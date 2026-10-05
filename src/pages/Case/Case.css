@@ -1,36 +1,83 @@
 .case-page {
-  width: 100vw;
-  min-height: 100dvh;
-  background-color: #050505;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: #000;
 }
 
-.case-content {
-  text-align: center;
+.archive-bg-img {
+  width: 100%;
+  height: 100dvh;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
-.case-title {
-  font-size: 2rem;
-  letter-spacing: 0.2em;
-  margin-bottom: 1rem;
-  font-weight: 300;
+.archive-typography-overlay {
+  position: absolute;
+  top: 7vh;
+  left: 7vw;
+  z-index: 10;
+  pointer-events: none;
+  max-width: 600px;
+  padding: 1.5rem 2rem 1.5rem 1rem;
+  background: radial-gradient(
+    ellipse at top left,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.25) 50%,
+    transparent 80%
+  );
+  border-radius: 8px;
 }
 
-.case-subtitle {
-  font-size: 1rem;
-  letter-spacing: 0.5em;
-  color: #888;
-  margin-bottom: 2rem;
-  font-weight: 300;
+.archive-title {
+  font-family: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.8rem, 3.2vw, 3.2rem);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: rgba(240, 235, 226, 0.92);
+  margin: 0 0 0.4rem 0;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.85);
+  line-height: 1.1;
+  white-space: nowrap;
 }
 
-.case-placeholder {
-  font-size: 0.9rem;
-  color: #555;
+.archive-subtitle {
+  font-family: 'Cinzel', sans-serif;
+  font-size: clamp(0.72rem, 1vw, 0.85rem);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  color: rgba(200, 185, 160, 0.78);
+  margin: 0 0 0.6rem 0;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
 }
+
+.archive-caption {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  color: rgba(210, 200, 185, 0.75);
+  margin: 0;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+}
+
+@media (max-width: 768px) {
+  .archive-typography-overlay {
+    top: 5vh;
+    left: 5vw;
+    right: 5vw;
+    padding: 1rem 1rem 1rem 0.5rem;
+  }
+  
+  .archive-title {
+    font-size: clamp(1.4rem, 6vw, 2.2rem);
+    letter-spacing: 0.1em;
+  }
+}
+
+
+

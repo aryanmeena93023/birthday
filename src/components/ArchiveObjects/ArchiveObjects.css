@@ -1,0 +1,118 @@
+.interactive-objects-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.archive-object {
+  position: absolute;
+  pointer-events: auto;
+  padding: 8px 14px;
+  background: rgba(18, 15, 12, 0.75);
+  border: 1px dashed rgba(200, 185, 160, 0.4);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.object-placeholder-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: rgba(230, 220, 205, 0.85);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Refined object spatial positioning relative to 100dvh archive room scene */
+
+/* 1. Envelope: center wooden desktop surface, warm illuminated area */
+.archive-envelope-wrapper {
+  position: absolute;
+  top: 64.5dvh;
+  left: 42%;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 900px;
+}
+
+.archive-envelope-asset {
+  width: clamp(160px, 16.5vw, 240px);
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  /* Lies flat on the horizontal wooden desktop surface matching shallow tabletop perspective */
+  transform: rotateX(30deg) rotate(-4deg);
+  transform-origin: center bottom;
+  /* Soft, tight contact shadow directly beneath envelope communicating contact with wood surface */
+  filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.75))
+          drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.35));
+  transition: transform 0.2s ease-out;
+}
+
+/* 2. Memory Archive: left side of wooden desktop surface */
+.archive-object-memory {
+  top: 67dvh;
+  left: 26%;
+}
+
+/* 3. Audio Evidence: right side of wooden desktop surface */
+.archive-object-audio {
+  top: 66dvh;
+  left: 65%;
+}
+
+/* 4. Raven: upper-right/rear shelf area */
+.archive-object-raven {
+  top: 25dvh;
+  left: 76%;
+}
+
+/* 5. Locked Drawer: front drawer panel on the front vertical face of the desk */
+.archive-object-drawer {
+  top: 85dvh;
+  left: 40%;
+}
+
+/* 6. ForbiddenBox: far-right portion of wooden desktop surface */
+.archive-object-forbidden {
+  top: 73dvh;
+  left: 74%;
+}
+
+@media (max-width: 768px) {
+  .object-placeholder-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+  }
+
+  .archive-object {
+    padding: 6px 10px;
+  }
+
+  .archive-envelope-wrapper {
+    top: 65.5dvh;
+    left: 40%;
+  }
+
+  .archive-envelope-asset {
+    width: clamp(135px, 36vw, 185px);
+    transform: rotateX(28deg) rotate(-4deg);
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.75))
+            drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.35));
+  }
+
+  .archive-object-drawer {
+    top: 86dvh;
+    left: 36%;
+  }
+}
