@@ -1,0 +1,241 @@
+/*
+ * Audio.css
+ * Stitch-inspired Audio Evidence styling.
+ * NO BLUR is used.
+ */
+
+.audio-scene {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  background-color: #030405;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(
+      ellipse 75% 65% at 50% 30%,
+      rgba(40, 28, 15, 0.45) 0%,
+      rgba(16, 12, 7, 0.75) 50%,
+      rgba(3, 4, 5, 0.98) 100%
+    );
+}
+
+.audio-container {
+  width: 100%;
+  max-width: 580px;
+  background: rgba(12, 10, 8, 0.95);
+  border: 1px solid rgba(214, 178, 116, 0.5);
+  border-radius: 8px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.audio-header {
+  margin-bottom: 2rem;
+}
+
+.audio-badge {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #fde047;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.audio-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+  letter-spacing: 0.22em;
+  color: #faedd4;
+  text-transform: uppercase;
+  margin: 0.25rem 0 0.5rem;
+  font-weight: 700;
+}
+
+.audio-subtitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  color: #d6d3d1;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+/* Player Chassis */
+.audio-chassis {
+  width: 100%;
+  background: rgba(28, 25, 23, 0.9);
+  border: 1px solid rgba(184, 149, 82, 0.4);
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.audio-status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: #fde68a;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 1rem;
+}
+
+.signal-locked {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #34d399;
+  font-weight: 700;
+}
+
+.signal-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #34d399;
+  box-shadow: 0 0 8px #34d399;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* Waveform Display */
+.audio-waveform-container {
+  height: 80px;
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 8px;
+  padding: 1rem;
+  box-sizing: border-box;
+  margin-bottom: 1.25rem;
+}
+
+.waveform-bar {
+  width: 8px;
+  background-color: #f59e0b;
+  border-radius: 4px;
+  transition: height 0.3s ease;
+}
+
+.bar-1 { height: 24px; }
+.bar-2 { height: 48px; }
+.bar-3 { height: 60px; background-color: #fbbf24; }
+.bar-4 { height: 32px; }
+.bar-5 { height: 52px; background-color: #d97706; }
+.bar-6 { height: 40px; }
+.bar-7 { height: 58px; background-color: #fbbf24; }
+.bar-8 { height: 28px; }
+
+.waveform-bar.active {
+  animation: waveformBounce 0.8s infinite alternate ease-in-out;
+}
+
+.bar-1.active { animation-delay: 0.1s; }
+.bar-2.active { animation-delay: 0.3s; }
+.bar-3.active { animation-delay: 0.2s; }
+.bar-4.active { animation-delay: 0.4s; }
+.bar-5.active { animation-delay: 0.15s; }
+.bar-6.active { animation-delay: 0.35s; }
+.bar-7.active { animation-delay: 0.25s; }
+.bar-8.active { animation-delay: 0.45s; }
+
+@keyframes waveformBounce {
+  0% { transform: scaleY(0.4); }
+  100% { transform: scaleY(1.2); }
+}
+
+/* Audio Controls */
+.audio-controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.audio-play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: #fef08a;
+  background: #292524;
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  padding: 0.45rem 0.85rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.audio-play-btn:hover:not(:disabled) {
+  background: #44403c;
+  border-color: #fde047;
+  color: #ffffff;
+}
+
+.tape-duration {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: #a8a29e;
+  text-transform: uppercase;
+}
+
+/* Return Action */
+.audio-return-container {
+  display: flex;
+  justify-content: center;
+}
+
+.audio-return-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #faedd4;
+  background: #1c1917;
+  border: 1px solid rgba(214, 178, 116, 0.6);
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.audio-return-btn:hover,
+.audio-return-btn:focus-visible {
+  color: #ffffff;
+  background: #292524;
+  border-color: #fde047;
+  outline: none;
+}

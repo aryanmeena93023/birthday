@@ -1,0 +1,206 @@
+/*
+ * Forbidden.css
+ * Stitch-inspired DO NOT OPEN / Cipher Box styling.
+ * NO BLUR is used.
+ */
+
+.cipher-scene {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  background-color: #030405;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(
+      ellipse 75% 65% at 50% 30%,
+      rgba(45, 15, 18, 0.45) 0%,
+      rgba(18, 8, 10, 0.75) 50%,
+      rgba(3, 4, 5, 0.98) 100%
+    );
+}
+
+.cipher-container {
+  width: 100%;
+  max-width: 580px;
+  background: rgba(12, 8, 9, 0.95);
+  border: 1px solid rgba(244, 63, 94, 0.4);
+  border-radius: 8px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cipher-header {
+  margin-bottom: 2rem;
+}
+
+.cipher-badge {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #fb7185;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.cipher-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+  letter-spacing: 0.22em;
+  color: #ffe4e6;
+  text-transform: uppercase;
+  margin: 0.25rem 0 0.5rem;
+  font-weight: 700;
+}
+
+.cipher-subtitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  color: #d6d3d1;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+/* Tumbler Dials Box */
+.cipher-tumbler-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: rgba(24, 20, 20, 0.85);
+  border: 1px solid rgba(159, 18, 57, 0.6);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.tumbler-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.tumbler-arrow-btn {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  font-size: 14px;
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.tumbler-arrow-btn:hover {
+  color: #fde047;
+  transform: scale(1.2);
+}
+
+.tumbler-arrow-btn:active {
+  transform: scale(0.95);
+}
+
+.tumbler-dial-digit {
+  width: 52px;
+  height: 68px;
+  background-color: #030405;
+  border: 2px solid rgba(217, 119, 6, 0.7);
+  border-radius: 4px;
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fde047;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+.tumbler-dial-digit.unlocked {
+  border-color: #34d399;
+  color: #34d399;
+  box-shadow: 0 0 16px rgba(52, 211, 153, 0.6);
+}
+
+.cipher-status-text {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  margin: 0 0 2rem;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.cipher-status-text.locked {
+  color: #fca5a5;
+}
+
+.cipher-status-text.success {
+  color: #34d399;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+}
+
+.cipher-unlocked-reveal {
+  background: rgba(6, 78, 59, 0.35);
+  border: 1px solid rgba(52, 211, 153, 0.5);
+  border-radius: 6px;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+  max-width: 480px;
+}
+
+.cipher-reveal-text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: #ecfdf5;
+  margin: 0;
+}
+
+/* Return Action */
+.cipher-return-container {
+  display: flex;
+  justify-content: center;
+}
+
+.cipher-return-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #faedd4;
+  background: #1c1917;
+  border: 1px solid rgba(244, 63, 94, 0.5);
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.cipher-return-btn:hover,
+.cipher-return-btn:focus-visible {
+  color: #ffffff;
+  background: #292524;
+  border-color: #fb7185;
+  outline: none;
+}

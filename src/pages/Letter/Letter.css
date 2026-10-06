@@ -1,0 +1,257 @@
+/*
+ * Letter.css
+ * Stitch-inspired parchment styling for The Letter.
+ * NO BLUR is used.
+ */
+
+.letter-scene {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  background-color: #030405;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(
+      ellipse 70% 60% at 50% 30%,
+      rgba(40, 28, 15, 0.45) 0%,
+      rgba(16, 12, 7, 0.75) 50%,
+      rgba(3, 4, 5, 0.98) 100%
+    );
+}
+
+.letter-parchment {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  max-height: 88vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  border: 2px solid #b89552;
+  padding: 2.25rem 2.75rem 2rem;
+  background-image: url('/media/archive/textures/aged-paper.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #f7eed8;
+  color: #2a1e16;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), inset 0 0 40px rgba(110, 75, 30, 0.15);
+  box-sizing: border-box;
+}
+
+/* Custom scrollbar */
+.letter-parchment::-webkit-scrollbar {
+  width: 6px;
+}
+.letter-parchment::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.08);
+}
+.letter-parchment::-webkit-scrollbar-thumb {
+  background: rgba(130, 95, 45, 0.45);
+  border-radius: 4px;
+}
+
+/* Letter Header Bar */
+.letter-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(168, 138, 88, 0.4);
+}
+
+.letter-record-id {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.record-marker-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #8c3321;
+}
+
+.record-marker-text {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #5e4b37;
+  font-weight: 700;
+}
+
+.letter-seal-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.letter-annotation-badge {
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  background: rgba(235, 216, 183, 0.75);
+  border: 1px solid rgba(191, 163, 115, 0.7);
+  font-family: 'Great Vibes', 'Alex Brush', cursive;
+  font-size: 1.35rem;
+  color: #8c3321;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Wax Seal Button / Emblem */
+.wax-seal {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #941b1b 0%, #631010 65%, #380707 100%);
+  border: 2px solid rgba(252, 211, 77, 0.45);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wax-seal-initial {
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: #fef3c7;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Greeting */
+.letter-greeting {
+  font-family: 'Great Vibes', 'Alex Brush', cursive;
+  font-size: clamp(2rem, 3.8vw, 2.6rem);
+  color: #2c1810;
+  font-weight: 400;
+  margin: 0 0 1.25rem;
+  letter-spacing: 0.02em;
+  user-select: text;
+}
+
+/* Body */
+.letter-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  user-select: text;
+}
+
+.letter-paragraph {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.05rem, 1.4vw, 1.15rem);
+  font-weight: 500;
+  line-height: 1.7;
+  color: #2a1e16;
+  letter-spacing: 0.015em;
+  margin: 0;
+}
+
+.letter-name-highlight {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #1f150e;
+  padding: 0.35rem 0;
+}
+
+.letter-birthday-highlight {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #8c3321;
+  padding-top: 0.5rem;
+}
+
+/* Signoff */
+.letter-signoff-section {
+  margin-top: 1.5rem;
+  padding-top: 0.5rem;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.letter-closing {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 1.35rem;
+  color: #5e4b37;
+  margin-bottom: 0.1rem;
+}
+
+.letter-signature {
+  font-family: 'Great Vibes', 'Alex Brush', cursive;
+  font-size: clamp(2.4rem, 4.2vw, 3rem);
+  color: #3b271d;
+  letter-spacing: 0.02em;
+}
+
+/* Return Action */
+.letter-return-container {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(168, 138, 88, 0.4);
+  display: flex;
+  justify-content: center;
+}
+
+.letter-return-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #2b1f17;
+  background: rgba(235, 216, 183, 0.85);
+  border: 1px solid rgba(191, 163, 115, 0.8);
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+
+.letter-return-btn:hover,
+.letter-return-btn:focus-visible {
+  color: #782414;
+  background: #ebd8b7;
+  border-color: #8c3321;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .letter-scene {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .letter-parchment {
+    padding: 1.5rem 1.25rem;
+    max-height: 92vh;
+  }
+
+  .letter-header-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+}

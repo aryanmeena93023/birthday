@@ -1,3 +1,9 @@
+/* 
+ * ArchiveObjects.css
+ * Clean, elegant interactive hotspots for the 6 archive objects.
+ * NO BLUR is used on the master scene.
+ */
+
 .interactive-objects-layer {
   position: absolute;
   inset: 0;
@@ -5,114 +11,194 @@
   pointer-events: none;
 }
 
-.archive-object {
+/* Hotspot Base Button */
+.archive-hotspot {
   position: absolute;
   pointer-events: auto;
-  padding: 8px 14px;
-  background: rgba(18, 15, 12, 0.75);
-  border: 1px dashed rgba(200, 185, 160, 0.4);
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
+  border-radius: 6px;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.object-placeholder-label {
-  font-family: 'Cinzel', serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  color: rgba(230, 220, 205, 0.85);
-  text-transform: uppercase;
-  white-space: nowrap;
+.archive-hotspot:hover,
+.archive-hotspot:focus-visible {
+  background-color: rgba(232, 195, 125, 0.08);
+  box-shadow: inset 0 0 16px rgba(232, 195, 125, 0.35);
 }
 
-/* Refined object spatial positioning relative to 100dvh archive room scene */
-
-/* 1. Envelope: center wooden desktop surface, warm illuminated area */
-.archive-envelope-wrapper {
-  position: absolute;
-  top: 64.5dvh;
-  left: 42%;
-  transform: translateX(-50%);
-  pointer-events: auto;
-  z-index: 25;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  perspective: 900px;
+.archive-hotspot:focus-visible {
+  outline: 2px solid rgba(232, 195, 125, 0.8);
+  outline-offset: 2px;
 }
 
-.archive-envelope-asset {
-  width: clamp(160px, 16.5vw, 240px);
-  height: auto;
-  display: block;
-  user-select: none;
-  -webkit-user-drag: none;
-  /* Lies flat on the horizontal wooden desktop surface matching shallow tabletop perspective */
-  transform: rotateX(30deg) rotate(-4deg);
-  transform-origin: center bottom;
-  /* Soft, tight contact shadow directly beneath envelope communicating contact with wood surface */
-  filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.75))
-          drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.35));
-  transition: transform 0.2s ease-out;
+/* Hotspot positions (matching archive-master.webp composition) */
+.archive-hotspot-envelope {
+  left: 35%;
+  top: 72%;
+  width: 19%;
+  height: 13%;
 }
 
-/* 2. Memory Archive: left side of wooden desktop surface */
-.archive-object-memory {
-  top: 67dvh;
-  left: 26%;
+.archive-hotspot-memory {
+  left: 23%;
+  top: 67%;
+  width: 12%;
+  height: 11%;
 }
 
-/* 3. Audio Evidence: right side of wooden desktop surface */
-.archive-object-audio {
-  top: 66dvh;
-  left: 65%;
+.archive-hotspot-audio {
+  left: 55%;
+  top: 64%;
+  width: 10%;
+  height: 12%;
 }
 
-/* 4. Raven: upper-right/rear shelf area */
-.archive-object-raven {
-  top: 25dvh;
-  left: 76%;
+.archive-hotspot-forbidden {
+  left: 68%;
+  top: 69%;
+  width: 11%;
+  height: 11%;
 }
 
-/* 5. Locked Drawer: front drawer panel on the front vertical face of the desk */
-.archive-object-drawer {
-  top: 85dvh;
-  left: 40%;
-}
-
-/* 6. ForbiddenBox: far-right portion of wooden desktop surface */
-.archive-object-forbidden {
-  top: 73dvh;
+.archive-hotspot-raven {
   left: 74%;
+  top: 41%;
+  width: 15%;
+  height: 19%;
 }
 
-@media (max-width: 768px) {
-  .object-placeholder-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-  }
+.archive-hotspot-drawer {
+  left: 21%;
+  top: 86%;
+  width: 20%;
+  height: 12%;
+}
 
-  .archive-object {
-    padding: 6px 10px;
-  }
+/* Hotspot Visual Marker Content */
+.hotspot-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
 
-  .archive-envelope-wrapper {
-    top: 65.5dvh;
-    left: 40%;
-  }
+/* Pulsing Beacon */
+.beacon-core {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: rgba(245, 185, 66, 0.95);
+  border: 2px solid #14100c;
+  box-shadow: 0 0 12px rgba(245, 185, 66, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: beaconPulse 2.6s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
 
-  .archive-envelope-asset {
-    width: clamp(135px, 36vw, 185px);
-    transform: rotateX(28deg) rotate(-4deg);
-    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.75))
-            drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.35));
-  }
+.beacon-core-raven {
+  background-color: rgba(56, 189, 248, 0.95);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.85);
+}
 
-  .archive-object-drawer {
-    top: 86dvh;
-    left: 36%;
+.beacon-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #0b0907;
+}
+
+@keyframes beaconPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.85;
+    box-shadow: 0 0 0 0 rgba(232, 195, 125, 0.65);
   }
+  60% {
+    transform: scale(1.15);
+    opacity: 1;
+    box-shadow: 0 0 0 9px rgba(232, 195, 125, 0);
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0.85;
+    box-shadow: 0 0 0 0 rgba(232, 195, 125, 0);
+  }
+}
+
+/* Antique Tag Label */
+.hotspot-tag {
+  margin-top: 7px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 4px;
+  background: rgba(12, 10, 8, 0.92);
+  border: 1px solid rgba(214, 178, 116, 0.7);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.85);
+  white-space: nowrap;
+  opacity: 0.92;
+  transition: transform 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
+}
+
+.archive-hotspot:hover .hotspot-tag,
+.archive-hotspot:focus-visible .hotspot-tag {
+  opacity: 1;
+  transform: scale(1.06);
+  border-color: #f7d594;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.95), 0 0 10px rgba(245, 185, 66, 0.35);
+}
+
+.hotspot-tag-raven {
+  border-color: rgba(56, 189, 248, 0.7);
+}
+
+.archive-hotspot:hover .hotspot-tag-raven,
+.archive-hotspot:focus-visible .hotspot-tag-raven {
+  border-color: #7dd3fc;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.95), 0 0 10px rgba(56, 189, 248, 0.35);
+}
+
+.hotspot-icon {
+  width: 14px;
+  height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #f59e0b;
+}
+
+.hotspot-icon-raven {
+  color: #38bdf8;
+}
+
+.hotspot-title {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fff4dc;
+}
+
+.hotspot-action {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: rgba(247, 213, 148, 0.85);
+  margin-left: 2px;
 }
