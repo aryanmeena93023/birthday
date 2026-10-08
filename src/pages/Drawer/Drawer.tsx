@@ -178,6 +178,9 @@ const Drawer: React.FC = () => {
 
   const changeState = useCallback(
     (targetState: number) => {
+      if (!isKeyAcquired && targetState !== 1) {
+        return;
+      }
       clearAllTimers();
       setCurrentState(targetState);
 
@@ -240,16 +243,26 @@ const Drawer: React.FC = () => {
 
   const handleTurnKey = () => {
     if (isTurning || currentState !== 1 || !isKeyAcquired) return;
+
     setIsTurning(true);
     playArtifactChime(369.99);
-    changeState(2);
 
+    // Phase 1: Key turns 90deg cleanly inside keyhole (0ms - 800ms) while drawer stays stationary in state 1
+    setTimeout(() => {
+      playUnlockChime();
+    }, 800);
+
+    // Phase 2: Lock released (950ms), drawer front face begins smooth downward slide in state 2
+    setTimeout(() => {
+      changeState(2);
+    }, 950);
+
+    // Phase 3: Drawer slide complete (1850ms), transition to state 3 (keepsake revealed)
     setTimeout(() => {
       setIsTurning(false);
       markDiscovered('drawer');
-      playUnlockChime();
       changeState(3);
-    }, 1500);
+    }, 1850);
   };
 
   const handleKeepsakeClick = () => {
@@ -316,23 +329,11 @@ const Drawer: React.FC = () => {
       </header>
 
       <div className="drawer-main-content">
-        {/* Meta Header Ribbon */}
-        <div className="drawer-meta-ribbon">
-          <div className="meta-ribbon-left">
-            <span className="meta-dot" />
-            <span>NLUJA ARCHIVAL ACCESS // MASTER DESK SANCTUM</span>
-          </div>
-          <div className="meta-ribbon-right">
-            <span className="meta-loc">LOC: GUWAHATI LAT 26.1445° N</span>
-            <span className="meta-dossier">DOSSIER #06 // CONFIDENTIAL</span>
-          </div>
-        </div>
-
-        {/* STAGE A: THE DESK DRAWER MODULE (States 1, 2, 3) */}
-        {currentState <= 3 && (
+        {!isKeyAcquired ? (
+          /* LOCKED ACCESS GATE UI (When Desk Drawer Key has not been claimed from forbidden chest) */
           <div className="drawer-experience-stage">
             <div className="drawer-hint-header">
-              <p className="drawer-sector-tag">SUB-VAULT COMPARTMENT // SECTOR IV</p>
+              <p className="drawer-sector-tag">RESTRICTED VAULT // SECTOR IV</p>
               <h1 className="drawer-main-title">The Master Study Drawer</h1>
               <p className="drawer-main-sub">An antique mahogany sanctum preserved under academic seal.</p>
             </div>
@@ -341,41 +342,8 @@ const Drawer: React.FC = () => {
               <div className="beveled-[#2c1d13] top-moulding-strip" />
 
               <div className="drawer-housing-cavity">
-                {/* Velvet Interior & Keepsake */}
-                <div className={`velvet-interior-cavity ${currentState >= 2 ? 'sliding-open' : ''}`}>
-                  <div className="velvet-sheen" />
-
-                  {/* State 3: Keepsake Artifact */}
-                  <div className="keepsake-artifact-card" onClick={handleKeepsakeClick}>
-                    <div className="artifact-card-glow" />
-                    <div className="matchbox-container">
-                      <div className="matchbox-header">
-                        <span className="matchbox-tag">RECOVERED KEEPSAKE // SEAL 06</span>
-                        <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
-                          <path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM8.9 6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2H8.9V6z" />
-                        </svg>
-                      </div>
-                      <div className="matchbox-body">
-                        <span className="matchbox-register">TESTAMENT REGISTER</span>
-                        <h3 className="matchbox-title">FOR KHUSHI</h3>
-                        <div className="matchbox-line" />
-                        <p className="matchbox-caption">"A midnight testament preserved in deep affection."</p>
-                      </div>
-                      <div className="matchbox-footer">
-                        <div className="striker-bar" />
-                        <span className="ceremony-prompt">OPEN CEREMONY →</span>
-                      </div>
-                    </div>
-
-                    <div className="artifact-instruction-badge">
-                      <span className="ping-dot" />
-                      <span>CLICK ARTIFACT TO UNVEIL CELEBRATION</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Physical Front Drawer Face */}
-                <div className={`drawer-front-face ${currentState >= 2 ? 'slid-down' : ''}`}>
+                {/* Physical Front Drawer Face in Locked Sealed State */}
+                <div className="drawer-front-face">
                   <div className="wood-panel-recess" />
 
                   <div className="escutcheon-plate-wrapper">
@@ -383,57 +351,39 @@ const Drawer: React.FC = () => {
                       <span className="escutcheon-code">NLUJA-06</span>
                       <div className="keyhole-container">
                         <div className="keyhole-black-slot" />
-                        <div className={`keyhole-glow-leak ${currentState >= 2 ? 'active' : ''}`} />
                       </div>
                       <div className="drop-bail-ring-handle">
                         <div className="drop-bail-inner" />
                       </div>
                     </div>
 
-                    <div className="drawer-status-chip">
+                    <div className="drawer-status-chip drawer-locked-warning">
                       <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
                         <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z" />
                       </svg>
-                      <span>
-                        {currentState === 1
-                          ? isKeyAcquired
-                            ? 'STATUS: CIPHER LOCKED (KEY ACQUIRED)'
-                            : 'STATUS: CIPHER LOCKED (KEY REQUIRED)'
-                          : currentState === 2
-                          ? 'STATUS: UNLOCKED & SLIDING'
-                          : 'STATUS: RECOVERY ACCESSIBLE'}
-                      </span>
+                      <span>STATUS: ACCESS RESTRICTED</span>
                     </div>
                   </div>
 
-                  {/* Turn Key Action Button */}
-                  {currentState === 1 && (
-                    <div className="interactive-key-action-container">
-                      <button
-                        type="button"
-                        className="btn-use-key"
-                        onClick={handleTurnKey}
-                        disabled={isTurning || !isKeyAcquired}
-                        title={!isKeyAcquired ? 'Master brass cipher key required from the Forbidden box' : undefined}
-                      >
-                        <div className={`key-icon-wrapper ${isTurning ? 'turning' : ''}`}>
-                          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-                            <path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
-                          </svg>
-                        </div>
-                        <div className="key-btn-text">
-                          <span className="key-tag">BRASS MASTER CIPHER</span>
-                          <span className="key-label">
-                            {!isKeyAcquired
-                              ? 'KEY REQUIRED'
-                              : isTurning
-                              ? 'TURNING SANCTUM KEY...'
-                              : 'TURN SANCTUM KEY'}
-                          </span>
-                        </div>
-                      </button>
+                  <div className="interactive-key-action-container">
+                    <div className="drawer-locked-gate-card">
+                      <div className="locked-gate-icon">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                          <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z" />
+                        </svg>
+                      </div>
+                      <span className="locked-gate-title">DESK DRAWER KEY REQUIRED</span>
+                      <p className="locked-gate-desc">
+                        Recover the key from the sealed chest before accessing this drawer.
+                      </p>
+                      <Link to="/case" onClick={handleReturn} className="btn-locked-return-archive">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+                        </svg>
+                        <span>RETURN TO ARCHIVE</span>
+                      </Link>
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
 
@@ -443,196 +393,339 @@ const Drawer: React.FC = () => {
               </div>
             </div>
           </div>
-        )}
+        ) : (
+          <>
+            {/* Meta Header Ribbon (Visible only in Stage A) */}
+            {currentState <= 3 && (
+              <div className="drawer-meta-ribbon">
+                <div className="meta-ribbon-left">
+                  <span className="meta-dot" />
+                  <span>NLUJA ARCHIVAL ACCESS // MASTER DESK SANCTUM</span>
+                </div>
+                <div className="meta-ribbon-right">
+                  <span className="meta-loc">LOC: GUWAHATI LAT 26.1445° N</span>
+                  <span className="meta-dossier">DOSSIER #06 // CONFIDENTIAL</span>
+                </div>
+              </div>
+            )}
 
-        {/* STAGE B: MIDNIGHT BIRTHDAY CHAMBER (States 4 to 10) */}
-        {currentState >= 4 && (
-          <div className="celebration-chamber-stage">
-            <div className="cake-ambient-glow" />
-            <div className="cake-spotlight-beam" />
-
-            {/* Vintage Archival Birthday Cake */}
-            {currentState <= 8 && (
-              <div className="cake-artifact-wrapper">
-                {/* 3 Slender Tapered Candles */}
-                <div className="candles-assembly">
-                  {/* Candle 1 */}
-                  <div className="candle-unit">
-                    <div className="flame-container">
-                      <div className={`flame-glow ${currentState >= 5 && currentState < 7 ? 'active' : ''}`} />
-                      <div className={`flame-element ${currentState >= 5 && currentState < 7 ? 'flame-active' : 'extinguished'}`} />
-                      <div className={`smoke-wisp ${currentState >= 7 ? 'active' : ''}`} />
-                    </div>
-                    <div className="candle-wick" />
-                    <div className="candle-body candle-short" />
-                  </div>
-
-                  {/* Candle 2 (Center - Taller) */}
-                  <div className="candle-unit">
-                    <div className="flame-container">
-                      <div className={`flame-glow ${currentState >= 5 && currentState < 7 ? 'active' : ''}`} />
-                      <div className={`flame-element ${currentState >= 5 && currentState < 7 ? 'flame-active' : 'extinguished'}`} />
-                      <div className={`smoke-wisp ${currentState >= 7 ? 'active' : ''}`} />
-                    </div>
-                    <div className="candle-wick" />
-                    <div className="candle-body candle-tall" />
-                  </div>
-
-                  {/* Candle 3 */}
-                  <div className="candle-unit">
-                    <div className="flame-container">
-                      <div className={`flame-glow ${currentState >= 5 && currentState < 7 ? 'active' : ''}`} />
-                      <div className={`flame-element ${currentState >= 5 && currentState < 7 ? 'flame-active' : 'extinguished'}`} />
-                      <div className={`smoke-wisp ${currentState >= 7 ? 'active' : ''}`} />
-                    </div>
-                    <div className="candle-wick" />
-                    <div className="candle-body candle-short" />
-                  </div>
+            {/* STAGE A: THE DESK DRAWER MODULE (States 1, 2, 3) */}
+            {currentState <= 3 && (
+              <div className="drawer-experience-stage">
+                <div className="drawer-hint-header">
+                  <p className="drawer-sector-tag">SUB-VAULT COMPARTMENT // SECTOR IV</p>
+                  <h1 className="drawer-main-title">The Master Study Drawer</h1>
+                  <p className="drawer-main-sub">An antique mahogany sanctum preserved under academic seal.</p>
                 </div>
 
-                {/* Tiered Cake */}
-                <div className="tiered-cake-structure">
-                  {/* Top Tier */}
-                  <div className="cake-top-tier">
-                    <div className="tier-glaze-highlight" />
-                    <div className="top-trim-gold" />
-                    <span className="tier-stars-pattern">✦ ✦ ✦ ✦ ✦ ✦</span>
-                    <div className="burgundy-trim-ribbon" />
-                  </div>
+                <div className="mahogany-desk-frame">
+                  <div className="beveled-[#2c1d13] top-moulding-strip" />
 
-                  {/* Bottom Tier */}
-                  <div className="cake-bottom-tier">
-                    <div className="tier-glaze-highlight" />
-                    <div className="top-trim-gold" />
-                    <div className="bottom-tier-decor">
-                      <span>❦</span>
-                      <span className="decor-star">✦</span>
-                      <span>❦</span>
-                      <span className="decor-star">✦</span>
-                      <span>❦</span>
+                  <div className="drawer-housing-cavity">
+                    {/* Velvet Interior & Keepsake */}
+                    <div className={`velvet-interior-cavity ${currentState >= 2 ? 'sliding-open' : ''}`}>
+                      <div className="velvet-sheen" />
+
+                      {/* State 3: Keepsake Artifact */}
+                      <div className="keepsake-artifact-card" onClick={handleKeepsakeClick}>
+                        <div className="artifact-card-glow" />
+                        <div className="matchbox-container">
+                          <div className="matchbox-header">
+                            <span className="matchbox-tag">RECOVERED KEEPSAKE // SEAL 06</span>
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+                              <path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM8.9 6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2H8.9V6z" />
+                            </svg>
+                          </div>
+                          <div className="matchbox-body">
+                            <span className="matchbox-register">TESTAMENT REGISTER</span>
+                            <h3 className="matchbox-title">FOR KHUSHI</h3>
+                            <div className="matchbox-line" />
+                            <p className="matchbox-caption">"A midnight testament preserved in deep affection."</p>
+                          </div>
+                          <div className="matchbox-footer">
+                            <div className="striker-bar" />
+                            <span className="ceremony-prompt">OPEN CEREMONY →</span>
+                          </div>
+                        </div>
+
+                        <div className="artifact-instruction-badge">
+                          <span className="ping-dot" />
+                          <span>CLICK ARTIFACT TO UNVEIL CELEBRATION</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="burgundy-trim-ribbon" />
+
+                    {/* Physical Front Drawer Face */}
+                    <div className={`drawer-front-face ${currentState >= 2 ? 'slid-down' : ''}`}>
+                      <div className="wood-panel-recess" />
+
+                      <div className="escutcheon-plate-wrapper">
+                        <div className="brass-escutcheon-plate">
+                          <span className="escutcheon-code">NLUJA-06</span>
+                          <div className="keyhole-container">
+                            <div className="keyhole-black-slot" />
+                            <div className={`keyhole-glow-leak ${currentState >= 2 ? 'active' : ''}`} />
+                          </div>
+                          <div className="drop-bail-ring-handle">
+                            <div className="drop-bail-inner" />
+                          </div>
+                        </div>
+
+                        <div className="drawer-status-chip">
+                          <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+                            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z" />
+                          </svg>
+                          <span>
+                            {currentState === 1
+                              ? isKeyAcquired
+                                ? 'STATUS: CIPHER LOCKED (KEY ACQUIRED)'
+                                : 'STATUS: CIPHER LOCKED (KEY REQUIRED)'
+                              : currentState === 2
+                                ? 'STATUS: UNLOCKED & SLIDING'
+                                : 'STATUS: RECOVERY ACCESSIBLE'}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Turn Key Action Button */}
+                      {currentState === 1 && (
+                        <div className="interactive-key-action-container">
+                          <button
+                            type="button"
+                            className="btn-use-key"
+                            onClick={handleTurnKey}
+                            disabled={isTurning || !isKeyAcquired}
+                            title={!isKeyAcquired ? 'Master brass cipher key required from the Forbidden box' : undefined}
+                          >
+                            <div className={`key-icon-wrapper ${isTurning ? 'turning' : ''}`}>
+                              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                                <path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
+                              </svg>
+                            </div>
+                            <div className="key-btn-text">
+                              <span className="key-tag">BRASS MASTER CIPHER</span>
+                              <span className="key-label">
+                                {!isKeyAcquired
+                                  ? 'KEY REQUIRED'
+                                  : isTurning
+                                    ? 'TURNING SANCTUM KEY...'
+                                    : 'TURN SANCTUM KEY'}
+                              </span>
+                            </div>
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
-                  {/* Silver Pedestal Stand */}
-                  <div className="pedestal-top-plate" />
-                  <div className="pedestal-base-stem" />
-                  <div className="pedestal-shadow-blur" />
+                  <div className="desk-joinery-footer">
+                    <span>JOINERY: MAHOGANY MORTISE #1984</span>
+                    <span>CHAMBER SECURITY: LEVEL III ARCHIVE</span>
+                  </div>
                 </div>
+              </div>
+            )}
 
-                {/* State 5: Blowout Action Prompt */}
-                {currentState === 5 && (
-                  <div className="blowout-action-container">
-                    <button
-                      type="button"
-                      className="btn-blow-candles"
-                      onClick={handleBlowCandles}
-                    >
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                        <path d="M14.5 17c0 1.65-1.35 3-3 3s-3-1.35-3-3h2c0 .55.45 1 1 1s1-.45 1-1-.45-1-1-1H3v-2h8.5c1.65 0 3 1.35 3 3zM19 6.5C19 4.57 17.43 3 15.5 3S12 4.57 12 6.5h2c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5H3v2h12.5c1.93 0 3.5-1.57 3.5-3.5zM18.5 11H3v2h15.5c.83 0 1.5.67 1.5 1.5S19.33 16 18.5 16s-1.5-.67-1.5-1.5h-2c0 1.93 1.57 3.5 3.5 3.5s3.5-1.57 3.5-3.5-1.57-3.5-3.5-3.5z" />
+            {/* STAGE B: MIDNIGHT BIRTHDAY CHAMBER (States 4 to 10) */}
+            {currentState >= 4 && (
+              <div className="celebration-chamber-stage">
+                <div className="cake-ambient-glow" />
+                <div className="cake-spotlight-beam" />
+
+                {/* Minimal Subtle Outer Flanking Metadata (Single line per side, far screen margins) */}
+                {currentState <= 8 && (
+                  <div className="cake-side-metadata-flanks">
+                    <span className="cake-flank-left">NLUJA ARCHIVAL ACCESS</span>
+                    <span className="cake-flank-right">MIDNIGHT CEREMONY</span>
+                  </div>
+                )}
+
+                {/* Vintage Archival Birthday Cake */}
+                {currentState <= 8 && (
+                  <div className="cake-artifact-wrapper">
+                    {/* 3 Slender Tapered Candles */}
+                    <div className="candles-assembly">
+                      {/* Candle 1 */}
+                      <div className="candle-unit">
+                        <div className="flame-container">
+                          <div className={`flame-glow ${currentState >= 5 && currentState < 7 ? 'active' : ''}`} />
+                          <div className={`flame-element ${currentState >= 5 && currentState < 7 ? 'flame-active' : 'extinguished'}`} />
+                          <div className={`smoke-wisp ${currentState >= 7 ? 'active' : ''}`} />
+                        </div>
+                        <div className="candle-wick" />
+                        <div className="candle-body candle-short" />
+                      </div>
+
+                      {/* Candle 2 (Center - Taller) */}
+                      <div className="candle-unit">
+                        <div className="flame-container">
+                          <div className={`flame-glow ${currentState >= 5 && currentState < 7 ? 'active' : ''}`} />
+                          <div className={`flame-element ${currentState >= 5 && currentState < 7 ? 'flame-active' : 'extinguished'}`} />
+                          <div className={`smoke-wisp ${currentState >= 7 ? 'active' : ''}`} />
+                        </div>
+                        <div className="candle-wick" />
+                        <div className="candle-body candle-tall" />
+                      </div>
+
+                      {/* Candle 3 */}
+                      <div className="candle-unit">
+                        <div className="flame-container">
+                          <div className={`flame-glow ${currentState >= 5 && currentState < 7 ? 'active' : ''}`} />
+                          <div className={`flame-element ${currentState >= 5 && currentState < 7 ? 'flame-active' : 'extinguished'}`} />
+                          <div className={`smoke-wisp ${currentState >= 7 ? 'active' : ''}`} />
+                        </div>
+                        <div className="candle-wick" />
+                        <div className="candle-body candle-short" />
+                      </div>
+                    </div>
+
+                    {/* Tiered Cake */}
+                    <div className="tiered-cake-structure">
+                      {/* Top Tier */}
+                      <div className="cake-top-tier">
+                        <div className="tier-glaze-highlight" />
+                        <div className="top-trim-gold" />
+                        <span className="tier-stars-pattern">✦ ✦ ✦ ✦ ✦ ✦</span>
+                        <div className="burgundy-trim-ribbon" />
+                      </div>
+
+                      {/* Bottom Tier */}
+                      <div className="cake-bottom-tier">
+                        <div className="tier-glaze-highlight" />
+                        <div className="top-trim-gold" />
+                        <div className="bottom-tier-decor">
+                          <span>❦</span>
+                          <span className="decor-star">✦</span>
+                          <span>❦</span>
+                          <span className="decor-star">✦</span>
+                          <span>❦</span>
+                        </div>
+                        <div className="burgundy-trim-ribbon" />
+                      </div>
+
+                      {/* Silver Pedestal Stand */}
+                      <div className="pedestal-top-plate" />
+                      <div className="pedestal-base-stem" />
+                      <div className="pedestal-shadow-blur" />
+                    </div>
+
+                    {/* State 5: Blowout Action Prompt */}
+                    {currentState === 5 && (
+                      <div className="blowout-action-container">
+                        <button
+                          type="button"
+                          className="btn-blow-candles"
+                          onClick={handleBlowCandles}
+                        >
+                          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                            <path d="M14.5 17c0 1.65-1.35 3-3 3s-3-1.35-3-3h2c0 .55.45 1 1 1s1-.45 1-1-.45-1-1-1H3v-2h8.5c1.65 0 3 1.35 3 3zM19 6.5C19 4.57 17.43 3 15.5 3S12 4.57 12 6.5h2c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5H3v2h12.5c1.93 0 3.5-1.57 3.5-3.5zM18.5 11H3v2h15.5c.83 0 1.5.67 1.5 1.5S19.33 16 18.5 16s-1.5-.67-1.5-1.5h-2c0 1.93 1.57 3.5 3.5 3.5s3.5-1.57 3.5-3.5-1.57-3.5-3.5-3.5z" />
+                          </svg>
+                          <span>MAKE A WISH & EXTINGUISH</span>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* State 6: Countdown Display */}
+                {currentState === 6 && (
+                  <div className="countdown-banner">
+                    <span className="countdown-tag">CEREMONIAL MOMENT</span>
+                    <div className="countdown-number">{countdownValue}</div>
+                  </div>
+                )}
+
+                {/* State 8: Floating Memory Text Stream */}
+                {currentState === 8 && (
+                  <div className="floating-text-stage">
+                    <p className={`memory-line-text ${lineVisible ? 'visible' : 'fade-up'}`}>
+                      {drawerBirthday.lines[currentLineIndex]}
+                    </p>
+                    <div className="memory-line-divider" />
+                    <span className="memory-stream-tag">ARCHIVAL RETRIEVAL // REFLECTION RECORD</span>
+                  </div>
+                )}
+
+                {/* State 9 & 10: Final Happy Birthday Climax & Actions */}
+                {currentState >= 9 && (
+                  <div className="final-climax-card">
+                    <div className="climax-wax-seal">
+                      <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                       </svg>
-                      <span>MAKE A WISH & EXTINGUISH</span>
-                    </button>
+                    </div>
+
+                    <span className="climax-sub-badge">{drawerBirthday.finalSub}</span>
+
+                    <h1 className="climax-title">{drawerBirthday.finalTitle}</h1>
+
+                    <div className="climax-divider" />
+
+                    <p className="climax-personal-message">{drawerBirthday.personalMessage}</p>
+
+                    <div className="climax-stamp-box">
+                      <span className="stamp-main">{drawerBirthday.caseConclusion}</span>
+                      <span className="stamp-sub">{drawerBirthday.archiveStatus}</span>
+                    </div>
+
+                    {/* State 10 Action Buttons */}
+                    <div className="climax-actions-container">
+                      <button type="button" className="btn-replay" onClick={handleReplay}>
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                          <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" />
+                        </svg>
+                        <span>REPLAY EXPERIENCE</span>
+                      </button>
+
+                      <Link to="/case" onClick={handleReturn} className="btn-return-archive">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+                        </svg>
+                        <span>RETURN TO ARCHIVE</span>
+                      </Link>
+                    </div>
                   </div>
                 )}
               </div>
             )}
-
-            {/* State 6: Countdown Display */}
-            {currentState === 6 && (
-              <div className="countdown-banner">
-                <span className="countdown-tag">CEREMONIAL MOMENT</span>
-                <div className="countdown-number">{countdownValue}</div>
-              </div>
-            )}
-
-            {/* State 8: Floating Memory Text Stream */}
-            {currentState === 8 && (
-              <div className="floating-text-stage">
-                <p className={`memory-line-text ${lineVisible ? 'visible' : 'fade-up'}`}>
-                  {drawerBirthday.lines[currentLineIndex]}
-                </p>
-                <div className="memory-line-divider" />
-                <span className="memory-stream-tag">ARCHIVAL RETRIEVAL // REFLECTION RECORD</span>
-              </div>
-            )}
-
-            {/* State 9 & 10: Final Happy Birthday Climax & Actions */}
-            {currentState >= 9 && (
-              <div className="final-climax-card">
-                <div className="climax-wax-seal">
-                  <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
-                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                  </svg>
-                </div>
-
-                <span className="climax-sub-badge">{drawerBirthday.finalSub}</span>
-
-                <h1 className="climax-title">{drawerBirthday.finalTitle}</h1>
-
-                <div className="climax-divider" />
-
-                <p className="climax-personal-message">{drawerBirthday.personalMessage}</p>
-
-                <div className="climax-stamp-box">
-                  <span className="stamp-main">{drawerBirthday.caseConclusion}</span>
-                  <span className="stamp-sub">{drawerBirthday.archiveStatus}</span>
-                </div>
-
-                {/* State 10 Action Buttons */}
-                <div className="climax-actions-container">
-                  <button type="button" className="btn-replay" onClick={handleReplay}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                      <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" />
-                    </svg>
-                    <span>REPLAY EXPERIENCE</span>
-                  </button>
-
-                  <Link to="/case" onClick={handleReturn} className="btn-return-archive">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                      <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
-                    </svg>
-                    <span>RETURN TO ARCHIVE</span>
-                  </Link>
-                </div>
-              </div>
-            )}
-          </div>
+          </>
         )}
       </div>
 
-      {/* HUD State Stepper & Controller */}
-      <footer className="hud-state-controller">
-        <div className="hud-container">
-          <div className="hud-label-group">
-            <span className="hud-tag font-bold">DIRECT STATE CONTROLLER</span>
-            <span className="hud-current-state">{stateLabels[currentState]}</span>
-          </div>
+      {/* HUD State Stepper & Controller (Only rendered when isKeyAcquired is true) */}
+      {isKeyAcquired && (
+        <footer className="hud-state-controller">
+          <div className="hud-container">
+            <div className="hud-label-group">
+              <span className="hud-tag font-bold">DIRECT STATE CONTROLLER</span>
+              <span className="hud-current-state">{stateLabels[currentState]}</span>
+            </div>
 
-          <div className="hud-pills-row">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+            <div className="hud-pills-row">
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                <button
+                  key={num}
+                  type="button"
+                  className={`state-pill ${currentState === num ? 'active' : ''}`}
+                  onClick={() => changeState(num)}
+                >
+                  {num}
+                </button>
+              ))}
+            </div>
+
+            <div className="hud-audio-group">
               <button
-                key={num}
                 type="button"
-                className={`state-pill ${currentState === num ? 'active' : ''}`}
-                onClick={() => changeState(num)}
+                className="hud-audio-btn"
+                onClick={() => setSoundEnabled(!soundEnabled)}
               >
-                {num}
+                <span>{soundEnabled ? 'SYNTH AUDIO: ACTIVE' : 'SYNTH AUDIO: MUTED'}</span>
               </button>
-            ))}
+            </div>
           </div>
-
-          <div className="hud-audio-group">
-            <button
-              type="button"
-              className="hud-audio-btn"
-              onClick={() => setSoundEnabled(!soundEnabled)}
-            >
-              <span>{soundEnabled ? 'SYNTH AUDIO: ACTIVE' : 'SYNTH AUDIO: MUTED'}</span>
-            </button>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      )}
     </main>
   );
 };

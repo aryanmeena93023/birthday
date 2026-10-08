@@ -1,132 +1,154 @@
 /*
  * Forbidden.css
- * Stitch-inspired DO NOT OPEN / Cipher Box styling.
- * NO BLUR is used.
+ * THE RESTRICTED RECORD — NLUJA Archival Material Theme
+ * Typography System:
+ * - Cormorant Garamond: Display & Personal Titles
+ * - EB Garamond: Personal Editorial & Narrative Text
+ * - Space Mono: Technical Metadata, Labels & Buttons
+ *
+ * Palette:
+ * - Charcoal (#07080a, #0c0d0f)
+ * - Dark Walnut (#160e0a, #22150e)
+ * - Muted Burgundy Velvet (#3a101f, #260c16)
+ * - Aged Brass (#baa36d, #cfbc8c, #8c7643)
+ * - Warm Parchment (#f5efe6, #e8e1d5)
  */
 
+:root {
+  --color-charcoal-dark: #07080a;
+  --color-charcoal-base: #0c0d0f;
+  
+  --color-walnut-dark: #120b07;
+  --color-walnut-base: #22150e;
+  --color-walnut-light: #342217;
+
+  --color-burgundy-dark: #18080f;
+  --color-burgundy-base: #260c16;
+  --color-burgundy-velvet: #3a101f;
+
+  --color-brass-primary: #baa36d;
+  --color-brass-bright: #cfbc8c;
+  --color-brass-dark: #8c7643;
+  --color-brass-gold: #d4af37;
+
+  --color-parchment-bright: #f5efe6;
+  --color-parchment-base: #e8e1d5;
+  --color-parchment-muted: #cbd5e1;
+}
+
+/* Typography Utilities */
+.font-cormorant {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-eb-garamond {
+  font-family: 'EB Garamond', Georgia, serif;
+}
+
+.font-space-mono {
+  font-family: 'Space Mono', monospace;
+}
+
+/* Scene Environment */
 .cipher-scene {
   position: relative;
   width: 100%;
   min-height: 100dvh;
-  background-color: #030405;
+  background-color: var(--color-charcoal-dark);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 3rem 1.5rem;
+  padding: 2rem 1.5rem;
   box-sizing: border-box;
   overflow-x: hidden;
   background-image:
     radial-gradient(
-      ellipse 75% 65% at 50% 30%,
-      rgba(45, 15, 18, 0.45) 0%,
-      rgba(18, 8, 10, 0.75) 50%,
-      rgba(3, 4, 5, 0.98) 100%
+      ellipse 80% 70% at 50% 30%,
+      rgba(58, 16, 31, 0.35) 0%,
+      rgba(34, 21, 14, 0.45) 50%,
+      rgba(7, 8, 10, 0.98) 100%
     );
 }
 
-.cipher-container {
-  width: 100%;
-  max-width: 580px;
-  background: rgba(12, 8, 9, 0.95);
-  border: 1px solid rgba(244, 63, 94, 0.4);
+/* Single Physical Chest Structure */
+.restricted-record-chest {
+  position: relative;
+  background: linear-gradient(180deg, #24150e 0%, #160e0a 100%);
+  border: 1px solid rgba(186, 163, 109, 0.45);
   border-radius: 8px;
-  padding: 2.5rem 2rem;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  box-shadow:
+    0 35px 90px rgba(0, 0, 0, 0.96),
+    0 0 35px rgba(58, 16, 31, 0.25),
+    inset 0 1px 2px rgba(245, 239, 230, 0.12);
 }
 
-.cipher-header {
-  margin-bottom: 2rem;
+/* Brass Corner Reinforcement Framing */
+.brass-corner-tl,
+.brass-corner-tr,
+.brass-corner-bl,
+.brass-corner-br {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: rgba(186, 163, 109, 0.7);
+  pointer-events: none;
+  z-index: 15;
 }
 
-.cipher-badge {
-  display: inline-block;
-  font-family: 'Cinzel', serif;
-  font-size: 11px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: #fb7185;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+.brass-corner-tl {
+  top: 10px;
+  left: 10px;
+  border-top: 2px solid;
+  border-left: 2px solid;
 }
 
-.cipher-title {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(1.8rem, 3.2vw, 2.4rem);
-  letter-spacing: 0.22em;
-  color: #ffe4e6;
-  text-transform: uppercase;
-  margin: 0.25rem 0 0.5rem;
-  font-weight: 700;
+.brass-corner-tr {
+  top: 10px;
+  right: 10px;
+  border-top: 2px solid;
+  border-right: 2px solid;
 }
 
-.cipher-subtitle {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-style: italic;
-  font-size: clamp(1rem, 1.4vw, 1.15rem);
-  color: #d6d3d1;
-  letter-spacing: 0.04em;
-  margin: 0;
+.brass-corner-bl {
+  bottom: 10px;
+  left: 10px;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
 }
 
-/* Tumbler Dials Box */
-.cipher-tumbler-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  background: rgba(24, 20, 20, 0.85);
-  border: 1px solid rgba(159, 18, 57, 0.6);
-  border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+.brass-corner-br {
+  bottom: 10px;
+  right: 10px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
 }
 
-.tumbler-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
+/* Recessed Cipher Housing */
+.recessed-cipher-panel {
+  background: linear-gradient(180deg, #120b07 0%, #1f0b13 100%);
+  border: 1px solid rgba(186, 163, 109, 0.5);
+  border-radius: 6px;
+  box-shadow:
+    inset 0 4px 18px rgba(0, 0, 0, 0.92),
+    0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
-.tumbler-arrow-btn {
-  background: transparent;
-  border: none;
-  color: #9ca3af;
-  font-size: 14px;
-  padding: 0.35rem 0.6rem;
-  cursor: pointer;
-  transition: color 0.2s ease, transform 0.1s ease;
-}
-
-.tumbler-arrow-btn:hover {
-  color: #fde047;
-  transform: scale(1.2);
-}
-
-.tumbler-arrow-btn:active {
-  transform: scale(0.95);
-}
-
+/* Tumbler Dial Digit */
 .tumbler-dial-digit {
-  width: 52px;
-  height: 68px;
-  background-color: #030405;
-  border: 2px solid rgba(217, 119, 6, 0.7);
+  width: 56px;
+  height: 72px;
+  background-color: #07080a;
+  border: 2px solid rgba(186, 163, 109, 0.7);
   border-radius: 4px;
-  font-family: 'Cinzel', serif;
-  font-size: 2rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 2.2rem;
   font-weight: 700;
-  color: #fde047;
+  color: var(--color-brass-bright);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.85), inset 0 1px 3px rgba(255, 255, 255, 0.1);
   user-select: none;
   transition: all 0.3s ease;
 }
@@ -134,73 +156,143 @@
 .tumbler-dial-digit.unlocked {
   border-color: #34d399;
   color: #34d399;
-  box-shadow: 0 0 16px rgba(52, 211, 153, 0.6);
+  box-shadow: 0 0 18px rgba(52, 211, 153, 0.6);
 }
 
-.cipher-status-text {
-  font-family: 'Cinzel', serif;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  margin: 0 0 2rem;
-  text-transform: uppercase;
-  transition: color 0.3s ease;
+/* Physical Unlock Release Button */
+.physical-unlock-btn {
+  background: linear-gradient(180deg, #8c7643 0%, #baa36d 50%, #594926 100%);
+  border-top: 1px solid rgba(245, 239, 230, 0.6);
+  border-bottom: 1px solid rgba(7, 8, 10, 0.8);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.2s ease;
 }
 
-.cipher-status-text.locked {
-  color: #fca5a5;
+.physical-unlock-btn:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.9),
+    0 0 15px rgba(186, 163, 109, 0.35);
 }
 
-.cipher-status-text.success {
-  color: #34d399;
-  font-weight: 700;
-  text-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+.physical-unlock-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.9);
 }
 
-.cipher-unlocked-reveal {
-  background: rgba(6, 78, 59, 0.35);
-  border: 1px solid rgba(52, 211, 153, 0.5);
-  border-radius: 6px;
-  padding: 1.25rem;
-  margin-bottom: 2rem;
-  max-width: 480px;
+/* Burgundy Velvet Interior Chamber */
+.burgundy-velvet-chamber {
+  background: radial-gradient(ellipse 90% 80% at 50% 30%, #3a101f 0%, #1c070e 65%, #07080a 100%);
+  border: 1px solid rgba(186, 163, 109, 0.35);
+  box-shadow: inset 0 15px 45px rgba(0, 0, 0, 0.92);
 }
 
-.cipher-reveal-text {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.15rem;
-  line-height: 1.5;
-  color: #ecfdf5;
-  margin: 0;
-}
-
-/* Return Action */
-.cipher-return-container {
+/* Personal Archival Record Card (Minimal, tactile, un-boxed feel) */
+.personal-record-card {
+  background: transparent;
   display: flex;
-  justify-content: center;
-}
-
-.cipher-return-btn {
-  display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  font-family: 'Cinzel', serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #faedd4;
-  background: #1c1917;
-  border: 1px solid rgba(244, 63, 94, 0.5);
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: all 0.25s ease;
+  text-align: center;
+  transition: all 0.3s ease;
 }
 
-.cipher-return-btn:hover,
-.cipher-return-btn:focus-visible {
-  color: #ffffff;
-  background: #292524;
-  border-color: #fb7185;
-  outline: none;
+.personal-record-spool-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.personal-record-spool-circle {
+  width: 9rem;
+  height: 9rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #22150e 0%, #3a101f 50%, #cfbc8c 100%);
+  padding: 5px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(58, 16, 31, 0.4);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.personal-record-card:hover .personal-record-spool-circle {
+  transform: scale(1.05);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(186, 163, 109, 0.3);
+}
+
+/* Key Levitation & Spotlight */
+@keyframes keyFloat {
+  0%, 100% {
+    transform: translateY(0px);
+    filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 18px rgba(212, 175, 55, 0.35));
+  }
+  50% {
+    transform: translateY(-8px);
+    filter: drop-shadow(0 22px 32px rgba(207, 188, 140, 0.45)) drop-shadow(0 0 28px rgba(212, 175, 55, 0.55));
+  }
+}
+
+.key-levitate {
+  animation: keyFloat 4s ease-in-out infinite;
+}
+
+.key-sanctum-pedestal {
+  background: radial-gradient(circle at 50% 40%, rgba(186, 163, 109, 0.25) 0%, rgba(58, 16, 31, 0.45) 50%, #07080a 100%);
+  border: 1px solid rgba(186, 163, 109, 0.4);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(186, 163, 109, 0.15);
+}
+
+/* Ambient Dust Motes */
+@keyframes floatMote {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translateY(-20px) translateX(10px);
+    opacity: 0.65;
+  }
+}
+
+.ambient-dust-mote {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(207, 188, 140, 0.4);
+  pointer-events: none;
+  filter: blur(0.5px);
+}
+
+/* Theater Overlay */
+.theater-overlay {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.theater-content {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease-in-out;
+  background: linear-gradient(180deg, #1f0912 0%, #07080a 100%);
+  border: 1px solid rgba(186, 163, 109, 0.5);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.98), 0 0 40px rgba(58, 16, 31, 0.35);
+}
+
+/* Archival Video Element & Fullscreen Sizing (Strict contain mode for portrait/landscape media) */
+.archival-video-element {
+  object-fit: contain !important;
+  background-color: #000000 !important;
+}
+
+.archival-video-element:-webkit-full-screen {
+  object-fit: contain !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: #000000 !important;
+}
+
+.archival-video-element:fullscreen {
+  object-fit: contain !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: #000000 !important;
 }

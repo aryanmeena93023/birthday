@@ -45,18 +45,23 @@
 }
 
 @keyframes candleFlickerAnim {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.85;
   }
+
   25% {
     transform: scale(1.08) translate(1px, -1px);
     opacity: 1;
   }
+
   50% {
     transform: scale(0.94) translate(-1px, 1px);
     opacity: 0.75;
   }
+
   75% {
     transform: scale(1.04) translate(1px, 0.5px);
     opacity: 0.95;
@@ -265,7 +270,9 @@
 }
 
 @keyframes ping {
-  75%, 100% {
+
+  75%,
+  100% {
     transform: scale(2.2);
     opacity: 0;
   }

@@ -1,86 +1,121 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Audio.css';
+import { audioMemoryData } from '../../content/audioMemory';
+import { AudioMemory } from '../../components/AudioMemory/AudioMemory';
 import { playArtifactChime } from '../../utils/archiveAudio';
 import { markDiscovered } from '../../utils/discoveryTracker';
 
-const Audio: React.FC = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-
+const AudioPage: React.FC = () => {
   useEffect(() => {
     markDiscovered('audio');
   }, []);
 
-  const handlePlayTape = () => {
-    playArtifactChime(587.33);
-    setIsPlaying(true);
-    setTimeout(() => {
-      setIsPlaying(false);
-    }, 3000);
-  };
-
-  const handleReturn = () => {
+  const handleReturnClick = () => {
     playArtifactChime(392);
   };
 
   return (
-    <main className="audio-scene">
-      <article className="audio-container">
-        <header className="audio-header">
-          <span className="audio-badge">CASE FILE // EVIDENCE 03</span>
-          <h1 className="audio-title">AUDIO EVIDENCE</h1>
-          <p className="audio-subtitle">Transceiver frequency intercepted across the archive chamber.</p>
-        </header>
-
-        {/* Player Chassis */}
-        <div className="audio-chassis">
-          <div className="audio-status-bar">
-            <span className="station-info">STATION: 104.7 MHZ [ECHO]</span>
-            <span className="signal-locked">
-              <span className="signal-dot" /> SIGNAL LOCKED
-            </span>
-          </div>
-
-          {/* Dynamic Waveform Display */}
-          <div className="audio-waveform-container" aria-label="Audio Waveform">
-            <span className={`waveform-bar bar-1 ${isPlaying ? 'active' : ''}`} />
-            <span className={`waveform-bar bar-2 ${isPlaying ? 'active' : ''}`} />
-            <span className={`waveform-bar bar-3 ${isPlaying ? 'active' : ''}`} />
-            <span className={`waveform-bar bar-4 ${isPlaying ? 'active' : ''}`} />
-            <span className={`waveform-bar bar-5 ${isPlaying ? 'active' : ''}`} />
-            <span className={`waveform-bar bar-6 ${isPlaying ? 'active' : ''}`} />
-            <span className={`waveform-bar bar-7 ${isPlaying ? 'active' : ''}`} />
-            <span className={`waveform-bar bar-8 ${isPlaying ? 'active' : ''}`} />
-          </div>
-
-          {/* Interactive Play Trigger */}
-          <div className="audio-controls-row">
-            <button
-              type="button"
-              onClick={handlePlayTape}
-              className="audio-play-btn"
-              disabled={isPlaying}
+    <div className="audio-page-root">
+      {/* 1. Fixed Top Archival Navigation Bar */}
+      <header className="audio-top-bar">
+        <div className="top-bar-inner">
+          <div className="top-bar-left">
+            <Link
+              to="/case"
+              onClick={handleReturnClick}
+              className="top-bar-back-link"
+              aria-label="Return to Case Archive"
+              title="Return to Case Archive"
             >
               <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
               </svg>
-              <span>{isPlaying ? 'PLAYING BROADCAST...' : 'REPLAY RECORDING'}</span>
-            </button>
-            <span className="tape-duration">TAPE DURATION: 00:34</span>
+            </Link>
+            <span className="top-bar-divider" />
+            <div className="top-bar-titles">
+              <span className="top-badge">{audioMemoryData.headerBadge}</span>
+              <span className="top-subbadge">{audioMemoryData.headerSubBadge}</span>
+            </div>
+          </div>
+          <div className="top-bar-right">
+            <span className="chamber-label">CHAMBER</span>
           </div>
         </div>
+      </header>
 
-        <div className="audio-return-container">
-          <Link to="/case" onClick={handleReturn} className="audio-return-btn">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-            </svg>
-            <span>RETURN TO ARCHIVE</span>
-          </Link>
+      {/* 2. Main Archival Body Container */}
+      <main className="audio-page-main">
+        <div className="audio-page-content">
+          {/* Top Archival Hero Header */}
+          <header className="audio-hero-header">
+            <div className="audio-hero-meta">
+              <span className="page-label">{audioMemoryData.pageLabel}</span>
+              <span className="meta-dot" />
+              <span className="record-no">PRIVATE ARCHIVE • RECORD NO. 04</span>
+            </div>
+            <h1 className="audio-hero-title">{audioMemoryData.heading}</h1>
+            <p className="audio-hero-tagline">{audioMemoryData.tagline}</p>
+
+            <div className="hero-divider">
+              <span className="divider-line" />
+              <span className="divider-dot" />
+              <span className="divider-line" />
+            </div>
+          </header>
+
+          {/* Single Recording Badge */}
+          <div className="single-recording-badge-row">
+            <div className="single-recording-badge">
+              <span className="badge-live-pulse" />
+              <span className="recording-label-text">{audioMemoryData.recordingLabel}</span>
+            </div>
+          </div>
+
+          {/* Core Audio Memory Experience Component */}
+          <AudioMemory />
+
+          {/* Bottom Navigation Dock */}
+          <nav className="audio-return-dock" aria-label="Bottom Navigation">
+            <Link
+              to="/case"
+              onClick={handleReturnClick}
+              className="return-archive-btn"
+            >
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+              </svg>
+              <span>RETURN TO ARCHIVE</span>
+            </Link>
+
+            <Link
+              to="/drawer"
+              onClick={handleReturnClick}
+              className="next-file-btn"
+            >
+              <span>MOVE TO NEXT FILE // 05</span>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
+              </svg>
+            </Link>
+          </nav>
         </div>
-      </article>
-    </main>
+      </main>
+
+      {/* 3. Archival Footer */}
+      <footer className="audio-page-footer">
+        <div className="footer-inner">
+          <div className="footer-left">
+            <span className="footer-title">NATIONAL LAW UNIVERSITY AND JUDICIAL ACADEMY, ASSAM</span>
+            <span className="footer-subtitle">CLASSIFIED AUDIO RECORD // CEREMONIAL DEPOSIT</span>
+          </div>
+          <div className="footer-right">
+            <span>© MMXXIV NLUJA ARCHIVES. ALL TESTAMENTS RESERVED.</span>
+          </div>
+        </div>
+      </footer>
+    </div>
   );
 };
 
-export default Audio;
+export default AudioPage;

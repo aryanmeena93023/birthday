@@ -6,7 +6,110 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Great+Vibes&family=Pirata+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Pirata+One&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+              "secondary-container": "#703842",
+              "on-tertiary-container": "#2c3d4c",
+              "secondary-fixed": "#ffd9dd",
+              "inverse-primary": "#6f5c2d",
+              "inverse-surface": "#e3e2e5",
+              "primary": "#ddc48b",
+              "on-tertiary": "#213241",
+              "secondary-fixed-dim": "#ffb2bd",
+              "surface-container-high": "#292a2c",
+              "primary-fixed": "#fae0a5",
+              "on-primary-container": "#49390d",
+              "tertiary-fixed": "#d3e4f9",
+              "on-primary-fixed-variant": "#554518",
+              "secondary": "#ffb2bd",
+              "tertiary-container": "#96a7ba",
+              "outline": "#989082",
+              "primary-container": "#baa36d",
+              "surface-dim": "#121315",
+              "surface-container-lowest": "#0d0e10",
+              "on-tertiary-fixed": "#0b1d2c",
+              "on-error-container": "#ffdad6",
+              "surface-bright": "#38393b",
+              "tertiary-fixed-dim": "#b7c8dc",
+              "error": "#ffb4ab",
+              "surface-variant": "#343537",
+              "on-error": "#690005",
+              "surface-container": "#1f2022",
+              "tertiary": "#b7c8dc",
+              "surface-container-highest": "#343537",
+              "primary-fixed-dim": "#ddc48b",
+              "inverse-on-surface": "#303033",
+              "surface": "#121315",
+              "background": "#121315",
+              "on-secondary-fixed": "#380b16",
+              "on-secondary-fixed-variant": "#6d3640",
+              "on-background": "#e3e2e5",
+              "error-container": "#93000a",
+              "on-surface": "#e3e2e5",
+              "surface-container-low": "#1b1c1e",
+              "surface-tint": "#ddc48b",
+              "on-surface-variant": "#cfc5b6",
+              "on-secondary": "#52202a",
+              "outline-variant": "#4c463a",
+              "on-tertiary-fixed-variant": "#384859",
+              "on-primary": "#3d2e03",
+              "on-secondary-container": "#efa4af",
+              "on-primary-fixed": "#251a00"
+            },
+            "borderRadius": {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "full": "9999px"
+            },
+            "spacing": {
+              "space-lg": "1.75rem",
+              "space-xl": "3rem",
+              "margin": "3rem",
+              "space-xs": "0.25rem",
+              "gutter": "1.5rem",
+              "margin-mobile": "1.25rem",
+              "space-sm": "0.5rem",
+              "space-md": "1rem",
+              "gutter-mobile": "1rem"
+            },
+            "fontFamily": {
+              "archival-caption": [ "Space Mono" ],
+              "display-lg-mobile": [ "Playfair Display" ],
+              "label-caps": [ "Playfair Display" ],
+              "relic-code": [ "Space Mono" ],
+              "display-xl": [ "Playfair Display" ],
+              "body-md": [ "EB Garamond" ],
+              "body-lg": [ "EB Garamond" ],
+              "display-xl-mobile": [ "Playfair Display" ],
+              "headline-md": [ "Playfair Display" ],
+              "title-sm": [ "EB Garamond" ],
+              "display-lg": [ "Playfair Display" ]
+            },
+            "fontSize": {
+              "archival-caption": [ "12px", { "lineHeight": "18px", "letterSpacing": "0.12em", "fontWeight": "400" } ],
+              "display-lg-mobile": [ "28px", { "lineHeight": "36px", "letterSpacing": "0.02em", "fontWeight": "500" } ],
+              "label-caps": [ "13px", { "lineHeight": "18px", "letterSpacing": "0.22em", "fontWeight": "700" } ],
+              "relic-code": [ "11px", { "lineHeight": "16px", "letterSpacing": "0.18em", "fontWeight": "700" } ],
+              "display-xl": [ "56px", { "lineHeight": "68px", "letterSpacing": "0.02em", "fontWeight": "600" } ],
+              "body-md": [ "16px", { "lineHeight": "26px", "letterSpacing": "0.01em", "fontWeight": "400" } ],
+              "body-lg": [ "19px", { "lineHeight": "30px", "letterSpacing": "0.01em", "fontWeight": "400" } ],
+              "display-xl-mobile": [ "34px", { "lineHeight": "42px", "letterSpacing": "0.02em", "fontWeight": "600" } ],
+              "headline-md": [ "26px", { "lineHeight": "34px", "letterSpacing": "0.04em", "fontWeight": "500" } ],
+              "title-sm": [ "20px", { "lineHeight": "28px", "letterSpacing": "0.06em", "fontWeight": "600" } ],
+              "display-lg": [ "40px", { "lineHeight": "50px", "letterSpacing": "0.03em", "fontWeight": "500" } ]
+            }
+          }
+        }
+      };
+    </script>
     <title>The Archive — Case File: Khushi</title>
   </head>
   <body>
