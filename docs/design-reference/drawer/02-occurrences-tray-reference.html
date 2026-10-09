@@ -1,0 +1,518 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_standard" name="shell-type"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-variant":"#343538","surface-bright":"#38393c","on-background":"#e3e2e6","on-tertiary-container":"#405568","inverse-primary":"#6f5c2d","on-error-container":"#ffdad6","surface-container-low":"#1b1b1f","on-secondary-container":"#ff97a3","on-tertiary":"#1e3244","secondary-container":"#7c2a38","on-surface":"#e3e2e6","background":"#121316","tertiary-fixed-dim":"#b4c9df","surface":"#121316","surface-dim":"#121316","surface-container-lowest":"#0d0e11","on-error":"#690005","on-primary-container":"#625022","on-primary-fixed":"#251a00","error-container":"#93000a","secondary-fixed-dim":"#ffb2ba","on-secondary-fixed-variant":"#7c2a38","on-secondary-fixed":"#400010","primary-container":"#ddc48b","surface-container":"#1f1f23","outline-variant":"#4c463a","inverse-surface":"#e3e2e6","tertiary-container":"#b4c9e0","error":"#ffb4ab","on-surface-variant":"#cfc5b6","on-tertiary-fixed":"#061d2e","surface-tint":"#ddc48b","surface-container-high":"#292a2d","tertiary":"#d0e5fc","on-primary":"#3d2e03","on-secondary":"#5e1323","primary":"#fae0a5","surface-container-highest":"#343538","secondary":"#ffb2ba","tertiary-fixed":"#cfe5fc","on-tertiary-fixed-variant":"#35495b","inverse-on-surface":"#303034","on-primary-fixed-variant":"#564518","primary-fixed-dim":"#ddc48b","secondary-fixed":"#ffd9dc","primary-fixed":"#fae0a5","outline":"#989082"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"margin":"3.5rem","gutter":"2rem","space-xs":"0.25rem","space-lg":"1.75rem","margin-mobile":"1.25rem","gutter-mobile":"1rem","space-xl":"3rem","space-md":"1rem","space-sm":"0.5rem"},fontFamily:{"body-sm":["EB Garamond"],"display-hero-mobile":["EB Garamond"],"label-caps":["Space Mono"],"display-hero":["EB Garamond"],"headline-md":["EB Garamond"],"headline-sm":["EB Garamond"],"label-xs":["Space Mono"],"body-md":["EB Garamond"],"body-lg":["EB Garamond"],"meta-code":["Space Mono"],"headline-lg":["EB Garamond"],"headline-lg-mobile":["EB Garamond"]},fontSize:{"body-sm":["15px",{"lineHeight":"22px","letterSpacing":"0.015em","fontWeight":"400"}],"display-hero-mobile":["36px",{"lineHeight":"44px","letterSpacing":"-0.01em","fontWeight":"400"}],"label-caps":["11px",{"lineHeight":"16px","letterSpacing":"0.18em","fontWeight":"700"}],"display-hero":["56px",{"lineHeight":"64px","letterSpacing":"-0.015em","fontWeight":"400"}],"headline-md":["28px",{"lineHeight":"36px","letterSpacing":"0em","fontWeight":"500"}],"headline-sm":["22px",{"lineHeight":"28px","letterSpacing":"0.01em","fontWeight":"500"}],"label-xs":["10px",{"lineHeight":"14px","letterSpacing":"0.22em","fontWeight":"400"}],"body-md":["17px",{"lineHeight":"26px","letterSpacing":"0.01em","fontWeight":"400"}],"body-lg":["20px",{"lineHeight":"32px","letterSpacing":"0.01em","fontWeight":"400"}],"meta-code":["13px",{"lineHeight":"18px","letterSpacing":"0.08em","fontWeight":"400"}],"headline-lg":["40px",{"lineHeight":"48px","letterSpacing":"-0.01em","fontWeight":"400"}],"headline-lg-mobile":["28px",{"lineHeight":"36px","letterSpacing":"0em","fontWeight":"400"}]}}}};</script>
+<style>
+  /* Physical Cabinet Glide & Mechanical Easing */
+  .drawer-perspective-stage {
+    perspective: 1200px;
+    perspective-origin: center 40%;
+  }
+
+  .drawer-slide-transition {
+    transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 900ms cubic-bezier(0.16, 1, 0.3, 1), filter 600ms ease;
+    will-change: transform, box-shadow;
+  }
+
+  /* Key insertion motion */
+  .flying-key-transition {
+    transition: transform 700ms cubic-bezier(0.34, 1.3, 0.64, 1), opacity 500ms ease;
+  }
+
+  @keyframes keyGlowPulse {
+    0%, 100% { transform: scale(1); opacity: 0.85; filter: drop-shadow(0 0 12px #fae0a5); }
+    50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 24px #fae0a5); }
+  }
+
+  .animate-key-glow {
+    animation: keyGlowPulse 2.2s infinite ease-in-out;
+  }
+</style>
+</head><body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen relative selection:bg-secondary-container selection:text-on-secondary-container"><div class="pointer-events-none fixed inset-0 z-30 shadow-[radial-gradient(circle_at_50%_35%,rgba(45,28,18,0.22)_0%,rgba(13,14,17,0.85)_70%,#07080a_100%)]"></div><header class="fixed top-0 w-full z-40 bg-surface-container-lowest/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.6)]"><div class="h-16 w-full px-margin-mobile lg:px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span><span class="font-label-caps text-label-caps text-primary tracking-widest">NLUJA ASSAM // FILE NO. 06</span></div><span class="hidden xl:inline-block font-label-xs text-label-xs text-on-surface-variant/60">LOC: GUWAHATI LAT 26.1445° N</span></div><nav class="hidden md:flex items-center gap-space-lg" data-active-classes="text-primary border-b border-primary font-bold"><a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors py-1" data-path="dossier-index" href="#">Dossier Index</a><a aria-current="page" class="transition-colors py-1 text-primary border-b border-primary font-bold" data-path="sanctum-desk" href="#">Sanctum Desk</a><a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors py-1" data-path="sealed-letters" href="#">Sealed Letters</a><a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors py-1" data-path="provenance-log" href="#">Provenance Log</a></nav><div class="flex items-center gap-space-md"><div class="hidden sm:flex items-center gap-space-xs px-space-sm py-0.5 rounded-full bg-surface-container-low"><span class="font-label-xs text-label-xs text-tertiary-fixed-dim">AMBIENCE: ACTIVE</span></div><a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors flex items-center gap-space-xs" data-path="archival-vault-gateway" href="#"><span class="px-1.5 py-0.5 bg-surface-container-high rounded text-on-surface-variant">ESC</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative z-10 w-full pt-16 min-h-[calc(100vh-4rem)] pb-24"><div class="flex flex-col w-full relative select-none">
+<!-- Dynamic Candlelight Particle Canvas -->
+<div class="pointer-events-none absolute inset-0 overflow-hidden z-0">
+<div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[720px] h-[520px] rounded-full bg-primary/10 blur-[130px] opacity-70"></div>
+<div class="absolute top-[35%] left-[20%] w-[380px] h-[380px] rounded-full bg-secondary-container/15 blur-[120px] opacity-50"></div>
+<div class="absolute top-[40%] right-[15%] w-[420px] h-[420px] rounded-full bg-primary-container/10 blur-[140px] opacity-60"></div>
+</div>
+<div class="relative z-10 w-full max-w-[1240px] mx-auto px-margin-mobile md:px-margin pt-6 md:pt-10 flex flex-col items-center">
+<!-- Archival Identification Docket Header -->
+<div class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm mb-8 text-on-surface-variant/80">
+<div class="flex items-center gap-space-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_#fae0a5]"></span>
+<span class="font-label-caps text-label-caps tracking-widest text-primary">NLUJA ARCHIVAL ACCESS // MASTER DESK SANCTUM</span>
+</div>
+<div class="flex items-center gap-space-md font-meta-code text-meta-code">
+<span class="px-space-sm py-1 bg-surface-container-low text-primary-container font-label-caps text-label-caps rounded uppercase tracking-wider">&nbsp;#06 // CONFIDENTIAL
+        </span>
+</div>
+</div>
+<!-- Master Inscription Hierarchy -->
+<div class="flex flex-col items-center text-center max-w-3xl mb-10 md:mb-14">
+<div class="flex items-center gap-space-sm mb-3">
+<span class="w-6 h-px bg-primary/40"></span>
+<span class="font-label-caps text-label-caps text-primary tracking-[0.28em] uppercase">SUB-VAULT COMPARTMENT&nbsp;</span>
+<span class="w-6 h-px bg-primary/40"></span>
+</div>
+<h1 class="font-display-hero text-display-hero-mobile md:text-display-hero text-on-surface tracking-tight font-normal leading-tight text-balance">
+        The Master Drawer
+      </h1>
+<p class="font-headline-sm text-headline-sm italic text-on-surface-variant font-light mt-2 max-w-xl">
+        An antique mahogany sanctum preserved under academic seal.
+      </p>
+</div>
+<!-- MAIN STAGE: Tactile Mahogany Desk Joinery -->
+<div class="drawer-perspective-stage relative w-full max-w-[940px] aspect-[16/10] sm:aspect-[16/9.5] rounded-lg p-3 sm:p-5 shadow-[0_32px_80px_-16px_rgba(0,0,0,0.95)] transition-all duration-700 bg-gradient-to-b from-[#2d1b11] via-[#1c100a] to-[#120a06]" id="deskHousing">
+<!-- Outer Mortise Shadow Trench -->
+<div class="w-full h-full rounded p-3 sm:p-5 flex flex-col justify-between relative overflow-hidden bg-gradient-to-tr from-[#190e09] via-[#2a170e] to-[#160c07] shadow-[inset_0_4px_12px_rgba(0,0,0,0.95),inset_0_-2px_4px_rgba(250,224,165,0.08)]">
+<!-- Woodgrain Grain Layer & Ambient Top Light -->
+<div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(ellipse_at_50%_0%,rgba(250,224,165,0.35)_0%,transparent_75%)]"></div>
+<div class="absolute inset-0 pointer-events-none mix-blend-overlay opacity-15 bg-gradient-to-r from-transparent via-[#fae0a5]/10 to-transparent"></div>
+<!-- Upper Recessed Rail Indicator -->
+<div class="w-full flex items-center justify-between z-10 opacity-70">
+<div class="flex items-center gap-space-xs text-on-surface-variant/70 font-label-xs text-label-xs tracking-widest">
+<span class="material-symbols-outlined text-sm text-primary/80">straighten</span>
+<span class="">SPEC. SPECIMEN DRAWER NO. VII</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+</div>
+</div>
+<!-- INNER DRAWER CAVITY (Interior Velvet Lining & Recovered Keepsake, Revealed as drawer face glides down) -->
+<div class="absolute inset-x-8 sm:inset-x-14 top-14 bottom-14 rounded-md overflow-hidden bg-gradient-to-b from-[#0a0505] via-[#150a0c] to-[#250d12] shadow-[inset_0_12px_30px_rgba(0,0,0,0.95),inset_0_0_40px_rgba(0,0,0,0.8)] border border-[#3e181f]/40 flex flex-col justify-between p-5 pointer-events-auto" id="interiorSanctumCavity">
+<!-- Crimson velvet texture & archival glow -->
+<div class="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_40%,rgba(124,42,56,0.35)_0%,transparent_80%)]"></div>
+<div class="relative z-10 flex items-center justify-between border-b border-[#7c2a38]/30 pb-2.5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-caps text-[10px] tracking-widest text-secondary uppercase">Sanctum Interior // Crimson Velvet Lining</span>
+</div>
+<span class="font-meta-code text-[11px] text-primary/80 tracking-widest">VAULT SPECIMEN #06-RECOVERED</span>
+</div>
+<!-- Physical Keepsake / Parchment Artifact inside -->
+<div class="relative z-10 my-auto flex flex-col md:flex-row items-center justify-between gap-4 px-3 py-2 bg-black/40 rounded border border-secondary-container/50 backdrop-blur-sm">
+<div class="flex items-center gap-4">
+<div class="w-12 h-16 rounded bg-[#f4e8cc] text-[#221805] shadow-[0_4px_16px_rgba(0,0,0,0.8)] border border-[#b4985c] flex flex-col items-center justify-between p-1.5 rotate-[-3deg] hover:rotate-0 transition-transform">
+<span class="font-label-xs text-[8px] text-[#5c4618] uppercase tracking-tighter">Docket #06</span>
+<div class="w-6 h-6 rounded-full bg-[#7c2a38]/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-[#7c2a38]">verified</span>
+</div>
+<span class="font-meta-code text-[7px] text-[#5c4618]">ACADEMIC SEAL</span>
+</div>
+<div>
+<h4 class="font-display-hero text-[18px] sm:text-[20px] text-primary leading-tight font-medium">Original Sovereign Charter Letter</h4>
+<p class="font-body-sm text-[13px] text-on-surface-variant/90 leading-snug mt-0.5">Found untouched inside mahogany compartment VII. Academic seal intact.</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container font-label-caps text-[10px] tracking-widest">LEVEL III ACCESSED</span>
+</div>
+</div>
+<div class="relative z-10 flex items-center justify-between text-on-surface-variant/60 font-meta-code text-[11px]">
+<span class="">RUNNER GLIDES: OILED EBONY SLIDES</span>
+<span class="text-secondary/80 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>MECHANISM DISENGAGED</span>
+</div>
+</div>
+<!-- THE PHYSICAL DRAWER FACE (Interactive Recessed Core that moves smoothly down and tilts forward) -->
+<div class="drawer-slide-transition relative my-auto w-full max-w-[760px] mx-auto h-[74%] rounded flex flex-col items-center justify-center p-6 bg-gradient-to-b from-[#382014] via-[#24130b] to-[#1a0e08] shadow-[0_16px_36px_rgba(0,0,0,0.9),inset_0_2px_4px_rgba(250,224,165,0.22),inset_0_-4px_10px_rgba(0,0,0,0.85)] z-20 cursor-pointer" id="drawerFace" style="transform: translateY(140px) rotateX(-5deg) scale(0.98); box-shadow: rgba(0, 0, 0, 0.98) 0px 45px 70px -15px, rgba(250, 224, 165, 0.22) 0px 2px 4px inset, rgba(0, 0, 0, 0.85) 0px -4px 10px inset;">
+<!-- Beveled Chamfer Frame Overlay -->
+<div class="absolute inset-2 sm:inset-3 rounded-sm pointer-events-none shadow-[inset_0_1px_1px_rgba(250,224,165,0.15),inset_0_-1px_3px_rgba(0,0,0,0.9)] bg-gradient-to-b from-transparent via-black/10 to-black/30"></div>
+<!-- Solid Sculpted Burnished Brass Escutcheon Plate -->
+<div class="relative z-10 flex flex-col items-center group">
+<!-- Brass Plate Body with Golden Patina -->
+<div class="relative w-36 h-48 sm:w-44 sm:h-56 rounded-t-full rounded-b-xl flex flex-col items-center justify-between py-5 px-3 transition-transform duration-500 shadow-[0_18px_30px_rgba(0,0,0,0.85),inset_0_2px_4px_rgba(255,255,255,0.4),inset_0_-4px_8px_rgba(61,46,3,0.9)] bg-gradient-to-b from-[#e7cb8a] via-[#be9b52] to-[#7a5e27] brightness-100 brightness-110" id="escutcheonPlate">
+<!-- Subtle Top Highlight Rim -->
+<div class="absolute inset-x-2 top-1 h-px bg-white/40 rounded-full"></div>
+<!-- Archival Engraving -->
+<div class="flex flex-col items-center mt-1">
+<span class="font-meta-code text-[11px] sm:text-meta-code font-bold text-[#3d2e03] tracking-[0.25em] drop-shadow-[0_1px_1px_rgba(255,255,255,0.4)]">
+                  NLUJA-06
+                </span>
+<span class="w-8 h-px bg-[#3d2e03]/30 mt-0.5"></span>
+</div>
+<!-- Sculpted Keyhole Cylinder -->
+<div class="relative my-auto flex flex-col items-center justify-center">
+<!-- Outer Beveled Keyhole Basin -->
+<div class="w-10 h-14 rounded-full bg-[#3d2e03] flex flex-col items-center justify-center p-1.5 shadow-[inset_0_4px_8px_rgba(0,0,0,0.9),0_1px_1px_rgba(255,255,255,0.3)] relative">
+<!-- Dynamic Keyhole Golden Glow Halo -->
+<div class="absolute inset-0 rounded-full pointer-events-none transition-opacity duration-500 bg-primary/40 blur-md opacity-100 animate-key-glow" id="keyholeGoldenGlow"></div>
+<!-- Classic Antique Skeleton Keyhole Slot -->
+<div class="relative w-4 h-9 flex flex-col items-center transition-all duration-500 rotate-90" id="keyholeSlot">
+<div class="w-3.5 h-3.5 rounded-full bg-surface-container-lowest shadow-[inset_0_2px_4px_rgba(0,0,0,1)]"></div>
+<div class="w-2 h-4.5 -mt-1 bg-surface-container-lowest rounded-b shadow-[inset_0_2px_4px_rgba(0,0,0,1)]"></div>
+<!-- Key Glimmer Glow inside slot -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-500 opacity-90" id="keyGlimmer">
+<div class="w-2.5 h-2.5 rounded-full bg-primary blur-[2px]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Cast Brass Bail Drop Handle -->
+<div class="w-full flex flex-col items-center mt-auto">
+<div class="w-24 sm:w-28 h-10 relative flex justify-center">
+<!-- Handle Mount Bosses -->
+<div class="absolute left-2 top-0 w-3 h-3 rounded-full bg-gradient-to-b from-[#f3dda2] to-[#5a4216] shadow-[0_2px_4px_rgba(0,0,0,0.6)]"></div>
+<div class="absolute right-2 top-0 w-3 h-3 rounded-full bg-gradient-to-b from-[#f3dda2] to-[#5a4216] shadow-[0_2px_4px_rgba(0,0,0,0.6)]"></div>
+<!-- Swung Bail Handle loop -->
+<div class="w-20 sm:w-24 h-8 rounded-b-full transition-transform duration-300 origin-top shadow-[0_6px_12px_rgba(0,0,0,0.7),inset_0_2px_2px_rgba(255,255,255,0.4)] bg-gradient-to-b from-[#dfbe73] to-[#6f531f] translate-y-0 scale-100 translate-y-2 scale-105" id="bailHandle"></div>
+</div>
+</div>
+</div>
+<!-- Lock Escutcheon Projected Shadow onto Wood -->
+<div class="w-40 sm:w-48 h-5 rounded-full bg-black/60 blur-md -mt-2"></div>
+</div>
+<!-- Micro Archival Status Badge (Direct Center Beneath Plate) -->
+<div class="relative z-20 mt-4 sm:mt-6"><div class="flex flex-col sm:flex-row items-center gap-space-sm">
+<div class="flex items-center gap-space-sm px-space-md py-1.5 rounded-full backdrop-blur-md shadow-[0_8px_16px_rgba(0,0,0,0.7)] transition-all duration-500 text-primary border bg-secondary-container/95 text-on-secondary-container border-secondary/40 shadow-[0_0_20px_rgba(255,178,186,0.35)]" id="lockStatusPill">
+<span class="material-symbols-outlined text-[16px] transition-all duration-300 text-secondary-fixed" id="lockStatusIcon">lock_open</span>
+<span class="font-meta-code text-[11px] sm:text-meta-code tracking-wider uppercase transition-colors duration-300 text-on-secondary-container" id="lockStatusText">STATUS: UNLOCKED // BOLT DISENGAGED</span>
+</div>
+</div></div>
+</div>
+<!-- Flying Key Motion Artifact (Ghost key animates into keyhole) -->
+<div class="flying-key-transition pointer-events-none absolute left-1/2 -bottom-4 -translate-x-1/2 z-30 opacity-0 scale-75" id="flyingKeyGhost" style="opacity: 0; transform: translate(-50%, -180px) rotate(90deg) scale(1.1);">
+<div class="w-9 h-9 rounded-full bg-primary/20 backdrop-blur-sm border border-primary flex items-center justify-center text-primary shadow-[0_0_20px_#fae0a5]">
+<svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 24 24"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"></path></svg>
+</div>
+</div>
+<!-- Joinery Craftsmanship Metadata Footer -->
+<div class="w-full flex items-center justify-between z-10 text-on-surface-variant/60 font-meta-code text-meta-code pt-2">
+<span class=""><br></span>
+</div>
+</div>
+<!-- REPOSITIONED & UPGRADED MASTER BRASS KEY ARTIFACT (Horizontally Centered Directly Beneath Drawer) -->
+<div class="absolute -bottom-6 sm:-bottom-8 left-1/2 -translate-x-1/2 z-40" id="keyWidget">
+<button class="group relative flex items-center gap-space-md px-6 py-3 sm:px-7 sm:py-3.5 rounded-full bg-gradient-to-r from-[#2a241b] via-[#352d22] to-[#2a241b] text-[#cfc5b6] shadow-[0_8px_20px_rgba(0,0,0,0.8)] border border-primary/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-500 cursor-pointer" id="turnKeyButton"><div class="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#15120c] border border-primary/20 flex items-center justify-center text-primary/70 shadow-md group-hover:rotate-12 transition-transform duration-500" id="keyIconBadge" style="transform: rotate(-35deg) scale(0.95);"><svg class="w-5 h-5 text-primary/70" fill="currentColor" viewBox="0 0 24 24"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"></path></svg></div><div class="flex flex-col text-left"><span class="font-meta-code text-[10px] sm:text-label-caps tracking-[0.25em] text-on-surface-variant/80 uppercase font-bold">BRASS MASTER CIPHER</span><span class="font-display-hero text-[17px] sm:text-[19px] tracking-wide text-on-surface font-bold flex items-center gap-2 mt-0.5"><span class="" id="turnKeyLabel">RESTORE LOCK BOLT</span><span class="material-symbols-outlined text-[18px] text-primary/80 font-bold group-hover:translate-x-1 transition-transform" id="turnKeyArrow">replay</span></span></div></button>
+</div>
+</div>
+<!-- TACTILE SOUND / AMBIENCE CUES & INSIGHT -->
+<div class="w-full max-w-[940px] mb-8 flex flex-col md:flex-row items-stretch justify-between gap-space-md text-on-surface-variant pt-16">
+<!-- Observation Log 01 -->
+<div class="flex-1 p-5 rounded bg-surface-container-low/70 backdrop-blur-md flex flex-col justify-between shadow-md">
+<div class="flex items-center gap-space-sm mb-3">
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-base">lock_clock</span>
+<span class="font-label-caps text-label-caps text-tertiary-fixed-dim tracking-widest">UNLOCKING PROCEDURE</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Acquire the master drawer key from the locked chest and then unlock the sanctum compartment ahead to inspect the sealed charter!</p>
+</div>
+</div>
+<!-- DIRECT STATE CONTROLLER HUD (Bottom Master Toggles) -->
+<div class="w-full max-w-[940px] mt-4 pt-6 border-t border-outline-variant/20 flex flex-col sm:flex-row items-center justify-between gap-space-md pb-12">
+<div class="flex flex-col items-start">
+<span class="font-label-xs text-label-xs text-on-surface-variant/60 tracking-[0.25em] uppercase">DIRECT STATE CONTROLLER</span>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-meta-code text-meta-code font-bold tracking-wider text-secondary" id="currentStatusIndicator">STATE 2: CIPHER DISENGAGED</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" id="statusPulseDot"></span>
+</div>
+</div>
+<!-- State Selection Pill Matrix -->
+<div class="flex items-center gap-1.5 bg-surface-container-lowest p-1.5 rounded shadow-inner">
+<button class="w-8 h-8 rounded flex items-center justify-center font-meta-code text-meta-code bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-all" id="state1Btn">
+          1
+        </button>
+<button class="w-8 h-8 rounded flex items-center justify-center font-meta-code text-meta-code bg-primary text-on-primary font-bold shadow-[0_0_12px_#fae0a5] transition-all" id="state2Btn">
+          2
+        </button>
+<button class="w-8 h-8 rounded flex items-center justify-center font-meta-code text-meta-code bg-surface-container text-on-surface-variant/40 cursor-not-allowed">
+          3
+        </button>
+<button class="w-8 h-8 rounded flex items-center justify-center font-meta-code text-meta-code bg-surface-container text-on-surface-variant/40 cursor-not-allowed">
+          4
+        </button>
+
+
+
+
+
+
+</div>
+<!-- Synth Audio Indicator Pill -->
+<div class="flex items-center gap-2 px-space-md py-1.5 rounded bg-surface-container-low text-on-surface-variant cursor-pointer hover:bg-surface-container-high transition-colors" id="audioToggleBadge" title="Audio Cues Active">
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim">graphic_eq</span>
+<span class="font-label-caps text-label-caps tracking-widest text-tertiary-fixed-dim">SYNTH AUDIO: ACTIVE</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function initMasterDrawer() {
+    let isUnlocked = false;
+    let isAnimating = false;
+
+    // Web Audio synthesizer for tactile feedback
+    let audioCtx = null;
+    function playTactileSound(type) {
+      try {
+        if (!audioCtx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) audioCtx = new AudioContext();
+        }
+        if (!audioCtx) return;
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const now = audioCtx.currentTime;
+
+        if (type === 'keyInsert') {
+          // Metallic click and ratchet slide
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(880, now);
+          osc.frequency.exponentialRampToValueAtTime(440, now + 0.12);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.15);
+        } else if (type === 'unlockClunk') {
+          // Deep heavy mahogany brass bolt disengage
+          const osc1 = audioCtx.createOscillator();
+          const gain1 = audioCtx.createGain();
+          osc1.type = 'sine';
+          osc1.frequency.setValueAtTime(140, now);
+          osc1.frequency.exponentialRampToValueAtTime(55, now + 0.35);
+          gain1.gain.setValueAtTime(0.4, now);
+          gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+          osc1.connect(gain1);
+          gain1.connect(audioCtx.destination);
+          osc1.start(now);
+          osc1.stop(now + 0.4);
+
+          // Wood resonance rattle
+          const osc2 = audioCtx.createOscillator();
+          const gain2 = audioCtx.createGain();
+          osc2.type = 'square';
+          osc2.frequency.setValueAtTime(320, now + 0.05);
+          osc2.frequency.exponentialRampToValueAtTime(90, now + 0.25);
+          gain2.gain.setValueAtTime(0.12, now + 0.05);
+          gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+          osc2.connect(gain2);
+          gain2.connect(audioCtx.destination);
+          osc2.start(now + 0.05);
+          osc2.stop(now + 0.3);
+        } else if (type === 'glideOpen') {
+          // Smooth oiled ebony glide friction
+          const bufferSize = audioCtx.sampleRate * 0.4;
+          const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+          const output = noiseBuffer.getChannelData(0);
+          for (let i = 0; i < bufferSize; i++) {
+            output[i] = Math.random() * 2 - 1;
+          }
+          const whiteNoise = audioCtx.createBufferSource();
+          whiteNoise.buffer = noiseBuffer;
+          const filter = audioCtx.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(400, now);
+          filter.frequency.exponentialRampToValueAtTime(180, now + 0.4);
+          const gain = audioCtx.createGain();
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+          whiteNoise.connect(filter);
+          filter.connect(gain);
+          gain.connect(audioCtx.destination);
+          whiteNoise.start(now);
+          whiteNoise.stop(now + 0.42);
+        } else if (type === 'lockShut') {
+          // Solid mechanical wooden frame thud
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(90, now);
+          osc.frequency.exponentialRampToValueAtTime(40, now + 0.25);
+          gain.gain.setValueAtTime(0.5, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.26);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.28);
+        }
+      } catch (e) {
+        // audio context fallback
+      }
+    }
+
+    const drawerFace = document.getElementById('drawerFace');
+    const turnKeyButton = document.getElementById('turnKeyButton');
+    const turnKeyLabel = document.getElementById('turnKeyLabel');
+    const turnKeyArrow = document.getElementById('turnKeyArrow');
+    const lockStatusPill = document.getElementById('lockStatusPill');
+    const lockStatusIcon = document.getElementById('lockStatusIcon');
+    const lockStatusText = document.getElementById('lockStatusText');
+    const keyholeSlot = document.getElementById('keyholeSlot');
+    const keyholeGoldenGlow = document.getElementById('keyholeGoldenGlow');
+    const keyGlimmer = document.getElementById('keyGlimmer');
+    const bailHandle = document.getElementById('bailHandle');
+    const escutcheonPlate = document.getElementById('escutcheonPlate');
+    const currentStatusIndicator = document.getElementById('currentStatusIndicator');
+    const state1Btn = document.getElementById('state1Btn');
+    const state2Btn = document.getElementById('state2Btn');
+    const flyingKeyGhost = document.getElementById('flyingKeyGhost');
+    const keyIconBadge = document.getElementById('keyIconBadge');
+
+    function applyState(unlocked) {
+      if (isAnimating) return;
+      isAnimating = true;
+      isUnlocked = unlocked;
+
+      if (isUnlocked) {
+        // --- STEP 1: KEY INSERTION & ROTATION ---
+        playTactileSound('keyInsert');
+        if (keyIconBadge) keyIconBadge.style.transform = 'rotate(-35deg) scale(0.95)';
+
+        // Ghost key animation into cylinder
+        if (flyingKeyGhost) {
+          flyingKeyGhost.style.opacity = '1';
+          flyingKeyGhost.style.transform = 'translate(-50%, -180px) rotate(90deg) scale(1.1)';
+        }
+
+        setTimeout(() => {
+          // --- STEP 2: CYLINDER ROTATION & GOLDEN GLOW ---
+          keyholeSlot.classList.add('rotate-90');
+          if (keyholeGoldenGlow) {
+            keyholeGoldenGlow.classList.remove('opacity-0');
+            keyholeGoldenGlow.classList.add('opacity-100', 'animate-key-glow');
+          }
+          if (keyGlimmer) {
+            keyGlimmer.classList.remove('opacity-0');
+            keyGlimmer.classList.add('opacity-90');
+          }
+          escutcheonPlate.classList.add('brightness-110');
+          bailHandle.classList.add('translate-y-2', 'scale-105');
+
+          playTactileSound('unlockClunk');
+
+          // Status Badge transition to Unlocked
+          lockStatusPill.classList.remove('bg-surface-container-lowest/90', 'border-outline-variant/30');
+          lockStatusPill.classList.add('bg-secondary-container/95', 'text-on-secondary-container', 'border-secondary/40', 'shadow-[0_0_20px_rgba(255,178,186,0.35)]');
+          lockStatusIcon.innerText = 'lock_open';
+          lockStatusIcon.classList.remove('text-primary');
+          lockStatusIcon.classList.add('text-secondary-fixed');
+          lockStatusText.innerText = 'STATUS: UNLOCKED // BOLT DISENGAGED';
+          lockStatusText.classList.remove('text-on-surface-variant');
+          lockStatusText.classList.add('text-on-secondary-container');
+
+          currentStatusIndicator.innerText = 'STATE 2: CIPHER DISENGAGED';
+          currentStatusIndicator.classList.remove('text-primary');
+          currentStatusIndicator.classList.add('text-secondary');
+
+          // State Pills update
+          state1Btn.className = 'w-8 h-8 rounded flex items-center justify-center font-meta-code text-meta-code bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-all';
+          state2Btn.className = 'w-8 h-8 rounded flex items-center justify-center font-meta-code text-meta-code bg-secondary text-on-secondary font-bold shadow transition-all';
+
+          // Turn Key Button text update
+          turnKeyLabel.innerText = 'RESTORE LOCK BOLT';
+          if (turnKeyArrow) turnKeyArrow.innerText = 'replay';
+
+          // Hide ghost key
+          if (flyingKeyGhost) flyingKeyGhost.style.opacity = '0';
+
+          // --- STEP 3: PHYSICAL DRAWER SLIDES OPEN ---
+          setTimeout(() => {
+            playTactileSound('glideOpen');
+            // Physical displacement: Slides down 140px, tilts out slightly (rotateX -4deg), drops heavy shadow
+            drawerFace.style.transform = 'translateY(140px) rotateX(-5deg) scale(0.98)';
+            drawerFace.style.boxShadow = '0 45px 70px -15px rgba(0,0,0,0.98), inset 0 2px 4px rgba(250,224,165,0.22), inset 0 -4px 10px rgba(0,0,0,0.85)';
+            isAnimating = false;
+          }, 350);
+
+        }, 400);
+
+      } else {
+        // --- STEP 1: DRAWER GLIDES SHUT FIRST ---
+        playTactileSound('glideOpen');
+        drawerFace.style.transform = 'translateY(0px) rotateX(0deg) scale(1)';
+        drawerFace.style.boxShadow = '0 16px 36px rgba(0,0,0,0.9), inset 0 2px 4px rgba(250,224,165,0.22), inset 0 -4px 10px rgba(0,0,0,0.85)';
+
+        setTimeout(() => {
+          // --- STEP 2: MECHANICAL LOCK BOLT ENGAGES ---
+          playTactileSound('lockShut');
+          keyholeSlot.classList.remove('rotate-90');
+          if (keyholeGoldenGlow) {
+            keyholeGoldenGlow.classList.remove('opacity-100', 'animate-key-glow');
+            keyholeGoldenGlow.classList.add('opacity-0');
+          }
+          if (keyGlimmer) {
+            keyGlimmer.classList.remove('opacity-90');
+            keyGlimmer.classList.add('opacity-0');
+          }
+          escutcheonPlate.classList.remove('brightness-110');
+          bailHandle.classList.remove('translate-y-2', 'scale-105');
+
+          if (keyIconBadge) keyIconBadge.style.transform = 'rotate(0deg) scale(1)';
+
+          // Status Badge transition back to Locked
+          lockStatusPill.classList.add('bg-surface-container-lowest/90', 'border-outline-variant/30');
+          lockStatusPill.classList.remove('bg-secondary-container/95', 'text-on-secondary-container', 'border-secondary/40', 'shadow-[0_0_20px_rgba(255,178,186,0.35)]');
+          lockStatusIcon.innerText = 'lock';
+          lockStatusIcon.classList.add('text-primary');
+          lockStatusIcon.classList.remove('text-secondary-fixed');
+          lockStatusText.innerText = 'STATUS: LOCKED // CIPHER ENGAGED';
+          lockStatusText.classList.add('text-on-surface-variant');
+          lockStatusText.classList.remove('text-on-secondary-container');
+
+          currentStatusIndicator.innerText = 'STATE 1: DRAWER LOCKED';
+          currentStatusIndicator.classList.add('text-primary');
+          currentStatusIndicator.classList.remove('text-secondary');
+
+          // State Pills update
+          state1Btn.className = 'w-8 h-8 rounded flex items-center justify-center font-meta-code text-meta-code bg-primary text-on-primary font-bold shadow transition-all';
+          state2Btn.className = 'w-8 h-8 rounded flex items-center justify-center font-meta-code text-meta-code bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-all';
+
+          // Turn Key Button text update
+          turnKeyLabel.innerText = 'UNLOCK & ENTER STAGE 02';
+          if (turnKeyArrow) turnKeyArrow.innerText = 'arrow_forward';
+
+          if (flyingKeyGhost) {
+            flyingKeyGhost.style.transform = 'translate(-50%, 0px) rotate(0deg) scale(0.75)';
+            flyingKeyGhost.style.opacity = '0';
+          }
+
+          isAnimating = false;
+        }, 600);
+      }
+    }
+
+    if (turnKeyButton) {
+      turnKeyButton.addEventListener('click', () => {
+        applyState(!isUnlocked);
+      });
+    }
+
+    if (drawerFace) {
+      drawerFace.addEventListener('click', (e) => {
+        // Allow clicking the drawer face itself to toggle physical state
+        if (e.target.closest('#lockStatusPill')) return;
+        applyState(!isUnlocked);
+      });
+    }
+
+    if (state1Btn) {
+      state1Btn.addEventListener('click', () => {
+        if (isUnlocked) applyState(false);
+      });
+    }
+
+    if (state2Btn) {
+      state2Btn.addEventListener('click', () => {
+        if (!isUnlocked) applyState(true);
+      });
+    }
+
+    const audioToggleBadge = document.getElementById('audioToggleBadge');
+    if (audioToggleBadge) {
+      audioToggleBadge.addEventListener('click', () => {
+        playTactileSound('unlockClunk');
+      });
+    }
+  })();
+</script></main><footer class="fixed bottom-0 left-0 w-full z-40 bg-surface-container-lowest/85 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.7)]"><div class="h-16 w-full px-margin-mobile lg:px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="font-label-xs text-label-xs text-on-surface-variant/70 uppercase tracking-widest">Sequence</span><div class="flex items-center gap-space-xs"><span class="font-meta-code text-meta-code text-primary">01</span><span class="text-outline-variant font-meta-code text-meta-code">/</span><span class="font-meta-code text-meta-code text-on-surface-variant/50">04</span></div></div><div class="flex items-center gap-space-md sm:gap-space-lg"><div class="flex items-center gap-space-xs text-primary"><span class="font-meta-code text-meta-code font-bold">I.</span><span class="font-label-caps text-label-caps tracking-widest">Conclave Entry</span></div><span class="text-outline-variant/40 hidden sm:inline">•</span><div class="flex items-center gap-space-xs text-on-surface-variant/50 hidden sm:flex"><span class="font-meta-code text-meta-code">II.</span><span class="font-label-caps text-label-caps tracking-widest">Occurrences Tray</span></div><span class="text-outline-variant/40 hidden md:inline">•</span><div class="flex items-center gap-space-xs text-on-surface-variant/50 hidden md:flex"><span class="font-meta-code text-meta-code">III.</span><span class="font-label-caps text-label-caps tracking-widest">Midnight Ledger</span></div><span class="text-outline-variant/40 hidden lg:inline">•</span><div class="flex items-center gap-space-xs text-on-surface-variant/50 hidden lg:flex"><span class="font-meta-code text-meta-code">IV.</span><span class="font-label-caps text-label-caps tracking-widest">Sealed Docket</span></div></div><div class="flex items-center gap-space-xs"></div></div></footer>
+
+
+
+
+
+
+
+
+</body></html>

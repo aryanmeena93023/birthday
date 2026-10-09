@@ -111,7 +111,7 @@ const Case: React.FC = () => {
             onClick={() => handleNavClick(329.63)}
             className={`direct-nav-link ${discoveredSet.has('raven') ? 'discovered' : ''}`}
           >
-            {discoveredSet.has('raven') && <span className="check-dot">✓</span>} Raven
+            {discoveredSet.has('raven') && <span className="check-dot">✓</span>} Owl
           </Link>
           <span className="direct-nav-sep">|</span>
           <Link

@@ -14,8 +14,8 @@ const Raven: React.FC = () => {
     <button
       type="button"
       className="archive-hotspot archive-hotspot-raven"
-      aria-label="Examine The Raven"
-      title="Examine The Raven"
+      aria-label="Examine The Owl"
+      title="Examine The Owl"
       onClick={handleClick}
     >
       <div className="hotspot-content">
@@ -28,7 +28,7 @@ const Raven: React.FC = () => {
               <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
             </svg>
           </span>
-          <span className="hotspot-title">The Raven</span>
+          <span className="hotspot-title">The Owl</span>
           <span className="hotspot-action" style={{ color: 'rgba(125, 211, 252, 0.85)' }}>• Inspect</span>
         </div>
       </div>
