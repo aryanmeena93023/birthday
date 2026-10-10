@@ -8,6 +8,7 @@ import { markDiscovered } from '../../utils/discoveryTracker';
 
 const AudioPage: React.FC = () => {
   useEffect(() => {
+    window.scrollTo(0, 0);
     markDiscovered('audio');
   }, []);
 
@@ -17,6 +18,49 @@ const AudioPage: React.FC = () => {
 
   return (
     <div className="audio-page-root">
+      {/* Ambient Floating Music Letters and Fireflies */}
+      <div className="audio-ambient-background" aria-hidden="true">
+        {/* Fireflies (45 items total) */}
+        {[...Array(45)].map((_, i) => {
+          // Evenly distribute across the whole page
+          const yPos = (i * (100 / 45)) + (Math.random() * (100 / 45));
+          return (
+            <div
+              key={`firefly-${i}`}
+              className={`ambient-firefly float-anim-${(i % 3) + 1}`}
+              style={{
+                '--start-x': `${Math.random() * 100}%`,
+                '--start-y': `${yPos}%`,
+                '--delay': `-${Math.random() * 30}s`,
+                '--duration': `${15 + Math.random() * 20}s`
+              } as React.CSSProperties}
+            ></div>
+          );
+        })}
+
+        {/* Music Notes (3 items total) */}
+        {[...Array(3)].map((_, i) => {
+          const notes = ['♪', '♫', '♬'];
+          const note = notes[i % notes.length];
+          // Even distribution for the 3 items
+          const yPos = i * (100 / 3) + (Math.random() * 10);
+          return (
+            <span
+              key={`note-${i}`}
+              className={`music-letter float-anim-${(i % 3) + 1}`}
+              style={{
+                '--start-x': `${Math.random() * 100}%`,
+                '--start-y': `${yPos}%`,
+                '--delay': `-${Math.random() * 30}s`,
+                '--duration': `${20 + Math.random() * 15}s`
+              } as React.CSSProperties}
+            >
+              {note}
+            </span>
+          );
+        })}
+      </div>
+
       {/* 1. Fixed Top Archival Navigation Bar */}
       <header className="audio-top-bar">
         <div className="top-bar-inner">
@@ -89,7 +133,7 @@ const AudioPage: React.FC = () => {
             </Link>
 
             <Link
-              to="/drawer"
+              to="/forbidden"
               onClick={handleReturnClick}
               className="next-file-btn"
             >

@@ -1,0 +1,528 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Memory Archive — Recovered Dossier // File-02</title>
+<!-- Google Fonts: Cormorant Garamond, Newsreader, Caveat & Cinzel -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&amp;family=Pinyon+Script&amp;display=swap" rel="stylesheet" class="">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&amp;family=Cinzel:wght@400;500;600&amp;family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500;1,600&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&amp;family=Space+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Custom Configuration & Styles -->
+<style data-purpose="ambient-lighting">
+    /* Deep charcoal/black base with dramatic cinematic vignette */
+    body {
+      background-color: #020202;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient Warm Radial Backlight with breathing pulse matching reference golden halo */
+    .cinematic-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle 380px at 50% 46%, rgba(240, 180, 75, 0.42) 0%, rgba(220, 155, 55, 0.32) 30%, rgba(180, 110, 30, 0.18) 55%, transparent 75%),
+        radial-gradient(ellipse 850px 520px at 50% 48%, rgba(210, 145, 45, 0.30) 0%, rgba(160, 95, 25, 0.18) 42%, rgba(100, 55, 15, 0.08) 68%, transparent 85%),
+        radial-gradient(ellipse 1300px 850px at 50% 48%, rgba(160, 100, 25, 0.22) 0%, rgba(95, 55, 15, 0.12) 45%, rgba(35, 20, 8, 0.05) 70%, transparent 90%),
+        radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(4, 3, 3, 0.6) 70%, #020202 100%);
+      animation: ambientBreathe 12s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+
+    /* Secondary subtle bloom layer for rich golden luminance */
+    .cinematic-bloom {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle 540px at 50% 46%, rgba(255, 195, 90, 0.14) 0%, rgba(200, 130, 40, 0.08) 45%, transparent 70%);
+      mix-blend-mode: screen;
+      animation: ambientPulse 8s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+
+    @keyframes ambientBreathe {
+      0% {
+        opacity: 0.88;
+        transform: scale(0.97);
+      }
+      100% {
+        opacity: 1.05;
+        transform: scale(1.03);
+      }
+    }
+
+    @keyframes ambientPulse {
+      0% {
+        opacity: 0.75;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cinematic-glow, .cinematic-bloom {
+        animation: none;
+      }
+    }
+  </style>
+<style data-purpose="typography">
+    .font-cormorant {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+    .font-kicker {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.28em;
+    }
+    .font-script {
+      font-family: 'Caveat', cursive;
+    }
+    .font-classic-serif {
+      font-family: 'Newsreader', Georgia, serif;
+    }
+    .font-metadata {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      letter-spacing: 0.08em;
+    }
+  </style>
+<style data-purpose="polaroid-styling">
+    .polaroid-perspective-wrapper {
+      perspective: 1200px;
+    }
+
+    /* Cream aged polaroid frame */
+    .polaroid-frame {
+      background-color: #f7f3e8;
+      background-image: 
+        linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(238,230,214,0.3) 100%),
+        radial-gradient(circle at 50% 50%, rgba(240, 230, 210, 0.6) 0%, rgba(226, 214, 192, 0.9) 100%);
+      box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.92),
+        0 10px 25px -5px rgba(0, 0, 0, 0.8),
+        0 0 1px 1px rgba(255, 255, 255, 0.15) inset,
+        0 1px 2px rgba(0, 0, 0, 0.25);
+      position: relative;
+      transform-style: preserve-3d;
+      will-change: transform, box-shadow;
+      transition: transform 400ms cubic-bezier(0.2, 0.8, 0.25, 1), box-shadow 400ms cubic-bezier(0.2, 0.8, 0.25, 1);
+    }
+
+    /* Delicate champagne/antique-gold luster sheen overlay */
+    .polaroid-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 2px;
+      pointer-events: none;
+      box-shadow: inset 0 0 0 1px rgba(218, 165, 78, 0.35), inset 0 0 16px rgba(230, 180, 90, 0.12);
+      opacity: 0;
+      transition: opacity 400ms cubic-bezier(0.2, 0.8, 0.25, 1);
+    }
+
+    /* Refined tactile lift & expanded archival golden backlighting */
+    .polaroid-frame:hover {
+      box-shadow: 
+        0 24px 45px -10px rgba(0, 0, 0, 0.85),
+        0 12px 28px -6px rgba(0, 0, 0, 0.75),
+        0 0 35px -5px rgba(218, 165, 78, 0.22),
+        0 0 1px 1px rgba(255, 245, 220, 0.28) inset;
+    }
+
+    .polaroid-frame:hover::after {
+      opacity: 1;
+    }
+
+    /* Initial resting rotations */
+    .polaroid-card-left {
+      transform: translate3d(0, 0, 0) rotateZ(-2.5deg);
+    }
+    .polaroid-card-right {
+      transform: translate3d(0, 0, 0) rotateZ(2deg);
+    }
+
+    /* Fallback CSS hover lift for non-JS / touch */
+    @media (hover: hover) and (pointer: fine) {
+      .polaroid-card-left:hover {
+        transform: translate3d(0, -6px, 0) rotateZ(-2.5deg);
+      }
+      .polaroid-card-right:hover {
+        transform: translate3d(0, -6px, 0) rotateZ(2deg);
+      }
+    }
+
+    /* Film dark chamber window with authentic grain & matte vignette */
+    .film-surface {
+      background: 
+        radial-gradient(circle at 45% 45%, #242424 0%, #171616 55%, #0e0d0d 100%);
+      box-shadow: 
+        inset 0 2px 5px rgba(0, 0, 0, 0.9),
+        inset 0 0 20px rgba(0, 0, 0, 0.7),
+        0 1px 1px rgba(255, 255, 255, 0.4);
+      position: relative;
+      transition: transform 400ms cubic-bezier(0.2, 0.8, 0.25, 1), box-shadow 400ms cubic-bezier(0.2, 0.8, 0.25, 1);
+    }
+
+    .film-surface::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 0);
+      background-size: 3px 3px;
+      opacity: 0.35;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+
+    /* Subtle zoom & champagne rim glow on hover */
+    .polaroid-frame:hover .film-surface {
+      transform: scale(1.015);
+      box-shadow: 
+        inset 0 2px 6px rgba(0, 0, 0, 0.95),
+        inset 0 0 22px rgba(0, 0, 0, 0.75),
+        0 0 0 1px rgba(218, 165, 78, 0.3),
+        0 1px 2px rgba(255, 245, 220, 0.4);
+    }
+
+    /* Fine vintage recessed border line inside frame */
+    .film-bezel {
+      outline: 1px solid rgba(135, 120, 100, 0.25);
+      outline-offset: 3px;
+      transition: outline-color 400ms cubic-bezier(0.2, 0.8, 0.25, 1);
+    }
+
+    .polaroid-frame:hover .film-bezel {
+      outline-color: rgba(218, 165, 78, 0.42);
+    }
+
+    /* Typography warm brightening transitions */
+    .card-title-text {
+      transition: color 380ms ease-out;
+    }
+    .card-script-text {
+      transition: color 380ms ease-out;
+    }
+    .polaroid-frame:hover .card-title-text {
+      color: #0b0908;
+    }
+    .polaroid-frame:hover .card-script-text {
+      color: #1a140e;
+    }
+  </style>
+</head>
+<body class="text-stone-200 flex flex-col justify-between min-h-screen relative selection:bg-amber-900/40 selection:text-amber-100">
+<!-- Background Atmospheric Glow Layers -->
+<div aria-hidden="true" class="cinematic-glow"></div>
+<div aria-hidden="true" class="cinematic-bloom"></div>
+<!-- Background Floating Golden Dust & Bokeh Particle Canvas -->
+<canvas aria-hidden="true" class="fixed inset-0 pointer-events-none z-[1] w-full h-full" id="dust-canvas" width="1280" height="799"></canvas>
+<!-- BEGIN: MainContentWrapper -->
+<main class="w-full flex-grow flex flex-col items-center justify-center px-4 py-8 md:py-12 relative z-10">
+<!-- BEGIN: HeaderSection -->
+<header class="text-center max-w-2xl mx-auto mb-8 md:mb-12 select-none" data-purpose="header">
+<!-- File Dossier Tracker -->
+<p class="font-kicker text-[11px] md:text-[12.5px] uppercase tracking-[0.24em] text-[#b6976f] mb-3 md:mb-4 drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
+        RECOVERED DOSSIER // FILE-02
+      </p>
+<!-- Archive Main Calligraphic Title -->
+<h1 class="font-cormorant italic text-4xl sm:text-5xl md:text-[64px] font-normal tracking-wide text-[#f5ebd7] leading-none mb-3 md:mb-4 drop-shadow-[0_4px_18px_rgba(235,210,165,0.18)]">
+        Memory Archive
+      </h1>
+<!-- Elegant Subtitle Description -->
+<p class="font-cormorant italic text-base md:text-[19px] text-[#cfbe9f]/90 tracking-wide font-normal">
+        A collection of recovered moments, preserved in time.
+      </p>
+</header>
+<!-- END: HeaderSection -->
+<!-- BEGIN: PolaroidGallerySection -->
+<section aria-label="Archived Memories Gallery" class="polaroid-perspective-wrapper flex flex-col sm:flex-row items-center justify-center gap-7 md:gap-10 lg:gap-12 w-full max-w-5xl my-auto" data-purpose="polaroid-gallery">
+<!-- Polaroid Card 1: Left (Resting -2.5deg) -->
+<article class="polaroid-frame polaroid-card-left w-[295px] sm:w-[310px] md:w-[335px] pt-4 px-4 pb-6 rounded-[2px] cursor-pointer" data-base-rot="-2.5" data-purpose="polaroid-card" style="transition: transform 400ms cubic-bezier(0.2, 0.8, 0.25, 1), box-shadow 400ms cubic-bezier(0.2, 0.8, 0.25, 1); transform: perspective(1000px) translate3d(0px, 0px, 0px) rotateX(0deg) rotateY(0deg) rotateZ(-2.5deg);">
+<!-- Film Exposure Area Container (overflow-hidden ensures crystal clear edges) -->
+<div class="overflow-hidden rounded-[1px] border border-black/40">
+<div class="film-surface film-bezel aspect-[1.18/1] w-full"></div>
+</div>
+<!-- Polaroid Caption Content -->
+<div class="mt-4 pt-1 px-1">
+<!-- Title & Date Row -->
+<div class="flex items-baseline justify-between mb-1">
+<h2 class="card-title-text font-classic-serif text-[18px] md:text-[19px] font-normal text-[#1d1916] tracking-tight">
+              A Frame of You
+            </h2>
+<span class="font-metadata text-[10.5px] font-medium tracking-wider text-[#7d7367] uppercase">
+              FEB 2024
+            </span>
+</div>
+<!-- Handwritten Script Line -->
+<p class="card-script-text font-script text-[21px] md:text-[22px] leading-tight text-[#2b2520] font-normal my-0.5">
+            Most Beautifull Soul Of The Day
+          </p>
+<!-- Sub-label Footer -->
+<p class="font-metadata text-[9.5px] tracking-[0.14em] text-[#8e8578] uppercase mt-2">I DIDN'T GET THE CHANCE TO COMPLIMENT YOU THAT DAY BUT YOU WERE FABULOUS THAT DAY.</p>
+</div>
+</article>
+<!-- Polaroid Card 2: Right (Resting +2deg) -->
+<article class="polaroid-frame polaroid-card-right w-[295px] sm:w-[310px] md:w-[335px] pt-4 px-4 pb-6 rounded-[2px] cursor-pointer" data-base-rot="2" data-purpose="polaroid-card" style="transition: transform 400ms cubic-bezier(0.2, 0.8, 0.25, 1), box-shadow 400ms cubic-bezier(0.2, 0.8, 0.25, 1); transform: perspective(1000px) translate3d(0px, 0px, 0px) rotateX(0deg) rotateY(0deg) rotateZ(2deg);">
+<!-- Film Exposure Area Container (overflow-hidden ensures crystal clear edges) -->
+<div class="overflow-hidden rounded-[1px] border border-black/40">
+<div class="film-surface film-bezel aspect-[1.18/1] w-full"></div>
+</div>
+<!-- Polaroid Caption Content -->
+<div class="mt-4 pt-1 px-1">
+<!-- Title & Date Row -->
+<div class="flex items-baseline justify-between mb-1">
+<h2 class="card-title-text font-classic-serif text-[18px] md:text-[19px] font-normal text-[#1d1916] tracking-tight">
+              A Beautiful Pause
+            </h2>
+<span class="font-metadata text-[10.5px] font-medium tracking-wider text-[#7d7367] uppercase">
+              FEB 2023
+            </span>
+</div>
+<!-- Handwritten Script Line -->
+<p class="card-script-text font-script text-[21px] md:text-[22px] leading-tight text-[#2b2520] font-normal my-0.5">
+            Time moved on. The memory stayed.
+          </p>
+<!-- Sub-label Footer -->
+<p class="font-metadata text-[9.5px] tracking-[0.14em] text-[#8e8578] uppercase mt-2">WE ALL WERE SO HAPPY AT THIS MOVEMENT .</p>
+</div>
+</article>
+</section>
+<!-- END: PolaroidGallerySection -->
+<!-- BEGIN: ReturnNavigationAction -->
+<nav aria-label="Archive Navigation" class="mt-10 md:mt-12 mb-2" data-purpose="navigation-control"><div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-xl mx-auto px-4"><a class="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-[3px] border border-[#6b5536]/80 bg-[#14110d]/70 text-[#dfcfb4] hover:text-[#faedd6] hover:border-[#b89562] hover:bg-[#1f1912]/90 hover:shadow-[0_0_15px_rgba(184,149,98,0.2)] transition-all duration-300 text-sm md:text-[14.5px] font-serif tracking-wide focus:outline-none focus:ring-1 focus:ring-[#c8a670]" href="#archive"><span aria-hidden="true" class="text-base text-[#cfbe9f]">←</span><span class="">Return to Archive</span></a><a class="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-[3px] border border-[#b89562]/70 bg-gradient-to-r from-[#b89562] via-[#cfbe9f] to-[#a8824f] text-[#1d1916] hover:brightness-105 hover:border-[#d6a85e] hover:shadow-[0_0_18px_rgba(207,190,159,0.3)] transition-all duration-300 text-sm md:text-[14.5px] font-serif font-medium tracking-wide focus:outline-none focus:ring-2 focus:ring-[#f5ebd7] shadow-[0_2px_12px_rgba(0,0,0,0.5)] cursor-pointer" href="#file-03"><span class="">File No. 03</span><span aria-hidden="true" class="text-base font-semibold">→</span></a></div></nav>
+<!-- END: ReturnNavigationAction -->
+</main>
+<!-- END: MainContentWrapper -->
+<!-- Tactile 3D Perspective Tilt Interaction for Memory Cards -->
+<script>
+  (function () {
+    const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!isFinePointer || prefersReducedMotion) return;
+
+    const cards = document.querySelectorAll('[data-purpose="polaroid-card"]');
+    cards.forEach((card) => {
+      const baseRot = parseFloat(card.getAttribute('data-base-rot') || '0');
+      let rafId = null;
+
+      function onMouseMove(e) {
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          const cardX = rect.left + rect.width / 2;
+          const cardY = rect.top + rect.height / 2;
+          const offsetX = (e.clientX - cardX) / (rect.width / 2);
+          const offsetY = (e.clientY - cardY) / (rect.height / 2);
+
+          // Subtle tilt: max ~1.9 degrees on X and Y axes
+          const tiltX = Math.max(-1.9, Math.min(1.9, -offsetY * 1.8));
+          const tiltY = Math.max(-1.9, Math.min(1.9, offsetX * 1.8));
+
+          card.style.transition = 'transform 100ms ease-out, box-shadow 400ms cubic-bezier(0.2, 0.8, 0.25, 1)';
+          card.style.transform = `perspective(1000px) translate3d(0, -6px, 0) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) rotateZ(${baseRot}deg)`;
+        });
+      }
+
+      function onMouseLeave() {
+        if (rafId) cancelAnimationFrame(rafId);
+        card.style.transition = 'transform 400ms cubic-bezier(0.2, 0.8, 0.25, 1), box-shadow 400ms cubic-bezier(0.2, 0.8, 0.25, 1)';
+        card.style.transform = `perspective(1000px) translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotateZ(${baseRot}deg)`;
+      }
+
+      card.addEventListener('mousemove', onMouseMove);
+      card.addEventListener('mouseleave', onMouseLeave);
+    });
+  })();
+</script>
+<!-- Enhanced Ambient Golden Particle & Bokeh System -->
+<script>
+  (function () {
+    const canvas = document.getElementById('dust-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = 0;
+    let height = 0;
+    const particles = [];
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+
+    function initParticles() {
+      particles.length = 0;
+
+      // Layer 1 (Distant dust): 50 tiny golden motes (0.8px - 1.5px)
+      for (let i = 0; i < 50; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: 0.8 + Math.random() * 0.7,
+          vx: (Math.random() - 0.48) * 0.22,
+          vy: -(0.08 + Math.random() * 0.18),
+          baseAlpha: 0.22 + Math.random() * 0.35,
+          pulseSpeed: 0.012 + Math.random() * 0.02,
+          pulseOffset: Math.random() * Math.PI * 2,
+          wobbleSpeed: 0.01 + Math.random() * 0.015,
+          layer: 'dust'
+        });
+      }
+
+      // Layer 2 (Mid-ground golden embers): 35 glowing antique gold particles (2px - 3.5px)
+      for (let i = 0; i < 35; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: 2.0 + Math.random() * 1.5,
+          vx: (Math.random() - 0.48) * 0.32,
+          vy: -(0.14 + Math.random() * 0.28),
+          baseAlpha: 0.42 + Math.random() * 0.38,
+          pulseSpeed: 0.018 + Math.random() * 0.028,
+          pulseOffset: Math.random() * Math.PI * 2,
+          wobbleSpeed: 0.015 + Math.random() * 0.02,
+          layer: 'ember'
+        });
+      }
+
+      // Layer 3 (Defocused foreground bokeh): 10 larger out-of-focus golden orbs (12px - 28px)
+      for (let i = 0; i < 10; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: 12 + Math.random() * 16,
+          vx: (Math.random() - 0.5) * 0.16,
+          vy: -(0.05 + Math.random() * 0.12),
+          baseAlpha: 0.09 + Math.random() * 0.11,
+          pulseSpeed: 0.006 + Math.random() * 0.012,
+          pulseOffset: Math.random() * Math.PI * 2,
+          wobbleSpeed: 0.007 + Math.random() * 0.01,
+          layer: 'bokeh'
+        });
+      }
+    }
+
+    function drawParticle(p, time) {
+      const alphaPulse = Math.sin(time * p.pulseSpeed + p.pulseOffset);
+      const currentAlpha = Math.max(0.04, Math.min(0.95, p.baseAlpha + alphaPulse * 0.22));
+
+      ctx.save();
+
+      if (p.layer === 'bokeh') {
+        // Out-of-focus soft radial bokeh disc
+        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+        gradient.addColorStop(0, `rgba(245, 195, 110, ${currentAlpha * 1.1})`);
+        gradient.addColorStop(0.5, `rgba(220, 160, 75, ${currentAlpha * 0.75})`);
+        gradient.addColorStop(0.85, `rgba(180, 115, 45, ${currentAlpha * 0.3})`);
+        gradient.addColorStop(1, 'rgba(160, 95, 30, 0)');
+
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (p.layer === 'ember') {
+        // Glowing mid-distance gold particle with halo
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = `rgba(245, 190, 85, ${Math.min(1, currentAlpha * 1.3)})`;
+
+        // Small warm core and halo
+        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 1.8);
+        grad.addColorStop(0, `rgba(255, 240, 200, ${Math.min(1, currentAlpha * 1.2)})`);
+        grad.addColorStop(0.35, `rgba(240, 185, 85, ${currentAlpha})`);
+        grad.addColorStop(1, 'rgba(215, 140, 45, 0)');
+
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius * 1.8, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        // Distant fine dust mote
+        ctx.shadowBlur = 4;
+        ctx.shadowColor = `rgba(235, 185, 95, ${currentAlpha * 0.7})`;
+        ctx.fillStyle = `rgba(240, 200, 130, ${currentAlpha})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.restore();
+    }
+
+    function renderStatic() {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = 0; i < particles.length; i++) {
+        drawParticle(particles[i], 0);
+      }
+    }
+
+    let animId = null;
+    let tick = 0;
+
+    function animate() {
+      tick++;
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+
+        // Horizontal sinusoidal drift + upward velocity
+        const drift = Math.sin(tick * p.wobbleSpeed + p.pulseOffset) * 0.18;
+        p.x += p.vx + drift;
+        p.y += p.vy;
+
+        // Smooth cyclic wrap-around
+        const buffer = p.radius + 30;
+        if (p.y < -buffer) {
+          p.y = height + buffer;
+          p.x = Math.random() * width;
+        } else if (p.y > height + buffer) {
+          p.y = -buffer;
+        }
+
+        if (p.x < -buffer) {
+          p.x = width + buffer;
+        } else if (p.x > width + buffer) {
+          p.x = -buffer;
+        }
+
+        drawParticle(p, tick);
+      }
+
+      animId = requestAnimationFrame(animate);
+    }
+
+    resize();
+    initParticles();
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (prefersReducedMotion.matches) {
+      renderStatic();
+    } else {
+      animate();
+    }
+
+    window.addEventListener('resize', function () {
+      resize();
+      initParticles();
+      if (prefersReducedMotion.matches) {
+        renderStatic();
+      }
+    });
+
+    prefersReducedMotion.addEventListener('change', function (e) {
+      if (e.matches) {
+        if (animId) cancelAnimationFrame(animId);
+        renderStatic();
+      } else {
+        animate();
+      }
+    });
+  })();
+</script>
+
+
+</body></html>

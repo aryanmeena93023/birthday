@@ -1,11 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { playArtifactChime } from '../../utils/archiveAudio';
+import { markDiscovered } from '../../utils/discoveryTracker';
 
 const Raven: React.FC = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
+    markDiscovered('raven');
     playArtifactChime(329.63);
     navigate('/raven');
   };

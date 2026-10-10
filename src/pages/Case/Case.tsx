@@ -90,6 +90,7 @@ const Case: React.FC = () => {
         {/* Quick Direct Access Navigation with Discovered Indicators */}
         <nav className="archive-direct-nav" aria-label="Direct Access Artifacts">
           <span className="direct-nav-label">Direct Access:</span>
+
           <Link
             to="/letter"
             onClick={() => handleNavClick(523.25)}
@@ -100,10 +101,10 @@ const Case: React.FC = () => {
           <span className="direct-nav-sep">|</span>
           <Link
             to="/memories"
-            onClick={() => handleNavClick(440.0)}
+            onClick={() => handleNavClick(440.00)}
             className={`direct-nav-link ${discoveredSet.has('memories') ? 'discovered' : ''}`}
           >
-            {discoveredSet.has('memories') && <span className="check-dot">✓</span>} Memories
+            {discoveredSet.has('memories') && <span className="check-dot">✓</span>} Memory Box
           </Link>
           <span className="direct-nav-sep">|</span>
           <Link
@@ -113,6 +114,7 @@ const Case: React.FC = () => {
           >
             {discoveredSet.has('raven') && <span className="check-dot">✓</span>} Owl
           </Link>
+
           <span className="direct-nav-sep">|</span>
           <Link
             to="/forbidden"

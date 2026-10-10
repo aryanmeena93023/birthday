@@ -1,0 +1,186 @@
+.memory-one-wrapper {
+  background-color: #06080e;
+  background: radial-gradient(circle at 50% 25%, rgb(23, 13, 19) 0%, rgb(14, 13, 19) 45%, rgb(9, 10, 15) 100%) rgb(9, 10, 15);
+  color: #e9dfcc;
+  overflow-x: hidden;
+}
+
+#ambient-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+}
+
+.ambient-haze {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px;
+  max-width: 90vw;
+  height: 600px;
+  background: radial-gradient(circle, rgba(194, 157, 90, 0.08) 0%, rgba(115, 28, 35, 0.04) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: hazeBreath 12s ease-in-out infinite;
+  filter: blur(40px);
+}
+
+@keyframes hazeBreath {
+  0%, 100% {
+    opacity: 0.28;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+  50% {
+    opacity: 0.42;
+    transform: translate(-50%, -50%) scale(1.04);
+  }
+}
+
+.parchment-sheet {
+  position: relative;
+  overflow: hidden;
+}
+
+.parchment-sheet::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(115deg, transparent 20%, rgba(228, 205, 159, 0.65) 30%, rgba(255, 248, 230, 0.85) 35%, rgba(228, 205, 159, 0.65) 40%, transparent 50%);
+  background-size: 300% 300%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 15;
+  animation: borderSweep 14s ease-in-out infinite;
+}
+
+@keyframes borderSweep {
+  0% {
+    background-position: 100% 100%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  35% {
+    background-position: 0% 0%;
+    opacity: 0.8;
+  }
+  45%, 100% {
+    background-position: 0% 0%;
+    opacity: 0;
+  }
+}
+
+.drop-cap {
+  float: left;
+  font-size: 5.25rem;
+  line-height: 0.8;
+  padding-top: 4px;
+  padding-right: 18px;
+  padding-bottom: 2px;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  color: #1a1612;
+}
+
+.wax-seal {
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+.wax-seal:hover {
+  box-shadow: 
+    0 8px 18px rgba(0, 0, 0, 0.55),
+    inset 0 2px 5px rgba(255, 200, 200, 0.4),
+    0 0 12px rgba(180, 40, 50, 0.25) !important;
+}
+
+.corner-ornament {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: rgba(168, 140, 95, 0.75);
+  pointer-events: none;
+  z-index: 10;
+}
+.corner-tl { top: 7px; left: 7px; border-top: 1px solid; border-left: 1px solid; }
+.corner-tr { top: 7px; right: 7px; border-top: 1px solid; border-right: 1px solid; }
+.corner-bl { bottom: 7px; left: 7px; border-bottom: 1px solid; border-left: 1px solid; }
+.corner-br { bottom: 7px; right: 7px; border-bottom: 1px solid; border-right: 1px solid; }
+
+.cinematic-entry-header {
+  opacity: 0;
+  animation: cinematicFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+}
+
+.cinematic-entry-panel {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: cinematicRiseIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+}
+
+.cinematic-entry-author {
+  opacity: 0;
+  animation: cinematicFadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+}
+
+.cinematic-entry-text {
+  opacity: 0;
+  animation: cinematicFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.78s forwards;
+}
+
+.cinematic-entry-footer-inner {
+  opacity: 0;
+  animation: cinematicFadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.95s forwards;
+}
+
+.cinematic-entry-bottom {
+  opacity: 0;
+  animation: cinematicFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 1.05s forwards;
+}
+
+@keyframes cinematicFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes cinematicRiseIn {
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.btn-silky {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+.btn-silky:hover {
+  box-shadow: 0 4px 16px -2px rgba(194, 157, 90, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-entry-header,
+  .cinematic-entry-panel,
+  .cinematic-entry-author,
+  .cinematic-entry-text,
+  .cinematic-entry-footer-inner,
+  .cinematic-entry-bottom {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .ambient-haze {
+    animation: none !important;
+    opacity: 0.3 !important;
+  }
+  .parchment-sheet::before {
+    animation: none !important;
+    opacity: 0.4 !important;
+  }
+}

@@ -121,14 +121,20 @@ export function useAudioAnalyser(
       // Exponential smoothing (alpha = 0.25)
       smoothedAmpRef.current = smoothedAmpRef.current * 0.75 + rawAmp * 0.25;
 
-      // Extract 15 frequency bars spread across spectrum
+      // Extract 15 frequency bars spread across the active lower spectrum
       const barCount = 15;
-      const step = Math.floor(dataArray.length / barCount) || 1;
       const newBars: number[] = [];
 
       for (let i = 0; i < barCount; i++) {
-        const val = dataArray[i * step] / 255;
-        const smoothedVal = (smoothedBarsRef.current[i] || 0.2) * 0.7 + val * 0.3;
+        // Use bins 1 through 15, which contain the dense bass and mid-range frequencies.
+        // This avoids the empty high-frequency bins that cause the right side to stay flat.
+        const binIndex = i + 1;
+        const val = (dataArray[binIndex] || 0) / 255;
+        
+        // Add slight pseudo-random variation so adjacent bars don't look identical
+        const variedVal = val * (0.85 + (i % 4) * 0.1);
+
+        const smoothedVal = (smoothedBarsRef.current[i] || 0.2) * 0.7 + variedVal * 0.3;
         newBars.push(Math.max(0.15, Math.min(1.0, smoothedVal)));
       }
 

@@ -388,3 +388,125 @@
     text-align: center;
   }
 }
+
+/* Ambient Background Animation */
+.audio-ambient-background {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.music-letter {
+  position: absolute;
+  top: var(--start-y);
+  left: var(--start-x);
+  font-size: 2.2rem;
+  color: #ddc48b;
+  opacity: 0;
+  font-family: serif;
+  text-shadow: 0 0 12px rgba(221, 196, 139, 0.6);
+  animation-duration: var(--duration);
+  animation-delay: var(--delay);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+.ambient-firefly {
+  position: absolute;
+  top: var(--start-y);
+  left: var(--start-x);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #ddc48b;
+  box-shadow: 0 0 12px 3px rgba(221, 196, 139, 0.5);
+  opacity: 0;
+  animation-duration: var(--duration);
+  animation-delay: var(--delay);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+.float-anim-1 {
+  animation-name: floatRandom1;
+}
+.float-anim-2 {
+  animation-name: floatRandom2;
+}
+.float-anim-3 {
+  animation-name: floatRandom3;
+}
+
+@keyframes floatRandom1 {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.8) rotate(-10deg);
+  }
+  20% {
+    opacity: 0.5;
+  }
+  40% {
+    transform: translate(40px, -50px) scale(1) rotate(5deg);
+  }
+  60% {
+    transform: translate(-30px, 40px) scale(1.1) rotate(15deg);
+  }
+  80% {
+    opacity: 0.5;
+    transform: translate(50px, -20px) scale(0.9) rotate(-5deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.8) rotate(-10deg);
+  }
+}
+
+@keyframes floatRandom2 {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.9) rotate(5deg);
+  }
+  25% {
+    opacity: 0.45;
+    transform: translate(-50px, -40px) scale(1.2) rotate(-5deg);
+  }
+  50% {
+    transform: translate(30px, 50px) scale(0.8) rotate(10deg);
+  }
+  75% {
+    opacity: 0.45;
+    transform: translate(20px, -60px) scale(1.1) rotate(-15deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.9) rotate(5deg);
+  }
+}
+
+@keyframes floatRandom3 {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(1) rotate(-15deg);
+  }
+  30% {
+    opacity: 0.55;
+    transform: translate(45px, 35px) scale(0.9) rotate(10deg);
+  }
+  60% {
+    transform: translate(-40px, -30px) scale(1.2) rotate(-5deg);
+  }
+  85% {
+    opacity: 0.55;
+    transform: translate(-20px, 50px) scale(1) rotate(5deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 0) scale(1) rotate(-15deg);
+  }
+}

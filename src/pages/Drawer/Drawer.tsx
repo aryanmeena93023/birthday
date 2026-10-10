@@ -116,6 +116,7 @@ const Drawer: React.FC = () => {
   const transitionGuardRef = useRef<boolean>(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
+  const infoSectionRef = useRef<HTMLDivElement>(null);
 
   const clearTimers = () => {
     if (unlockTimerRef.current) {
@@ -222,6 +223,9 @@ const Drawer: React.FC = () => {
     if (!isKeyAcquired) {
       setKeyNotice('Master Drawer key not acquired yet. Acquire the master key from the sealed chest on the Restricted Record (/forbidden) page first.');
       playArtifactChime(220);
+      setTimeout(() => {
+        infoSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 50);
       return;
     }
 
@@ -289,6 +293,15 @@ const Drawer: React.FC = () => {
 
   // Direct HUD matrix jump — no animation guard or key check needed for stage-control navigation
   const jumpToStage = (targetStage: 1 | 2 | 3 | 4) => {
+    if (targetStage !== 1 && !isKeyAcquired) {
+      setKeyNotice('Master Drawer key not acquired yet. Acquire the master key from the sealed chest on the Restricted Record (/forbidden) page first.');
+      playArtifactChime(220);
+      setTimeout(() => {
+        infoSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 50);
+      return;
+    }
+
     setKeyNotice(null);
     clearTimers();
     transitionGuardRef.current = false;
@@ -352,8 +365,8 @@ const Drawer: React.FC = () => {
           <nav className="drawer-header-nav">
             <Link to="/case" className="drawer-nav-link">Dossier Index</Link>
             <Link to="/drawer" className="drawer-nav-link active">Sanctum Desk</Link>
+
             <Link to="/letter" className="drawer-nav-link">Sealed Letters</Link>
-            <Link to="/memories" className="drawer-nav-link">Provenance Log</Link>
           </nav>
 
           <div className="drawer-header-right">
@@ -456,7 +469,7 @@ const Drawer: React.FC = () => {
                       <div className="drawer-env-diamond bottom" />
                       <div className="drawer-env-diamond left" />
                       <div className="drawer-env-diamond right" />
-                      
+
                       {Array.from({ length: 15 }).map((_, i) => (
                         <div key={`dust-${i}`} className={`drawer-env-dust dust-${i % 3}`} style={{
                           top: `${Math.random() * 100}%`,
@@ -465,56 +478,56 @@ const Drawer: React.FC = () => {
                           animationDuration: `${15 + Math.random() * 15}s`
                         }} />
                       ))}
-                      
+
                       <div className="drawer-env-vignette" />
                     </div>
-                  <div 
-                    className="drawer-stage2-card visible"
-                    ref={cardRef}
-                    onPointerMove={handlePointerMove}
-                    onPointerLeave={handlePointerLeave}
-                  >
-                    <div className="drawer-card-corner-tl" />
-                    <div className="drawer-card-corner-tr" />
-                    <div className="drawer-card-corner-bl" />
-                    <div className="drawer-card-corner-br" />
-
-                    <div className="drawer-stage2-top-bar">
-                      <span className="drawer-stage2-seal-tag">• RECOVERED KEEPSAKE // SEAL 06</span>
-                      <span className="material-symbols-outlined drawer-stage2-lock-icon">lock</span>
-                    </div>
-
-                    <span className="drawer-stage2-category">TESTAMENT REGISTER</span>
-                    <h3 className="drawer-stage2-title">FOR KHUSHI</h3>
-                    <div className="drawer-stage2-divider" />
-                    <p className="drawer-stage2-quote">
-                      “A midnight testament preserved in deep affection.”
-                    </p>
-
-                    <div className="drawer-stage2-status-row">
-                      <span className="drawer-consecrated-pill">CONSECRATED</span>
-                      <span
-                        className="material-symbols-outlined drawer-stage2-arrow"
-                        onClick={handleAdvanceToStage3}
-                        role="button"
-                        tabIndex={0}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter' || e.key === ' ') handleAdvanceToStage3();
-                        }}
-                        title="Advance to Stage 03"
-                      >
-                        arrow_forward
-                      </span>
-                    </div>
-
-                    <button
-                      type="button"
-                      className="drawer-stage2-cta-btn"
-                      onClick={handleAdvanceToStage3}
+                    <div
+                      className="drawer-stage2-card visible"
+                      ref={cardRef}
+                      onPointerMove={handlePointerMove}
+                      onPointerLeave={handlePointerLeave}
                     >
-                      <span>✦ CLICK TO ADVANCE DIRECTLY TO STAGE 03</span>
-                    </button>
-                  </div>
+                      <div className="drawer-card-corner-tl" />
+                      <div className="drawer-card-corner-tr" />
+                      <div className="drawer-card-corner-bl" />
+                      <div className="drawer-card-corner-br" />
+
+                      <div className="drawer-stage2-top-bar">
+                        <span className="drawer-stage2-seal-tag">• RECOVERED KEEPSAKE // SEAL 06</span>
+                        <span className="material-symbols-outlined drawer-stage2-lock-icon">lock</span>
+                      </div>
+
+                      <span className="drawer-stage2-category">TESTAMENT REGISTER</span>
+                      <h3 className="drawer-stage2-title">FOR KHUSHI</h3>
+                      <div className="drawer-stage2-divider" />
+                      <p className="drawer-stage2-quote">
+                        “A midnight testament preserved in deep affection.”
+                      </p>
+
+                      <div className="drawer-stage2-status-row">
+                        <span className="drawer-consecrated-pill">CONSECRATED</span>
+                        <span
+                          className="material-symbols-outlined drawer-stage2-arrow"
+                          onClick={handleAdvanceToStage3}
+                          role="button"
+                          tabIndex={0}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') handleAdvanceToStage3();
+                          }}
+                          title="Advance to Stage 03"
+                        >
+                          arrow_forward
+                        </span>
+                      </div>
+
+                      <button
+                        type="button"
+                        className="drawer-stage2-cta-btn"
+                        onClick={handleAdvanceToStage3}
+                      >
+                        <span>✦ CLICK TO ADVANCE DIRECTLY TO STAGE 03</span>
+                      </button>
+                    </div>
                   </>
                 )}
 
@@ -612,10 +625,10 @@ const Drawer: React.FC = () => {
                       {!isKeyAcquired
                         ? 'KEY REQUIRED — SEALED CHEST'
                         : isAnimating
-                        ? (isDrawerOpen ? 'RESTORING LOCK BOLT...' : 'DISENGAGING LOCK BOLT...')
-                        : stage === 2
-                        ? 'RESTORE LOCK BOLT'
-                        : 'UNLOCK SANCTUM DRAWER'}
+                          ? (isDrawerOpen ? 'RESTORING LOCK BOLT...' : 'DISENGAGING LOCK BOLT...')
+                          : stage === 2
+                            ? 'RESTORE LOCK BOLT'
+                            : 'UNLOCK SANCTUM DRAWER'}
                     </span>
                     <span className="material-symbols-outlined text-[18px]">
                       {stage === 2 ? 'replay' : 'arrow_forward'}
@@ -627,7 +640,7 @@ const Drawer: React.FC = () => {
           </div>
 
           {/* SUPPORTING INFORMATION SECTION */}
-          <div className="drawer-info-section">
+          <div className="drawer-info-section" ref={infoSectionRef}>
             <div className="drawer-procedure-card">
               <div className="drawer-procedure-header">
                 <span className="material-symbols-outlined text-[#b4c9df] text-[18px]">lock_clock</span>
@@ -638,9 +651,19 @@ const Drawer: React.FC = () => {
               </p>
 
               {keyNotice && (
-                <div className="drawer-key-warning-notice">
-                  <span className="material-symbols-outlined text-[16px]">warning</span>
-                  <span>{keyNotice}</span>
+                <div className="flex flex-col gap-4 mt-2 w-full">
+                  <div className="drawer-key-warning-notice !mt-0">
+                    <span className="material-symbols-outlined text-[16px]">warning</span>
+                    <span>{keyNotice}</span>
+                  </div>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full pt-2">
+                    <Link to="/case" className="w-full sm:w-auto py-3 px-6 rounded-lg border border-[#4a5568]/50 hover:border-[#dfc27d]/70 bg-[#0d111a]/85 hover:bg-[#131926] text-[#e2e8f0] hover:text-[#fce7a9] font-serif text-[11px] sm:text-xs tracking-[0.2em] font-medium transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.4)] text-center uppercase no-underline">
+                      Return to Archive
+                    </Link>
+                    <Link to="/forbidden" className="w-full sm:w-auto py-3 px-6 rounded-lg bg-gradient-to-br from-[#e5c17d] via-[#dfba76] to-[#d8ae64] hover:brightness-105 text-[#15120d] font-serif text-[11px] sm:text-xs font-bold tracking-[0.2em] transition-all duration-300 shadow-[0_0_15px_rgba(223,194,125,0.25)] hover:shadow-[0_0_20px_rgba(223,194,125,0.4)] border border-[#edd89f]/40 text-center uppercase no-underline">
+                      Inspect Locked Chest →
+                    </Link>
+                  </div>
                 </div>
               )}
             </div>

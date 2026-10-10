@@ -217,8 +217,8 @@ const MidnightLedgerPage: React.FC<MidnightLedgerPageProps> = ({
           <nav className="ledger-header-nav">
             <Link to="/case" className="ledger-nav-link" onClick={(e) => e.stopPropagation()}>Dossier Index</Link>
             <Link to="/drawer" className="ledger-nav-link active" onClick={(e) => e.stopPropagation()}>Sanctum Desk</Link>
+
             <Link to="/letter" className="ledger-nav-link" onClick={(e) => e.stopPropagation()}>Sealed Letters</Link>
-            <Link to="/memories" className="ledger-nav-link" onClick={(e) => e.stopPropagation()}>Provenance Log</Link>
           </nav>
 
           <div className="ledger-header-right">
@@ -370,7 +370,20 @@ const MidnightLedgerPage: React.FC<MidnightLedgerPageProps> = ({
           {candleState === 9 && (
             <div className="ledger-climax-group">
               <span className="ledger-climax-tag">TESTAMENT OF COMMENDATION</span>
-              <h1 className="ledger-climax-title">HAPPY BIRTHDAY, KHUSHI</h1>
+              <div className="ledger-climax-typography">
+                <h1 className="ledger-greeting-primary">Happy Birthday</h1>
+                <div className="ledger-greeting-divider">
+                  <span className="ledger-div-line"></span>
+                  <span className="ledger-div-star">✦</span>
+                  <span className="ledger-div-line"></span>
+                </div>
+                <h2 className="ledger-greeting-secondary">Khushi</h2>
+                <div className="ledger-greeting-divider small">
+                  <span className="ledger-div-line"></span>
+                  <span className="ledger-div-star">✦</span>
+                  <span className="ledger-div-line"></span>
+                </div>
+              </div>
               <div className="ledger-climax-btn-row">
                 <button
                   type="button"

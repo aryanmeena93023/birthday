@@ -38,3 +38,19 @@ export function resetDiscoveries(): void {
   inMemoryDiscoveredSet.clear();
 }
 
+let owlMemory1Unlocked = false;
+let owlMemory2Unlocked = false;
+
+export function setOwlMemoryUnlocked(memoryNum: 1 | 2, unlocked = true): void {
+  if (memoryNum === 1) {
+    owlMemory1Unlocked = unlocked;
+  } else if (memoryNum === 2) {
+    if (unlocked) owlMemory1Unlocked = true;
+    owlMemory2Unlocked = unlocked;
+  }
+}
+
+export function getOwlMemoryUnlockedState(): { unlocked1: boolean; unlocked2: boolean } {
+  return { unlocked1: owlMemory1Unlocked, unlocked2: owlMemory2Unlocked };
+}
+

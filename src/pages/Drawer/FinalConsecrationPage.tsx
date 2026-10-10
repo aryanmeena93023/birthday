@@ -242,8 +242,8 @@ const FinalConsecrationPage: React.FC<FinalConsecrationPageProps> = ({
           <nav className="consecration-header-nav">
             <Link to="/case" className="consecration-nav-link" onClick={(e) => e.stopPropagation()}>Dossier Index</Link>
             <Link to="/drawer" className="consecration-nav-link active" onClick={(e) => e.stopPropagation()}>Sanctum Desk</Link>
+
             <Link to="/letter" className="consecration-nav-link" onClick={(e) => e.stopPropagation()}>Sealed Letters</Link>
-            <Link to="/memories" className="consecration-nav-link" onClick={(e) => e.stopPropagation()}>Provenance Log</Link>
           </nav>
 
           <div className="consecration-header-right">
