@@ -1,0 +1,239 @@
+<!DOCTYPE html><html class="h-full" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>NLUJA Assam — Judicial Archives Requisition</title>
+<!-- Tailwind CSS CDN with forms and container queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Cinzel Decorative / Cormorant Garamond / JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&amp;family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500;1,600&amp;family=JetBrains+Mono:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<!-- Tailwind Config -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serifHeading: ['Cinzel', 'serif'],
+            serifBody: ['Cormorant Garamond', 'serif'],
+            monoArchival: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            amberAccent: '#c59b27',
+            goldBorder: '#8c734b',
+            goldBorderLight: '#a38655',
+            ivoryCream: '#f7f4ee',
+            ivoryMuted: '#cfc8be',
+            darkCharcoal: '#0d0c0a',
+          }
+        }
+      }
+    }
+  </script>
+<!-- Custom CSS for atmospheric vignetting and subtle animations -->
+<style data-purpose="atmospheric-effects">
+    /* Deep radial vignette matching the visual reference */
+    .vignette-layer {
+      background: radial-gradient(
+        ellipse at center,
+        rgba(8, 8, 10, 0.42) 0%,
+        rgba(7, 7, 9, 0.65) 45%,
+        rgba(5, 5, 7, 0.90) 80%,
+        rgba(3, 3, 5, 0.98) 100%
+      );
+    }
+
+    /* Ambient pulse for active indicators */
+    @keyframes amberPulse {
+      0%, 100% {
+        opacity: 0.9;
+        box-shadow: 0 0 6px rgba(197, 155, 39, 0.6);
+      }
+      50% {
+        opacity: 0.4;
+        box-shadow: 0 0 2px rgba(197, 155, 39, 0.2);
+      }
+    }
+
+    .pulse-amber {
+      animation: amberPulse 3.2s ease-in-out infinite;
+    }
+
+    /* Soft letterpress glow for the primary display title */
+    .title-letterpress {
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9), 0 0 45px rgba(247, 244, 238, 0.18);
+    }
+
+    /* Refined Academy Entry CTA Button */
+    .btn-academy-entry {
+      background-color: rgba(12, 12, 14, 0.88);
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      color: #f5efe6;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.7), 0 0 12px 0 rgba(212, 175, 55, 0.15);
+      transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1),
+                  box-shadow 300ms cubic-bezier(0.2, 0.8, 0.2, 1),
+                  border-color 300ms ease,
+                  background-color 300ms ease;
+    }
+
+    .btn-academy-entry:hover {
+      transform: translateY(-5px);
+      border-color: rgba(225, 195, 125, 0.9);
+      background-color: rgba(18, 17, 20, 0.94);
+      box-shadow: 0 16px 32px -4px rgba(0, 0, 0, 0.85), 0 0 25px 2px rgba(212, 175, 55, 0.38), inset 0 1px 1px 0 rgba(255, 240, 200, 0.25);
+    }
+
+    .btn-academy-entry:active {
+      transform: translateY(-2px);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .btn-academy-entry {
+        transition: box-shadow 300ms ease, border-color 300ms ease, background-color 300ms ease;
+      }
+      .btn-academy-entry:hover,
+      .btn-academy-entry:active {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body class="relative h-full w-full bg-[#050506] text-[#ded8cb] font-monoArchival select-none overflow-hidden antialiased">
+<!-- BEGIN: BackgroundContainer -->
+<!-- Full-bleed high-resolution gothic gate background -->
+<div class="fixed inset-0 z-0 pointer-events-none" data-purpose="hero-background-wrapper">
+<img alt="NLUJA Assam Gothic Iron Gate at Twilight" class="w-full h-full object-cover object-center filter brightness-[0.78] contrast-[1.12]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmTorqLaBYwYdyznhO9T0EPD3AsFDZyTXvN1OjicnGkxMUv-cU33VgNSMzw_R-u78_Th-dx3-Ybz0gPL6XZ2-kIVBANUM2JLGO3Jx7bOUqDDM80EPn4j7vqDl6CULTCanRWU8GRnPmywSfeBSM3kTiJSdGb-h_RJtrCSRuo8Z2KzqtTFEpEACDL0rFm0pQ7k3l01Jk3a10EZy-rxI0dD_3sxTkUOo97a2ZFOoIl0mBo3SOcVAiIMS8A1B3kaUsL9hGI0o" style="filter: blur(0px) brightness(1.05) contrast(1.05) saturate(1.05); image-rendering: -webkit-optimize-contrast;">
+<!-- Deep atmospheric shadow & vignette overlay -->
+<div aria-hidden="true" class="absolute inset-0 vignette-layer mix-blend-multiply" style="background: radial-gradient(rgba(8, 8, 10, 0.15) 0%, rgba(7, 7, 9, 0.35) 55%, rgba(5, 5, 7, 0.65) 100%); mix-blend-mode: multiply;"></div>
+<div aria-hidden="true" class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/85" style="background: linear-gradient(rgba(0, 0, 0, 0.35) 0%, transparent 40%, rgba(0, 0, 0, 0.42) 100%);"></div>
+</div>
+<!-- END: BackgroundContainer -->
+<!-- BEGIN: MainContentLayer -->
+<div class="relative z-10 flex flex-col justify-between h-full w-full px-7 sm:px-10 lg:px-14 py-6 sm:py-8 box-border">
+<!-- BEGIN: TopBar -->
+<header class="w-full flex items-start justify-between text-[11px] tracking-[0.24em] uppercase text-[#a9a296]" data-purpose="meta-header">
+<!-- Top Left: Deposit ID & Archive Requisition -->
+<div class="flex flex-col space-y-1" data-purpose="archive-status-indicator">
+<div class="flex items-center space-x-2.5">
+<span aria-hidden="true" class="w-1.5 h-1.5 rounded-full bg-amberAccent pulse-amber shrink-0"></span>
+<span class="text-ivoryCream font-medium">RECOVERY DEPOSIT // MK-84</span>
+</div>
+<div class="text-[#7d776c] tracking-[0.26em] text-[10px] pl-4">
+          JUDICIAL ARCHIVES REQUISITION
+        </div>
+</div>
+<!-- Top Right: Covenant Date & Atmosphere Audio Toggle Button -->
+<div class="flex flex-col items-end space-y-2.5" data-purpose="archive-controls">
+<div class="text-[#8c8477] tracking-[0.22em] text-[10.5px]">
+          OCTOBER 1984 COVENANT
+        </div>
+<!-- Interactive Atmosphere Audio Control Pill -->
+<button aria-pressed="false" class="group flex items-center space-x-2 px-3 py-1.5 rounded-md border border-[#4a4235] bg-[#12100e]/80 hover:bg-[#1a1714] hover:border-goldBorder transition-all duration-200 cursor-pointer shadow-sm" data-purpose="audio-atmosphere-toggle" id="audioToggleBtn" type="button">
+<!-- Speaker Icon (Muted by default) -->
+<svg aria-hidden="true" class="w-3.5 h-3.5 text-[#a69d8f] group-hover:text-amberAccent transition-colors" fill="none" id="iconAudioMuted" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24">
+<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+<line x1="23" x2="17" y1="9" y2="15"></line>
+<line x1="17" x2="23" y1="9" y2="15"></line>
+</svg>
+<svg aria-hidden="true" class="w-3.5 h-3.5 text-amberAccent hidden transition-colors" fill="none" id="iconAudioActive" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24">
+<polygon points="11 5 6 9 2 9 2 15 6 15 11 5"></polygon>
+<path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+<path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+</svg>
+<span class="text-[10px] tracking-[0.24em] text-[#a69d8f] group-hover:text-ivoryCream transition-colors">
+            ATMOSPHERE : <span class="" id="audioStateText">MUTED</span>
+</span>
+</button>
+</div>
+</header>
+<!-- END: TopBar -->
+<!-- BEGIN: CenterSanctumHero -->
+<main class="w-full flex flex-col items-center justify-center text-center my-auto px-4" data-purpose="academy-portal-entry" style="transform: translateY(-11.5rem);">
+<!-- Sub-label with ornamental decorative brass rules -->
+<div class="flex items-center justify-center space-x-4 mb-4 sm:mb-5 max-w-xl w-full opacity-90" style="margin-bottom: 1.25rem; letter-spacing: 0.38em;">
+<span aria-hidden="true" class="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#8c734b]/60 to-[#a38655]"></span>
+<h2 class="text-[10.5px] sm:text-[11.5px] uppercase tracking-[0.38em] text-[#c9bfaf] font-monoArchival whitespace-nowrap">
+          DEPARTMENT OF UNUSUAL OCCURRENCES
+        </h2>
+<span aria-hidden="true" class="h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#8c734b]/60 to-[#a38655]"></span>
+</div>
+<!-- Main Monumental Heading: NLUJA ASSAM -->
+<img alt="NLUJA ASSAM" class="mx-auto w-full max-w-[520px] md:max-w-[620px] lg:max-w-[680px] h-auto object-contain select-none pointer-events-none mb-3 sm:mb-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKlaNXKk-U-BmtH5iedLIjOoh8w1sp-6jEhXk1GqKDjr4BBM-Tt8G38kiKg2c9_V25oJkgGjiL98tc4scgA7TFzb2_TFvkll0NDWp3FFAO1QjZaEAlENxHIXWimga1urKbeW6QwZJROnbhLnjrk-RMTDR6UWWfXdnTy-spwIshCNCIukVocuUI17m0ZXNfbrQCQsfRHZluAj9a_3P6eIZ0vrR2oZmzo_LBHkGOlDAeOeduHc00gi_rckzBMy0eUpBxajY" style="max-width: clamp(340px, 48vw, 540px); filter: drop-shadow(rgba(0, 0, 0, 0.7) 0px 4px 16px); image-rendering: -webkit-optimize-contrast;">
+<!-- Full Academic Institution Name -->
+<p class="font-serifBody italic text-xl sm:text-2xl md:text-3xl text-[#f3ece0] font-normal tracking-[0.03em] mb-3 sm:mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+        National Law University and Judicial Academy, Assam
+      </p>
+<!-- Archival Quote Narrative -->
+<blockquote class="font-serifBody italic text-base sm:text-lg md:text-xl text-[#d4ccc0] tracking-wide max-w-2xl font-light mb-8 sm:mb-10 drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
+        “A rather unusual file has arrived at the gates...”
+      </blockquote>
+<!-- Gateway Access Action Button -->
+<div class="flex flex-col items-center space-y-4">
+<a class="btn-academy-entry group relative inline-flex items-center space-x-3 px-8 py-3.5 sm:px-10 sm:py-4 rounded-md backdrop-blur-md focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/50" data-purpose="enter-academy-action" href="#enter">
+<!-- Glowing amber indicator dot -->
+<span aria-hidden="true" class="w-2 h-2 rounded-full bg-amberAccent group-hover:scale-125 group-hover:bg-[#e7b83d] transition-all duration-200 shrink-0"></span>
+<!-- CTA Text -->
+<span class="text-xs sm:text-sm font-monoArchival uppercase tracking-widest text-[#f5efe6] font-medium group-hover:text-white transition-colors">
+            ENTER THE ACADEMY
+          </span>
+<!-- Forward Arrow -->
+<span aria-hidden="true" class="text-xs sm:text-sm font-monoArchival text-[#c59b27] group-hover:text-[#e7b83d] group-hover:translate-x-1 transition-all duration-200">
+            →
+          </span>
+</a>
+<!-- Security Level Tag Beneath CTA -->
+<div class="flex items-center space-x-2 text-[10px] tracking-[0.26em] uppercase text-[#736c61]" data-purpose="security-clearance">
+<!-- Padlock SVG Icon -->
+
+
+</div>
+</div>
+</main>
+<!-- END: CenterSanctumHero -->
+<!-- BEGIN: FooterBar -->
+<footer class="w-full flex flex-col md:flex-row items-center md:items-end justify-between text-[9.5px] sm:text-[10px] tracking-[0.26em] uppercase text-[#696358] gap-2 pt-2 border-t border-white/[0.04]" data-purpose="coordinates-footer">
+<!-- Geo-Coordinates -->
+<div class="text-center md:text-left">
+        LAT 26.1856° N • LONG 91.7483° E • GUWAHATI CITADEL ARCHIVES
+      </div>
+<!-- Institutional Protocol Legal -->
+<div class="text-center md:text-right text-[#5f5a50]">
+        © MMDXXIV JUDICIAL REPOSITORY • RESTRICTED ARCHIVAL PROTOCOL
+      </div>
+</footer>
+<!-- END: FooterBar -->
+</div>
+<!-- END: MainContentLayer -->
+<!-- BEGIN: InteractiveHandlers -->
+<script data-purpose="atmosphere-audio-handler">
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggleBtn = document.getElementById('audioToggleBtn');
+      const iconMuted = document.getElementById('iconAudioMuted');
+      const iconActive = document.getElementById('iconAudioActive');
+      const stateText = document.getElementById('audioStateText');
+
+      let isPlaying = false;
+
+      toggleBtn.addEventListener('click', () => {
+        isPlaying = !isPlaying;
+        
+        if (isPlaying) {
+          iconMuted.classList.add('hidden');
+          iconActive.classList.remove('hidden');
+          stateText.textContent = 'ACTIVE';
+          stateText.classList.add('text-amberAccent');
+          toggleBtn.setAttribute('aria-pressed', 'true');
+        } else {
+          iconActive.classList.add('hidden');
+          iconMuted.classList.remove('hidden');
+          stateText.textContent = 'MUTED';
+          stateText.classList.remove('text-amberAccent');
+          toggleBtn.setAttribute('aria-pressed', 'false');
+        }
+      });
+    });
+  </script>
+<!-- END: InteractiveHandlers -->
+
+
+</body></html>

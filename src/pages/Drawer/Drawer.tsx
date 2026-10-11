@@ -90,8 +90,8 @@ function playTactileSound(type: 'keyInsert' | 'unlockClunk' | 'glideOpen' | 'loc
 }
 
 const Drawer: React.FC = () => {
-  // Access control state: Master key is acquired from sealed chest (Forbidden page)
-  const isKeyAcquired = isDiscovered('forbidden');
+  // Access control state: Master key is accessible directly
+  const isKeyAcquired = true;
 
   // Single source of truth React state for stages and animation states
   const [stage, setStage] = useState<1 | 2 | 3 | 4>(() => {
@@ -221,7 +221,7 @@ const Drawer: React.FC = () => {
     const nextUnlocked = targetUnlocked !== undefined ? targetUnlocked : (stage === 1);
 
     if (!isKeyAcquired) {
-      setKeyNotice('Master Drawer key not acquired yet. Acquire the master key from the sealed chest on the Restricted Record (/forbidden) page first.');
+      setKeyNotice('Master Drawer key not acquired yet.');
       playArtifactChime(220);
       setTimeout(() => {
         infoSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -294,7 +294,7 @@ const Drawer: React.FC = () => {
   // Direct HUD matrix jump — no animation guard or key check needed for stage-control navigation
   const jumpToStage = (targetStage: 1 | 2 | 3 | 4) => {
     if (targetStage !== 1 && !isKeyAcquired) {
-      setKeyNotice('Master Drawer key not acquired yet. Acquire the master key from the sealed chest on the Restricted Record (/forbidden) page first.');
+      setKeyNotice('Master Drawer key not acquired yet.');
       playArtifactChime(220);
       setTimeout(() => {
         infoSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -659,9 +659,6 @@ const Drawer: React.FC = () => {
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full pt-2">
                     <Link to="/case" className="w-full sm:w-auto py-3 px-6 rounded-lg border border-[#4a5568]/50 hover:border-[#dfc27d]/70 bg-[#0d111a]/85 hover:bg-[#131926] text-[#e2e8f0] hover:text-[#fce7a9] font-serif text-[11px] sm:text-xs tracking-[0.2em] font-medium transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.4)] text-center uppercase no-underline">
                       Return to Archive
-                    </Link>
-                    <Link to="/forbidden" className="w-full sm:w-auto py-3 px-6 rounded-lg bg-gradient-to-br from-[#e5c17d] via-[#dfba76] to-[#d8ae64] hover:brightness-105 text-[#15120d] font-serif text-[11px] sm:text-xs font-bold tracking-[0.2em] transition-all duration-300 shadow-[0_0_15px_rgba(223,194,125,0.25)] hover:shadow-[0_0_20px_rgba(223,194,125,0.4)] border border-[#edd89f]/40 text-center uppercase no-underline">
-                      Inspect Locked Chest →
                     </Link>
                   </div>
                 </div>

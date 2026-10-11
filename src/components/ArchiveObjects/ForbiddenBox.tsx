@@ -1,12 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { playArtifactChime } from '../../utils/archiveAudio';
+import { markDiscovered } from '../../utils/discoveryTracker';
 
 const ForbiddenBox: React.FC = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
     playArtifactChime(293.66);
+    markDiscovered('forbidden');
     navigate('/forbidden');
   };
 
@@ -29,7 +31,7 @@ const ForbiddenBox: React.FC = () => {
             </svg>
           </span>
           <span className="hotspot-title">Cipher Box</span>
-          <span className="hotspot-action">• Inspect</span>
+          <span className="hotspot-action">• Examined</span>
         </div>
       </div>
     </button>

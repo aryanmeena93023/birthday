@@ -1,0 +1,273 @@
+/*
+ * EntryGate.css
+ * Production styling for the NLUJA Assam Entry Gate.
+ * Faithful implementation of the approved Google Stitch design reference
+ * with smooth threshold reveal animation into Page 2.
+ */
+
+.entry-gate-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background-color: #050506;
+  color: #ded8cb;
+  font-family: 'JetBrains Mono', 'Space Mono', monospace;
+  user-select: none;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Full-bleed high-resolution gothic gate background container */
+.entry-gate-bg-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.entry-gate-bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: blur(0px) brightness(1.05) contrast(1.05) saturate(1.05);
+  image-rendering: -webkit-optimize-contrast;
+  transition: transform 1.35s cubic-bezier(0.25, 1, 0.35, 1), filter 1.35s ease;
+}
+
+/* Atmospheric camera move when entering the academy */
+.entry-gate-root.is-entering .entry-gate-bg-image {
+  transform: scale(1.12);
+  filter: blur(1.5px) brightness(1.18) contrast(1.08) saturate(1.1);
+}
+
+/* Deep atmospheric shadow & vignette overlay matching the Stitch reference */
+.entry-gate-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(8, 8, 10, 0.15) 0%,
+    rgba(7, 7, 9, 0.35) 55%,
+    rgba(5, 5, 7, 0.65) 100%
+  );
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.entry-gate-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.35) 0%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.42) 100%
+  );
+  pointer-events: none;
+}
+
+/* Restrained Antique-Gold Edge-Light Aura during Transition */
+.entry-edge-light-aura {
+  position: fixed;
+  inset: 0;
+  z-index: 14;
+  pointer-events: none;
+  box-shadow: inset 0 0 70px 15px rgba(221, 196, 139, 0.45), inset 0 0 140px 30px rgba(186, 163, 109, 0.25);
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.entry-edge-light-aura.active {
+  opacity: 1;
+}
+
+/* Threshold Lantern Bloom Layer: warm golden glow expanding across the gate */
+.entry-threshold-bloom {
+  position: fixed;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(221, 196, 139, 0.38) 0%,
+    rgba(197, 155, 39, 0.2) 35%,
+    rgba(14, 13, 11, 0.75) 75%,
+    rgba(5, 5, 6, 0.98) 100%
+  );
+  opacity: 0;
+  transition: opacity 1.1s cubic-bezier(0.25, 1, 0.5, 1) 0.15s;
+}
+
+.entry-threshold-bloom.active {
+  opacity: 1;
+}
+
+/* Velvet Veil Dissolve Layer: smooth dark wash seamlessly bridging to Page 2 */
+.entry-transition-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  pointer-events: none;
+  background: #030405;
+  opacity: 0;
+  transition: opacity 0.45s ease 0.85s;
+}
+
+.entry-transition-veil.active {
+  opacity: 1;
+}
+
+/* Main Content Layout */
+.entry-gate-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  box-sizing: border-box;
+}
+
+/* Header & Footer fade out when transitioning */
+.entry-gate-root.is-entering .entry-gate-content header {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  pointer-events: none;
+}
+
+.entry-gate-root.is-entering .entry-gate-content footer {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  pointer-events: none;
+}
+
+/* Ambient pulse for active indicators */
+@keyframes amberPulse {
+  0%, 100% {
+    opacity: 0.9;
+    box-shadow: 0 0 6px rgba(197, 155, 39, 0.6);
+  }
+  50% {
+    opacity: 0.4;
+    box-shadow: 0 0 2px rgba(197, 155, 39, 0.2);
+  }
+}
+
+.pulse-amber {
+  animation: amberPulse 3.2s ease-in-out infinite;
+}
+
+/* Center Sanctum Hero */
+.center-sanctum-hero {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: auto 0;
+  transform: translateY(-2vh);
+  transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.65s cubic-bezier(0.4, 0, 0.2, 1),
+              filter 0.65s ease;
+}
+
+@media (min-height: 700px) and (min-width: 768px) {
+  .center-sanctum-hero {
+    transform: translateY(-6rem);
+  }
+}
+
+@media (min-height: 850px) and (min-width: 1024px) {
+  .center-sanctum-hero {
+    transform: translateY(-9.5rem);
+  }
+}
+
+@media (min-height: 1050px) and (min-width: 1024px) {
+  .center-sanctum-hero {
+    transform: translateY(-11.5rem);
+  }
+}
+
+/* Gracefully dissolve center text when transition starts */
+.entry-gate-root.is-entering .center-sanctum-hero {
+  opacity: 0;
+  transform: scale(0.96) translateY(-4rem);
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+/* NLUJA Logo styling */
+.entry-gate-logo {
+  max-width: clamp(260px, 32vw, 390px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(rgba(0, 0, 0, 0.7) 0px 4px 16px);
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Font helpers */
+.font-serif-heading {
+  font-family: 'Cinzel', serif;
+}
+
+.font-serif-body {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-mono-archival {
+  font-family: 'JetBrains Mono', 'Space Mono', monospace;
+}
+
+/* Refined Academy Entry CTA Button */
+.btn-academy-entry {
+  background-color: rgba(12, 12, 14, 0.88);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  color: #f5efe6;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.7), 0 0 12px 0 rgba(212, 175, 55, 0.15);
+  transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 300ms cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 300ms ease,
+              background-color 300ms ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-academy-entry:hover {
+  transform: translateY(-5px);
+  border-color: rgba(225, 195, 125, 0.9);
+  background-color: rgba(18, 17, 20, 0.94);
+  box-shadow: 0 16px 32px -4px rgba(0, 0, 0, 0.85), 0 0 25px 2px rgba(212, 175, 55, 0.38), inset 0 1px 1px 0 rgba(255, 240, 200, 0.25);
+}
+
+.btn-academy-entry:active {
+  transform: translateY(-2px);
+}
+
+/* Button Active State during Enter transition */
+.btn-academy-entry.entering {
+  transform: scale(0.98);
+  border-color: #fae0a5;
+  background-color: rgba(22, 20, 16, 0.98);
+  box-shadow: 0 0 28px rgba(221, 196, 139, 0.55), inset 0 0 10px rgba(221, 196, 139, 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-academy-entry {
+    transition: box-shadow 300ms ease, border-color 300ms ease, background-color 300ms ease;
+  }
+  .btn-academy-entry:hover,
+  .btn-academy-entry:active {
+    transform: none;
+  }
+  .entry-gate-bg-image,
+  .center-sanctum-hero {
+    transition: none !important;
+  }
+}

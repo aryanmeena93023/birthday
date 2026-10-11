@@ -133,11 +133,11 @@ const AudioPage: React.FC = () => {
             </Link>
 
             <Link
-              to="/forbidden"
+              to="/drawer"
               onClick={handleReturnClick}
               className="next-file-btn"
             >
-              <span>MOVE TO NEXT FILE // 05</span>
+              <span>MOVE TO NEXT FILE // 06</span>
               <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
                 <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
               </svg>
