@@ -1,11 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { playArtifactChime } from '../../utils/archiveAudio';
+import { playArtifactChime, pauseAndResetArchiveSoundtrack } from '../../utils/archiveAudio';
 
 const MemoryArchive: React.FC = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
+    pauseAndResetArchiveSoundtrack();
     playArtifactChime(440.0);
     navigate('/memories');
   };

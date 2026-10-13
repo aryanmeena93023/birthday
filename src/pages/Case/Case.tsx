@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Case.css';
+import ArchiveFieldGuide from '../../components/ArchiveFieldGuide/ArchiveFieldGuide';
 import ArchiveObjects from '../../components/ArchiveObjects/ArchiveObjects';
-import { toggleAmbienceDrone, playArtifactChime } from '../../utils/archiveAudio';
+import {
+  playArtifactChime,
+  stopAmbienceDrone,
+  getArchiveSoundtrack,
+  pauseAndResetArchiveSoundtrack,
+  playArchiveSoundtrack,
+  setArchiveManuallyMuted,
+  isArchiveManuallyMutedState
+} from '../../utils/archiveAudio';
 import { getDiscoveredCount, getDiscoveredSet, markDiscovered } from '../../utils/discoveryTracker';
 
 const Case: React.FC = () => {
@@ -10,14 +19,76 @@ const Case: React.FC = () => {
   const discoveredCount = getDiscoveredCount();
   const discoveredSet = getDiscoveredSet();
 
+  useEffect(() => {
+    // Stop any legacy drone synthesizer sound so there are never conflicting tracks
+    stopAmbienceDrone();
+
+    const audio = getArchiveSoundtrack();
+
+    // Reset track position to 00:00 every time Page 2 becomes active
+    audio.currentTime = 0;
+
+    const syncState = () => {
+      setIsAmbiencePlaying(!audio.paused && !audio.muted);
+    };
+
+    audio.addEventListener('play', syncState);
+    audio.addEventListener('pause', syncState);
+    audio.addEventListener('ended', syncState);
+
+    // Attempt automatic playback from 00:00 if visitor has not manually muted ambience
+    if (!isArchiveManuallyMutedState()) {
+      const playPromise = playArchiveSoundtrack();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsAmbiencePlaying(true);
+          })
+          .catch(() => {
+            // Browser autoplay restricted; button remains in OFF state until clicked
+            setIsAmbiencePlaying(false);
+          });
+      }
+    } else {
+      setIsAmbiencePlaying(false);
+    }
+
+    // Cleanup on leaving Page 2:
+    // Immediately stop playback and reset track position to 00:00
+    return () => {
+      audio.removeEventListener('play', syncState);
+      audio.removeEventListener('pause', syncState);
+      audio.removeEventListener('ended', syncState);
+      pauseAndResetArchiveSoundtrack();
+    };
+  }, []);
+
   const handleToggleAmbience = () => {
-    const active = toggleAmbienceDrone((playing) => {
-      setIsAmbiencePlaying(playing);
-    });
-    setIsAmbiencePlaying(active);
+    const audio = getArchiveSoundtrack();
+
+    if (audio.paused) {
+      // User turned sound ON: clear manual mute and start playback
+      const playPromise = playArchiveSoundtrack();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsAmbiencePlaying(true);
+          })
+          .catch(() => {
+            setIsAmbiencePlaying(false);
+          });
+      }
+    } else {
+      // User turned sound OFF: pause immediately, reset, and remember manual mute choice
+      setArchiveManuallyMuted(true);
+      pauseAndResetArchiveSoundtrack();
+      setIsAmbiencePlaying(false);
+    }
   };
 
   const handleNavClick = (pitch = 440) => {
+    // When opening an artifact, immediately stop soundtrack and rewind to 00:00
+    pauseAndResetArchiveSoundtrack();
     playArtifactChime(pitch);
   };
 
@@ -53,6 +124,9 @@ const Case: React.FC = () => {
           </p>
         </div>
       </header>
+
+      {/* 4b. Archive Field Guide Instruction Box */}
+      <ArchiveFieldGuide />
 
       {/* 5. Top Right Controls (User-Initiated Ambience Audio) */}
       <div className="archive-top-controls">

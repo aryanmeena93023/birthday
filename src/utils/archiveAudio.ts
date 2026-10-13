@@ -152,6 +152,57 @@ export function toggleAmbienceDrone(onStateChange?: (playing: boolean) => void):
   }
 }
 
+export function stopAmbienceDrone(): void {
+  if (!isAmbiencePlaying) return;
+  const ctx = getAudioContext();
+  if (ctx && droneGain) {
+    try {
+      droneGain.gain.setValueAtTime(0.0001, ctx.currentTime);
+      droneOsc1?.stop();
+      droneOsc2?.stop();
+    } catch {}
+  }
+  isAmbiencePlaying = false;
+}
+
 export function isAmbienceActive(): boolean {
   return isAmbiencePlaying;
 }
+
+// Dedicated single soundtrack manager for Page 2 Archive Desk
+let archiveSoundtrackAudio: HTMLAudioElement | null = null;
+let isArchiveManuallyMuted = false;
+
+export function getArchiveSoundtrack(): HTMLAudioElement {
+  if (!archiveSoundtrackAudio && typeof window !== 'undefined') {
+    archiveSoundtrackAudio = new Audio('/media/audio/archive-ambience.mpeg');
+    archiveSoundtrackAudio.loop = true;
+    archiveSoundtrackAudio.volume = 0.28;
+    archiveSoundtrackAudio.preload = 'auto';
+  }
+  return archiveSoundtrackAudio!;
+}
+
+export function playArchiveSoundtrack(): Promise<void> | undefined {
+  const audio = getArchiveSoundtrack();
+  if (!audio) return;
+  isArchiveManuallyMuted = false;
+  audio.muted = false;
+  return audio.play();
+}
+
+export function pauseAndResetArchiveSoundtrack(): void {
+  if (archiveSoundtrackAudio) {
+    archiveSoundtrackAudio.pause();
+    archiveSoundtrackAudio.currentTime = 0;
+  }
+}
+
+export function setArchiveManuallyMuted(muted: boolean): void {
+  isArchiveManuallyMuted = muted;
+}
+
+export function isArchiveManuallyMutedState(): boolean {
+  return isArchiveManuallyMuted;
+}
+

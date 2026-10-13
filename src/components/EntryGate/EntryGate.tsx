@@ -3,10 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import './EntryGate.css';
 import { toggleAmbienceDrone, isAmbienceActive, playUnlockChime } from '../../utils/archiveAudio';
 
-export const EntryGate: React.FC = () => {
+interface EntryGateProps {
+  animateReveal?: boolean;
+}
+
+export const EntryGate: React.FC<EntryGateProps> = ({ animateReveal = false }) => {
   const navigate = useNavigate();
   const [isAudioActive, setIsAudioActive] = useState(isAmbienceActive());
   const [isEntering, setIsEntering] = useState(false);
+  const [isRevealing, setIsRevealing] = useState(animateReveal);
+
+  // When animateReveal becomes true, activate reveal animation and auto-clean after sequence finishes
+  React.useEffect(() => {
+    if (animateReveal) {
+      setIsRevealing(true);
+      // Reveal sequence takes ~1.95s total; cleanup class at 2.3s so all temporary styles are removed
+      const timer = setTimeout(() => {
+        setIsRevealing(false);
+      }, 2300);
+      return () => clearTimeout(timer);
+    }
+  }, [animateReveal]);
 
   const handleToggleAudio = () => {
     if (isEntering) return;
@@ -32,7 +49,7 @@ export const EntryGate: React.FC = () => {
 
   return (
     <div
-      className={`entry-gate-root ${isEntering ? 'is-entering' : ''}`}
+      className={`entry-gate-root ${isEntering ? 'is-entering' : ''} ${isRevealing ? 'is-revealing' : ''}`}
       data-purpose="nluja-entry-gate"
     >
       {/* Background Container: Full-bleed gothic gate background with authentic overlays */}
@@ -68,9 +85,9 @@ export const EntryGate: React.FC = () => {
 
       {/* Main Content Layer */}
       <div className="entry-gate-content px-7 sm:px-10 lg:px-14 py-6 sm:py-8">
-        {/* Top Bar: Archival Metadata & Atmosphere Control */}
+        {/* Top Bar: Archival Metadata & Atmosphere Control (Step 1) */}
         <header
-          className="w-full flex items-start justify-between text-[11px] tracking-[0.24em] uppercase text-[#a9a296]"
+          className="w-full flex items-start justify-between text-[11px] tracking-[0.24em] uppercase text-[#a9a296] reveal-step-1"
           data-purpose="meta-header"
         >
           {/* Top Left: Deposit ID & Archive Requisition */}
@@ -149,8 +166,8 @@ export const EntryGate: React.FC = () => {
           className="center-sanctum-hero px-4"
           data-purpose="academy-portal-entry"
         >
-          {/* Sub-label with ornamental decorative brass rules */}
-          <div className="flex items-center justify-center space-x-4 mb-4 sm:mb-5 max-w-xl w-full opacity-90">
+          {/* Sub-label with ornamental decorative brass rules (Step 2) */}
+          <div className="flex items-center justify-center space-x-4 mb-4 sm:mb-5 max-w-xl w-full opacity-90 reveal-step-2">
             <span
               aria-hidden="true"
               className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#8c734b]/60 to-[#a38655]"
@@ -164,47 +181,49 @@ export const EntryGate: React.FC = () => {
             />
           </div>
 
-          {/* Main Monumental Heading: Authentic NLUJA ASSAM Logo */}
+          {/* Main Monumental Heading: Authentic NLUJA ASSAM Logo (Step 3) */}
           <img
             src="/media/entrance/nluja-logo.png"
             alt="NLUJA ASSAM"
-            className="entry-gate-logo mx-auto w-full select-none pointer-events-none mb-3 sm:mb-4"
+            className="entry-gate-logo mx-auto w-full select-none pointer-events-none mb-3 sm:mb-4 reveal-step-3"
             draggable={false}
           />
 
-          {/* Full Academic Institution Name */}
-          <p className="font-serif-body italic text-xl sm:text-2xl md:text-3xl text-[#f3ece0] font-normal tracking-[0.03em] mb-3 sm:mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+          {/* Full Academic Institution Name (Step 4) */}
+          <p className="font-serif-body italic text-xl sm:text-2xl md:text-3xl text-[#f3ece0] font-normal tracking-[0.03em] mb-3 sm:mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] reveal-step-4">
             National Law University and Judicial Academy, Assam
           </p>
 
-          {/* Archival Quote Narrative */}
-          <blockquote className="font-serif-body italic text-base sm:text-lg md:text-xl text-[#d4ccc0] tracking-wide max-w-2xl font-light mb-8 sm:mb-10 drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
+          {/* Archival Quote Narrative (Step 5) */}
+          <blockquote className="font-serif-body italic text-base sm:text-lg md:text-xl text-[#d4ccc0] tracking-wide max-w-2xl font-light mb-8 sm:mb-10 drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] reveal-step-5">
             “A rather unusual file has arrived at the gates...”
           </blockquote>
 
-          {/* Gateway Access Action Button */}
-          <div className="flex flex-col items-center space-y-4">
+          {/* Gateway Access Action Button (Step 6) */}
+          <div className="flex flex-col items-center space-y-4 entry-btn-container reveal-step-6">
             <button
               type="button"
               onClick={handleEnterAcademy}
               disabled={isEntering}
-              className={`btn-academy-entry group relative inline-flex items-center space-x-3 px-8 py-3.5 sm:px-10 sm:py-4 rounded-md backdrop-blur-md focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/50 ${isEntering ? 'entering' : ''}`}
+              className={`btn-academy-entry group relative inline-flex items-center justify-center space-x-3.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/70 ${isEntering ? 'entering' : ''}`}
               data-purpose="enter-academy-action"
               id="enterBtn"
             >
-              {/* Glowing amber indicator dot */}
-              <span
-                aria-hidden="true"
-                className={`w-2 h-2 rounded-full bg-[#c59b27] transition-all duration-300 shrink-0 ${isEntering ? 'scale-150 bg-[#fae0a5] shadow-[0_0_12px_#fae0a5]' : 'group-hover:scale-125 group-hover:bg-[#e7b83d]'}`}
-              />
-              {/* CTA Text */}
-              <span className="text-xs sm:text-sm font-mono-archival uppercase tracking-widest text-[#f5efe6] font-medium group-hover:text-white transition-colors">
+              {/* Subtle metallic sheen sweep effect on hover */}
+              <span className="btn-metallic-sheen" aria-hidden="true" />
+
+              {/* Inner delicate border frame */}
+              <span className="btn-inner-frame" aria-hidden="true" />
+
+              {/* Button text in refined serif typography */}
+              <span className="btn-label-text">
                 {isEntering ? 'ENTERING THE ACADEMY...' : 'ENTER THE ACADEMY'}
               </span>
+
               {/* Forward Arrow */}
               <span
                 aria-hidden="true"
-                className={`text-xs sm:text-sm font-mono-archival text-[#c59b27] transition-all duration-300 ${isEntering ? 'translate-x-2 text-[#fae0a5]' : 'group-hover:text-[#e7b83d] group-hover:translate-x-1'}`}
+                className="btn-arrow-icon"
               >
                 →
               </span>
@@ -212,9 +231,9 @@ export const EntryGate: React.FC = () => {
           </div>
         </main>
 
-        {/* Footer Bar: Coordinates & Institutional Protocol */}
+        {/* Footer Bar: Coordinates & Institutional Protocol (Step 7) */}
         <footer
-          className="w-full flex flex-col md:flex-row items-center md:items-end justify-between text-[9.5px] sm:text-[10px] tracking-[0.26em] uppercase text-[#696358] gap-2 pt-2 border-t border-white/[0.04]"
+          className="w-full flex flex-col md:flex-row items-center md:items-end justify-between text-[9.5px] sm:text-[10px] tracking-[0.26em] uppercase text-[#696358] gap-2 pt-2 border-t border-white/[0.04] reveal-step-7"
           data-purpose="coordinates-footer"
         >
           {/* Geo-Coordinates */}

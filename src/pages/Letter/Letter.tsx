@@ -15,44 +15,68 @@ const Letter: React.FC = () => {
 
   const [revealStep, setRevealStep] = useState(0);
   const [isReducedMotion, setIsReducedMotion] = useState(false);
+  const letterBodyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
       setIsReducedMotion(true);
-      setRevealStep(10);
+      // Immediately show all lines if reduced motion is requested
+      const host = letterBodyRef.current;
+      if (host) {
+        host.querySelectorAll('.letter-line-item').forEach((el) => {
+          el.classList.add('is-visible');
+        });
+      }
       return;
     }
-    
-    const t1 = setTimeout(() => setRevealStep(1), 400);
-    const t2 = setTimeout(() => setRevealStep(2), 1000);
-    const t3 = setTimeout(() => setRevealStep(3), 1400);
-    const t4 = setTimeout(() => setRevealStep(4), 1800);
-    const t5 = setTimeout(() => setRevealStep(5), 2200);
-    const t6 = setTimeout(() => setRevealStep(6), 2600);
-    const t7 = setTimeout(() => setRevealStep(7), 3000);
-    const t8 = setTimeout(() => setRevealStep(8), 3400);
-    const t9 = setTimeout(() => setRevealStep(9), 4000);
-    
+
+    const host = letterBodyRef.current;
+    if (!host) return;
+
+    let isCancelled = false;
+    const lineElements = Array.from(host.querySelectorAll<HTMLElement>('.letter-line-item'));
+    if (lineElements.length === 0) return;
+
+    // Sequential top-to-bottom line reveal with 90ms stagger (within Phase 1 target: 80–100ms)
+    // Starting after 320ms so parchment entrance smoothly settles
+    let currentLine = 0;
+    const totalLines = lineElements.length;
+
+    const startTimer = setTimeout(() => {
+      if (isCancelled) return;
+
+      const staggerInterval = setInterval(() => {
+        if (isCancelled) {
+          clearInterval(staggerInterval);
+          return;
+        }
+
+        if (currentLine < totalLines) {
+          const el = lineElements[currentLine];
+          if (el) {
+            el.classList.add('is-visible');
+          }
+          currentLine++;
+        } else {
+          clearInterval(staggerInterval);
+        }
+      }, 90); // 90ms delay between consecutive lines (approx 80–100ms target)
+
+      return () => clearInterval(staggerInterval);
+    }, 320);
+
+    // Guaranteed failsafe: all lines become visible by 4.2s
+    const failsafeTimer = setTimeout(() => {
+      lineElements.forEach((el) => el.classList.add('is-visible'));
+    }, 4200);
+
     return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-      clearTimeout(t4);
-      clearTimeout(t5);
-      clearTimeout(t6);
-      clearTimeout(t7);
-      clearTimeout(t8);
-      clearTimeout(t9);
+      isCancelled = true;
+      clearTimeout(startTimer);
+      clearTimeout(failsafeTimer);
     };
   }, []);
-
-  const getRevealClass = (stepIndex: number) => {
-    if (isReducedMotion || revealStep >= stepIndex) {
-      return "opacity-100 translate-y-0";
-    }
-    return "opacity-0 translate-y-2";
-  };
 
   useEffect(() => {
     markDiscovered('letter');
@@ -342,8 +366,8 @@ const Letter: React.FC = () => {
             </div>
 
             {/* Letter Content Body */}
-            <div className="pt-8 sm:pt-10 md:pt-12 text-[#221612] max-w-2xl">
-              <div className={`mb-7 sm:mb-9 transition-all duration-[1200ms] ease-out ${getRevealClass(1)}`}>
+            <div ref={letterBodyRef} className="pt-8 sm:pt-10 md:pt-12 text-[#221612] max-w-2xl">
+              <div className="mb-7 sm:mb-9 letter-line-item">
                 <h2
                   className="font-script text-4xl sm:text-5xl md:text-[54px] font-normal tracking-wide text-[#1c120c] leading-tight select-none"
                   style={{
@@ -369,26 +393,85 @@ const Letter: React.FC = () => {
                   color: 'rgb(42, 27, 20)',
                 }}
               >
-                <p className={`transition-all duration-[1200ms] ease-out ${getRevealClass(2)}`}>
-                  First of all,<div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Happy Birthday!</div>
-                </p>
-                <p className={`transition-all duration-[1200ms] ease-out ${getRevealClass(3)}`}>
-                  I hope this year brings you lots of happiness, new opportunities, good experiences, and plenty of reasons to smile. May your hard work pay off, your plans work out the way you hope, and you get to achieve the things you've been looking forward to. I hope you meet good people, learn new things, try things you've always wanted to try, and make the most of all the little moments along the way.
-                </p>
-                <p className={`transition-all duration-[1200ms] ease-out ${getRevealClass(4)}`}>
-                  I hope this year brings you more good days than bad ones, more laughter than stress, and lots of things to look forward to. Most importantly, I hope you stay happy, healthy, and keep finding your own reasons to smile. And of course, I hope you have a really lovely birthday!
-                </p>
-                <p className={`pt-2 sm:pt-3 transition-all duration-[1200ms] ease-out ${getRevealClass(5)}`}>
-                  I also made this little project as a birthday surprise for you. I wanted to do something a little different instead of just sending a birthday message, so I thought, why not make something of my own for the occasion? It's a small way of wishing you on your birthday, but one that I wanted to make a little more personal than the usual birthday wishes.
-                </p>
-                <p className={`transition-all duration-[1200ms] ease-out ${getRevealClass(6)}`}>
-                  I hope you enjoy going through it and have fun exploring it. And don't judge it too harshly, okay? 😂 I'm still learning a few things along the way!
-                </p>
-                <p className={`transition-all duration-[1200ms] ease-out ${getRevealClass(7)}`}>
-                  Anyway, that's enough from me. I won't turn your birthday wish into a whole essay.
-                </p>
-                <p className={`transition-all duration-[1200ms] ease-out ${getRevealClass(8)}`}>
-                  Have a wonderful day, enjoy yourself, and may the year ahead bring you lots of happiness, success, and reasons to look back and say, <em>"That was a good year."</em><br /><br />
+                <div className="letter-line-item">
+                  <p>First of all,</p>
+                </div>
+                <div className="letter-line-item pl-8 sm:pl-16">
+                  <p>Happy Birthday!</p>
+                </div>
+
+                <div className="letter-line-item">
+                  <p>
+                    I hope this year brings you lots of happiness, new opportunities, good experiences, and plenty of reasons to smile.
+                  </p>
+                </div>
+                <div className="letter-line-item">
+                  <p>
+                    May your hard work pay off, your plans work out the way you hope, and you get to achieve the things you've been looking forward to.
+                  </p>
+                </div>
+                <div className="letter-line-item">
+                  <p>
+                    I hope you meet good people, learn new things, try things you've always wanted to try, and make the most of all the little moments along the way.
+                  </p>
+                </div>
+
+                <div className="letter-line-item">
+                  <p>
+                    I hope this year brings you more good days than bad ones, more laughter than stress, and lots of things to look forward to.
+                  </p>
+                </div>
+                <div className="letter-line-item">
+                  <p>
+                    Most importantly, I hope you stay happy, healthy, and keep finding your own reasons to smile.
+                  </p>
+                </div>
+                <div className="letter-line-item">
+                  <p>
+                    And of course, I hope you have a really lovely birthday!
+                  </p>
+                </div>
+
+                <div className="pt-2 sm:pt-3 letter-line-item">
+                  <p>
+                    I also made this little project as a birthday surprise for you.
+                  </p>
+                </div>
+                <div className="letter-line-item">
+                  <p>
+                    I wanted to do something a little different instead of just sending a birthday message, so I thought, why not make something of my own for the occasion?
+                  </p>
+                </div>
+                <div className="letter-line-item">
+                  <p>
+                    It's a small way of wishing you on your birthday, but one that I wanted to make a little more personal than the usual birthday wishes.
+                  </p>
+                </div>
+
+                <div className="letter-line-item">
+                  <p>
+                    I hope you enjoy going through it and have fun exploring it.
+                  </p>
+                </div>
+                <div className="letter-line-item">
+                  <p>
+                    And don't judge it too harshly, okay? 😂 I'm still learning a few things along the way!
+                  </p>
+                </div>
+
+                <div className="letter-line-item">
+                  <p>
+                    Anyway, that's enough from me. I won't turn your birthday wish into a whole essay.
+                  </p>
+                </div>
+
+                <div className="letter-line-item">
+                  <p>
+                    Have a wonderful day, enjoy yourself, and may the year ahead bring you lots of happiness, success, and reasons to look back and say, <em>"That was a good year."</em>
+                  </p>
+                </div>
+
+                <div className="pt-2 letter-line-item">
                   <span
                     style={{
                       fontFamily: 'Cinzel, "Cormorant Garamond", serif',
@@ -403,9 +486,9 @@ const Letter: React.FC = () => {
                   >
                     HAPPY BIRTHDAY ,"3<span className="inline-block relative underline decoration-amber-700 decoration-2 underline-offset-4 font-bold" style={{textDecoration: 'underline 2px', textUnderlineOffset: '4px', fontStyle: 'italic', color: 'rgb(110, 38, 29)'}}>0</span>00"
                   </span>
-                </p>
+                </div>
 
-                <div className={`pt-4 pb-2 flex flex-col items-end text-right select-none pr-2 sm:pr-6 transition-all duration-[1200ms] ease-out ${getRevealClass(9)}`}>
+                <div className="pt-4 pb-2 flex flex-col items-end text-right select-none pr-2 sm:pr-6 letter-line-item">
                   <span
                     className="font-serif italic text-xl sm:text-2xl text-[#3c2a1e] tracking-wide leading-tight"
                     style={{

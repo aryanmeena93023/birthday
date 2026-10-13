@@ -3,9 +3,10 @@ import './IntroVideo.css';
 
 interface IntroVideoProps {
   onComplete: () => void;
+  onStartReveal?: () => void;
 }
 
-export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete }) => {
+export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete, onStartReveal }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const isFinishedRef = useRef(false);
   const userMutedExplicitlyRef = useRef(false);
@@ -27,13 +28,18 @@ export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete }) => {
       }
     }
 
+    // Begin background and foreground sequential reveal right as video starts fading out
+    if (onStartReveal) {
+      onStartReveal();
+    }
+
     setIsFadingOut(true);
 
-    // Smooth transition window into the Entry Gate
+    // Smooth transition window into the Entry Gate (approx 750ms fadeout)
     setTimeout(() => {
       onComplete();
-    }, 600);
-  }, [onComplete]);
+    }, 750);
+  }, [onComplete, onStartReveal]);
 
   // Autoplay attempt on mount with sound initially on
   useEffect(() => {
