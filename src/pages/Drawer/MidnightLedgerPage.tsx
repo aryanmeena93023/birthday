@@ -308,11 +308,11 @@ const MidnightLedgerPage: React.FC<MidnightLedgerPageProps> = ({
             </div>
             <div className="ledger-cake-tier-bottom">
               <div className="ledger-bottom-crest-row">
-                <span className="ledger-crest-icon">🥀</span>
+                <span className="ledger-crest-star-primary">✦</span>
                 <span className="ledger-crest-star">✦</span>
-                <span className="ledger-crest-icon">🥀</span>
+                <span className="ledger-crest-star-primary">✦</span>
                 <span className="ledger-crest-star">✦</span>
-                <span className="ledger-crest-icon">🥀</span>
+                <span className="ledger-crest-star-primary">✦</span>
               </div>
             </div>
             <div className="ledger-pedestal-plate" />

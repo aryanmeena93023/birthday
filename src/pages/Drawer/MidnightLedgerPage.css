@@ -617,13 +617,13 @@
   font-size: 16px;
 }
 
-.ledger-crest-icon {
-  font-size: 16px;
-  color: #6b1d2c;
-}
-
 .ledger-crest-star {
   font-size: 10px;
+  color: #c9a96e;
+}
+
+.ledger-crest-star-primary {
+  font-size: 14px;
   color: #c9a96e;
 }
 

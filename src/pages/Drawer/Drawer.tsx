@@ -343,12 +343,43 @@ const Drawer: React.FC = () => {
 
   return (
     <div className="drawer-page-container">
-      {/* Background Ambient Vignette & Candle Light Layers */}
+      {/* Background Ambient Vignette, Candle Light & Drifting Motes Layers */}
       <div className="drawer-ambient-vignette" />
       <div className="drawer-glow-layer">
         <div className="drawer-glow-center" />
         <div className="drawer-glow-left" />
         <div className="drawer-glow-right" />
+        
+        {/* Sparse ambient drifting dust particles */}
+        <div className="drawer-bg-dust-motes" aria-hidden="true">
+          {[
+            { top: '22%', left: '12%', dur: '17s', delay: '0s', size: 3 },
+            { top: '34%', left: '88%', dur: '21s', delay: '3s', size: 2.5 },
+            { top: '55%', left: '8%', dur: '19s', delay: '7s', size: 3 },
+            { top: '65%', left: '92%', dur: '24s', delay: '2s', size: 3 },
+            { top: '15%', left: '50%', dur: '18s', delay: '5s', size: 2.5 },
+            { top: '78%', left: '18%', dur: '22s', delay: '9s', size: 3.5 },
+            { top: '82%', left: '82%', dur: '16s', delay: '4s', size: 2.5 },
+            { top: '28%', left: '80%', dur: '20s', delay: '8s', size: 3 },
+            { top: '48%', left: '6%', dur: '23s', delay: '1s', size: 3 },
+            { top: '70%', left: '86%', dur: '19s', delay: '6s', size: 2.5 },
+            { top: '38%', left: '16%', dur: '25s', delay: '11s', size: 3 },
+            { top: '62%', left: '14%', dur: '22s', delay: '4s', size: 2.5 }
+          ].map((mote, idx) => (
+            <div
+              key={`bg-dust-${idx}`}
+              className="drawer-bg-dust-mote"
+              style={{
+                top: mote.top,
+                left: mote.left,
+                width: `${mote.size}px`,
+                height: `${mote.size}px`,
+                animationDuration: mote.dur,
+                animationDelay: mote.delay
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* FIXED HEADER NAVIGATION */}
