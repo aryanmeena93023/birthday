@@ -9,6 +9,7 @@ import beautifulPauseImg from '../../assets/images/memories/file-02/a-beautiful-
 interface MemoryCardData {
   id: string;
   title: string;
+  titleNode?: React.ReactNode;
   date: string;
   caption: string;
   supportingText: string;
@@ -20,20 +21,25 @@ interface MemoryCardData {
 const MEMORY_CARDS: MemoryCardData[] = [
   {
     id: 'card-1',
-    title: 'A Frame of You',
+    title: 'Simp"1"y You',
+    titleNode: (
+      <>
+        Simp"<span style={{ textDecoration: 'underline' }}>1</span>"y You
+      </>
+    ),
     date: 'FEB 2024',
-    caption: 'Most Beautifull Soul Of The Day',
-    supportingText: "I DIDN'T GET THE CHANCE TO COMPLIMENT YOU THAT DAY BUT YOU WERE FABULOUS THAT DAY.",
+    caption: 'Most Beautifull Soul Of That Day',
+    supportingText: "I DIDN'T GET THE CHANCE TO COMPLIMENT YOU THAT DAY BUT YOU WERE GORGEOUS.",
     baseRot: -2.5,
     image: frameOfYouImg,
     objectPosition: 'center 25%',
   },
   {
     id: 'card-2',
-    title: 'A Beautiful Pause',
+    title: 'TimeLess',
     date: 'FEB 2023',
-    caption: 'Time moved on. The memory stayed.',
-    supportingText: 'WE ALL WERE SO HAPPY AT THIS MOVEMENT .',
+    caption: 'A Perfect Movement Frozen.',
+    supportingText: 'YOU WERE SO SWEET AT THIS MOVEMENT  .',
     baseRot: 2,
     image: beautifulPauseImg,
     objectPosition: 'center 10%',
@@ -372,7 +378,7 @@ const Memories: React.FC = () => {
                 <div className="mt-4 pt-1 px-1">
                   <div className="flex items-baseline justify-between mb-1">
                     <h2 className="card-title-text font-classic-serif text-[18px] md:text-[19px] font-normal text-[#1d1916] tracking-tight">
-                      {card.title}
+                      {card.titleNode || card.title}
                     </h2>
                     <span className="font-date text-[10.5px] font-medium tracking-wider text-[#7d7367] uppercase">
                       {card.date}
@@ -533,7 +539,7 @@ const Memories: React.FC = () => {
                 {/* Row 1: Title & Date */}
                 <div className="w-full flex items-baseline justify-between">
                   <h1 className="text-xl sm:text-[22px] tracking-normal text-[#1e1a17] font-classic-serif font-normal leading-tight">
-                    {selectedCard.title}
+                    {selectedCard.titleNode || selectedCard.title}
                   </h1>
                   <span className="text-[11px] sm:text-[11.5px] font-date tracking-[0.22em] text-[#5b5247] uppercase font-medium">
                     {selectedCard.date}

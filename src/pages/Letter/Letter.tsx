@@ -378,7 +378,7 @@ const Letter: React.FC = () => {
                     textShadow: 'rgba(0, 0, 0, 0.08) 0px 1px 1px',
                   }}
                 >
-                  Dear Khushi,
+                  Khushi,
                 </h2>
               </div>
 
@@ -467,7 +467,8 @@ const Letter: React.FC = () => {
 
                 <div className="letter-line-item">
                   <p>
-                    Have a wonderful day, enjoy yourself, and may the year ahead bring you lots of happiness, success, and reasons to look back and say, <em>"That was a good year."</em>
+                    Have a wonderful day, enjoy yourself, and may the year ahead bring you lots of happiness, success, and reasons to look back and say, <em>"That was a good year." 
+                      so </em>
                   </p>
                 </div>
 
@@ -484,14 +485,15 @@ const Letter: React.FC = () => {
                       textTransform: 'uppercase',
                     }}
                   >
-                    HAPPY BIRTHDAY ,"3<span className="inline-block relative underline decoration-amber-700 decoration-2 underline-offset-4 font-bold" style={{textDecoration: 'underline 2px', textUnderlineOffset: '4px', fontStyle: 'italic', color: 'rgb(110, 38, 29)'}}>0</span>00"
+                    HAPPY BIRTHDAY ,"3<span className="inline-block relative underline decoration-amber-700 decoration-2 underline-offset-4 font-bold" style={{textDecoration: 'underline 2px', textUnderlineOffset: '4px', fontStyle: 'italic', color: 'rgb(110, 38, 29)'}}>0</span>00"😜
                   </span>
                 </div>
 
-                <div className="pt-4 pb-2 flex flex-col items-end text-right select-none pr-2 sm:pr-6 letter-line-item">
+                <div className="pt-4 pb-2 flex flex-col items-end text-right select-none pr-2 sm:pr-6 letter-line-item" style={{ display: 'flex', flexDirection: 'column' }}>
                   <span
-                    className="font-serif italic text-xl sm:text-2xl text-[#3c2a1e] tracking-wide leading-tight"
+                    className="font-serif italic text-xl sm:text-2xl text-[#3c2a1e] tracking-wide leading-tight block"
                     style={{
+                      display: 'block',
                       fontFamily: '"Cormorant Garamond", Garamond, Georgia, serif',
                       fontStyle: 'italic',
                       color: 'rgb(60, 42, 30)',
@@ -500,8 +502,9 @@ const Letter: React.FC = () => {
                     With love,
                   </span>
                   <span
-                    className="font-script text-3xl sm:text-4xl md:text-[48px] text-[#221612] leading-none pt-1 sm:pt-2 -mr-1"
+                    className="font-script text-3xl sm:text-4xl md:text-[48px] text-[#221612] leading-none pt-1 sm:pt-2 -mr-1 block"
                     style={{
+                      display: 'block',
                       fontFamily: '"Great Vibes", "Alex Brush", cursive',
                       color: 'rgb(34, 22, 18)',
                       textShadow: 'rgba(0, 0, 0, 0.05) 0px 1px 1px',

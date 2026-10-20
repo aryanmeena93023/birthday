@@ -173,7 +173,7 @@ const MemoryOne: React.FC = () => {
                 <p>It was when we were practicing for Teachers’ Day. I was doing really badly at the dance, so you told me to keep practicing. You were sitting right in front of me, with your legs folded, leaning against the wall beneath the window.</p>
                 <p>And then, while I was practicing, we suddenly made eye contact for two or three seconds. I don’t know what was going through your mind at that moment, but I remember how, out of awkwardness, we both smiled. You turned your face toward the wall and started laughing, while all our friends were looking at us.</p>
                 <p>I don’t know why such a small moment stayed with me so clearly, but it did. Maybe it was the unexpected eye contact, the awkwardness we both felt, or simply the way you smiled. Your smile was genuinely so beautiful that even now, when I think about that moment, it brings back the same feeling.</p>
-                <p>Maybe you don’t remember it at all, and for you, it was just another ordinary day. But for me, it became one of those little memories that I never really wanted to forget. And I think that’s what makes it so special to me—not because something extraordinary happened, but because, for a few seconds, I got to share such a sweet little moment with you.</p>
+                <p>Maybe you don’t remember it at all, and for you, it was just another ordinary day. But for me, it became one of those little memories that I never really wanted to forget. And I think that’s what makes it so special to me—not because something extraordinary happened, but because, for a few seconds, I got to share such a sweet little moment with you ^_^.</p>
               </div>
             </div>
 

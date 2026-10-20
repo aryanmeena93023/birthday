@@ -49,7 +49,7 @@ export const AudioMemory: React.FC = () => {
       {/* 2. Sound-Reactive Organic Equalizer */}
       <div className="equalizer-section">
         <div className="equalizer-header">
-          <span className="equalizer-subtitle">IF I COULD PORTRAY YOU IN WORDS</span>
+          <span className="equalizer-subtitle">IF WORDS COULD PORTRAY YOU , THIS IS HOW THEY WOULD BE.</span>
           <span
             className="equalizer-dot"
             style={{
