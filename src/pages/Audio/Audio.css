@@ -325,6 +325,7 @@
     max-width: 340px;
     gap: 0.75rem;
   }
+
   .return-archive-btn,
   .next-file-btn {
     width: 100%;
@@ -436,9 +437,11 @@
 .float-anim-1 {
   animation-name: floatRandom1;
 }
+
 .float-anim-2 {
   animation-name: floatRandom2;
 }
+
 .float-anim-3 {
   animation-name: floatRandom3;
 }
@@ -448,19 +451,24 @@
     opacity: 0;
     transform: translate(0, 0) scale(0.8) rotate(-10deg);
   }
+
   20% {
     opacity: 0.5;
   }
+
   40% {
     transform: translate(40px, -50px) scale(1) rotate(5deg);
   }
+
   60% {
     transform: translate(-30px, 40px) scale(1.1) rotate(15deg);
   }
+
   80% {
     opacity: 0.5;
     transform: translate(50px, -20px) scale(0.9) rotate(-5deg);
   }
+
   100% {
     opacity: 0;
     transform: translate(0, 0) scale(0.8) rotate(-10deg);
@@ -472,17 +480,21 @@
     opacity: 0;
     transform: translate(0, 0) scale(0.9) rotate(5deg);
   }
+
   25% {
     opacity: 0.45;
     transform: translate(-50px, -40px) scale(1.2) rotate(-5deg);
   }
+
   50% {
     transform: translate(30px, 50px) scale(0.8) rotate(10deg);
   }
+
   75% {
     opacity: 0.45;
     transform: translate(20px, -60px) scale(1.1) rotate(-15deg);
   }
+
   100% {
     opacity: 0;
     transform: translate(0, 0) scale(0.9) rotate(5deg);
@@ -494,17 +506,21 @@
     opacity: 0;
     transform: translate(0, 0) scale(1) rotate(-15deg);
   }
+
   30% {
     opacity: 0.55;
     transform: translate(45px, 35px) scale(0.9) rotate(10deg);
   }
+
   60% {
     transform: translate(-40px, -30px) scale(1.2) rotate(-5deg);
   }
+
   85% {
     opacity: 0.55;
     transform: translate(-20px, 50px) scale(1) rotate(5deg);
   }
+
   100% {
     opacity: 0;
     transform: translate(0, 0) scale(1) rotate(-15deg);

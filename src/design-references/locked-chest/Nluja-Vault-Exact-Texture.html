@@ -116,7 +116,24 @@ function ru() {
       }, []),
       T = H.useCallback(() => {
         playChestSound("click");
-        if (e.join("") === "2810") { playChestSound("unlock"); c(!0); }
+        if (e.join("") === "2810") {
+          playChestSound("unlock");
+          c(!0);
+          setTimeout(() => {
+            try {
+              if (window.parent && window.parent !== window) {
+                window.parent.postMessage({ type: 'VAULT_UNLOCKED', destination: '/personal-record' }, '*');
+              }
+              if (window.top && window.top !== window) {
+                window.top.location.href = "/personal-record";
+              } else {
+                window.location.href = "/personal-record";
+              }
+            } catch(err) {
+              window.location.href = "/personal-record";
+            }
+          }, 650);
+        }
         else v(), a("SEAL HOLDS — ALIGN THE TUMBLERS");
       }, [e, a, v]),
       D = H.useCallback(() => {
@@ -695,7 +712,7 @@ function ru() {
                 }),
                 I("p", {
                   className: "serif text-[13.5px] leading-[1.65] font-normal text-[rgba(245,241,232,0.78)]",
-                  children: i === 1 ? "Reverse what you find. Four fragments, one sequence — mirrored back to its source." : "This year's index marks its rite. Four digits, a harvest, a crowning at ten."
+                  children: i === 1 ? "Reverse what you find. Four fragments, one sequence — mirrored back to its source." : "Within autumn’s tenth chapter, a bittersweet favourite claims a day of its own. Find its place on the calendar; let the day lead and the month follow to unseal the record."
                 }),
                 G("div", {
                   className: "mt-[18px] pt-[14px] border-t border-[rgba(201,168,106,0.14)] flex items-center justify-between",
@@ -788,7 +805,20 @@ function ru() {
                       className: "mt-[24px] flex items-center justify-center gap-[12px] flex-wrap",
                       children: [
                         I("button", {
-                          onClick: () => c(!1),
+                          onClick: () => {
+                            try {
+                              if (window.parent && window.parent !== window) {
+                                window.parent.postMessage({ type: 'VAULT_UNLOCKED', destination: '/personal-record' }, '*');
+                              }
+                              if (window.top && window.top !== window) {
+                                window.top.location.href = "/personal-record";
+                              } else {
+                                window.location.href = "/personal-record";
+                              }
+                            } catch(err) {
+                              window.location.href = "/personal-record";
+                            }
+                          },
                           className: "mono px-[20px] py-[10px] rounded-full border text-[11px] tracking-[0.18em] uppercase transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer",
                           style: {
                             background: "rgba(197,168,128,0.12)",

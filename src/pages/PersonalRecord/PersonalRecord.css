@@ -1,0 +1,643 @@
+/* =========================================================================
+   PERSONAL RECORD PAGE — VINTAGE RESTRICTED ARCHIVE THEME
+   Strictly scoped to the Personal Record I specification & reference image
+   ========================================================================= */
+
+:root {
+  --pr-bg-dark: #070709;
+  --pr-panel-bg: #0c0b0a;
+  --pr-panel-inner-glow: radial-gradient(ellipse 90% 75% at 50% 28%, #181410 0%, #0d0c0b 60%, #080706 100%);
+  --pr-brass-border: rgba(186, 163, 109, 0.46);
+  --pr-brass-inner-border: rgba(186, 163, 109, 0.22);
+  --pr-brass-muted: #96835b;
+  --pr-brass-champagne: #cfbc8c;
+  --pr-brass-bright: #e8d5a8;
+  --pr-text-ivory: #f5efe6;
+  --pr-text-ivory-dim: rgba(245, 239, 230, 0.76);
+  --pr-text-muted: rgba(207, 188, 140, 0.62);
+  --pr-btn-brass: linear-gradient(180deg, #baa36d 0%, #9e8753 50%, #7d683a 100%);
+}
+
+.personal-record-container {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--pr-bg-dark);
+  background-image: 
+    radial-gradient(ellipse 85% 65% at 50% 30%, rgba(28, 22, 16, 0.55) 0%, rgba(7, 7, 9, 0.95) 80%, #050507 100%),
+    radial-gradient(circle at 50% 50%, rgba(20, 16, 13, 0.6) 0%, transparent 100%);
+  color: var(--pr-text-ivory);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Atmospheric subtle vignette & motes overlay */
+.personal-record-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, transparent 45%, rgba(0, 0, 0, 0.68) 100%);
+  z-index: 1;
+}
+
+/* =========================================================================
+   TOP NAVIGATION BAR
+   ========================================================================= */
+
+.personal-record-header {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+.personal-record-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 2.2rem;
+  max-width: 1440px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.personal-record-return-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: transparent;
+  border: none;
+  color: var(--pr-brass-champagne);
+  font-family: 'Space Mono', 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  padding: 0.35rem 0.2rem;
+}
+
+.personal-record-return-link:hover {
+  color: var(--pr-text-ivory);
+  transform: translateX(-2px);
+  text-shadow: 0 0 10px rgba(207, 188, 140, 0.4);
+}
+
+.personal-record-return-arrow {
+  font-size: 0.95rem;
+  line-height: 1;
+  transition: transform 0.25s ease;
+}
+
+.personal-record-return-link:hover .personal-record-return-arrow {
+  transform: translateX(-3px);
+}
+
+.personal-record-case-tag {
+  font-family: 'Space Mono', 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--pr-brass-muted);
+  user-select: none;
+}
+
+.personal-record-mute-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(18, 15, 12, 0.65);
+  border: 1px solid var(--pr-brass-border);
+  border-radius: 4px;
+  padding: 0.4rem 0.85rem;
+  color: var(--pr-brass-champagne);
+  font-family: 'Space Mono', 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.personal-record-mute-btn:hover {
+  background: rgba(28, 23, 18, 0.85);
+  border-color: var(--pr-brass-bright);
+  color: var(--pr-text-ivory);
+  box-shadow: 0 0 12px rgba(186, 163, 109, 0.25);
+}
+
+.personal-record-mute-btn:focus-visible {
+  outline: 2px solid var(--pr-brass-champagne);
+  outline-offset: 2px;
+}
+
+.personal-record-mute-icon {
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.personal-record-nav-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(186, 163, 109, 0.18) 18%,
+    rgba(186, 163, 109, 0.38) 50%,
+    rgba(186, 163, 109, 0.18) 82%,
+    transparent 100%
+  );
+}
+
+/* =========================================================================
+   INTRODUCTORY QUOTATION
+   ========================================================================= */
+
+.personal-record-intro-quote {
+  text-align: center;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--pr-text-ivory-dim);
+  margin: 1.75rem auto 1.5rem auto;
+  padding: 0 1.5rem;
+  letter-spacing: 0.02em;
+  max-width: 680px;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
+  position: relative;
+  z-index: 5;
+}
+
+/* =========================================================================
+   MAIN ARCHIVAL DOUBLE-FRAME PANEL
+   ========================================================================= */
+
+.personal-record-main-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.5rem 2rem 1.5rem;
+  position: relative;
+  z-index: 5;
+}
+
+.personal-record-outer-frame {
+  position: relative;
+  width: 100%;
+  max-width: 780px;
+  background: var(--pr-panel-bg);
+  background-image: var(--pr-panel-inner-glow);
+  border: 1px solid var(--pr-brass-border);
+  box-shadow: 
+    0 24px 60px rgba(0, 0, 0, 0.88),
+    0 0 45px rgba(186, 163, 109, 0.07),
+    inset 0 0 24px rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Outer geometric corner brackets */
+.pr-corner-bracket {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+}
+
+.pr-corner-tl {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid var(--pr-brass-champagne);
+  border-left: 2px solid var(--pr-brass-champagne);
+}
+
+.pr-corner-tr {
+  top: -1px;
+  right: -1px;
+  border-top: 2px solid var(--pr-brass-champagne);
+  border-right: 2px solid var(--pr-brass-champagne);
+}
+
+.pr-corner-bl {
+  bottom: -1px;
+  left: -1px;
+  border-bottom: 2px solid var(--pr-brass-champagne);
+  border-left: 2px solid var(--pr-brass-champagne);
+}
+
+.pr-corner-br {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid var(--pr-brass-champagne);
+  border-right: 2px solid var(--pr-brass-champagne);
+}
+
+/* Inner frame */
+.personal-record-inner-frame {
+  position: relative;
+  border: 1px solid var(--pr-brass-inner-border);
+  padding: 2.75rem 2.5rem 1.75rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Inner frame corner notches */
+.pr-inner-notch {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+}
+
+.pr-notch-tl {
+  top: 4px;
+  left: 4px;
+  border-top: 1px solid rgba(207, 188, 140, 0.4);
+  border-left: 1px solid rgba(207, 188, 140, 0.4);
+}
+
+.pr-notch-tr {
+  top: 4px;
+  right: 4px;
+  border-top: 1px solid rgba(207, 188, 140, 0.4);
+  border-right: 1px solid rgba(207, 188, 140, 0.4);
+}
+
+.pr-notch-bl {
+  bottom: 4px;
+  left: 4px;
+  border-bottom: 1px solid rgba(207, 188, 140, 0.4);
+  border-left: 1px solid rgba(207, 188, 140, 0.4);
+}
+
+.pr-notch-br {
+  bottom: 4px;
+  right: 4px;
+  border-bottom: 1px solid rgba(207, 188, 140, 0.4);
+  border-right: 1px solid rgba(207, 188, 140, 0.4);
+}
+
+/* =========================================================================
+   HEADINGS & RECORD METADATA
+   ========================================================================= */
+
+.personal-record-label {
+  font-family: 'Space Mono', 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--pr-brass-muted);
+  margin-bottom: 0.85rem;
+  user-select: none;
+}
+
+.personal-record-title {
+  font-family: 'Playfair Display', 'Cinzel', Georgia, serif;
+  font-size: clamp(1.6rem, 3.4vw, 2.35rem);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pr-text-ivory);
+  margin: 0 0 0.85rem 0;
+  line-height: 1.15;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.8);
+}
+
+.personal-record-subtitle {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: 0.96rem;
+  color: var(--pr-text-ivory-dim);
+  margin: 0 0 2.2rem 0;
+  letter-spacing: 0.02em;
+  max-width: 520px;
+  line-height: 1.45;
+}
+
+/* =========================================================================
+   ANTIQUE BRASS RECORD GRAPHIC
+   ========================================================================= */
+
+.personal-record-disc-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.personal-record-disc {
+  width: 168px;
+  height: 168px;
+  object-fit: contain;
+  border-radius: 50%;
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.88)) drop-shadow(0 0 12px rgba(186, 163, 109, 0.15));
+  transition: transform 0.4s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.personal-record-disc.spinning {
+  animation: discSpin 16s linear infinite;
+}
+
+@keyframes discSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.personal-record-identifier {
+  font-family: 'Space Mono', 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--pr-brass-muted);
+  margin: 0 0 1.6rem 0;
+  user-select: none;
+}
+
+/* =========================================================================
+   PLAYBACK BUTTON
+   ========================================================================= */
+
+.personal-record-play-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  width: 100%;
+  max-width: 320px;
+  height: 44px;
+  border-radius: 9999px;
+  background: var(--pr-btn-brass);
+  border: 1px solid #3d3119;
+  box-shadow: 
+    0 4px 18px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.45);
+  color: #17130c;
+  font-family: 'Space Mono', 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+  margin-bottom: 2.75rem;
+  position: relative;
+  outline: none;
+}
+
+.personal-record-play-btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 
+    0 6px 22px rgba(0, 0, 0, 0.85),
+    0 0 16px rgba(186, 163, 109, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.personal-record-play-btn:active {
+  transform: translateY(1px);
+  filter: brightness(0.96);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.9),
+    inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.personal-record-play-btn:focus-visible {
+  outline: 2px solid var(--pr-brass-bright);
+  outline-offset: 3px;
+}
+
+.personal-record-play-icon-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid #17130c;
+  margin-right: 0.15rem;
+}
+
+.personal-record-play-icon-circle svg {
+  margin-left: 1px;
+}
+
+/* =========================================================================
+   BOTTOM METADATA DIVIDER & ROW
+   ========================================================================= */
+
+.personal-record-meta-divider-wrapper {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.15rem;
+}
+
+.personal-record-meta-divider-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(186, 163, 109, 0.18) 12%,
+    rgba(186, 163, 109, 0.32) 50%,
+    rgba(186, 163, 109, 0.18) 88%,
+    transparent 100%
+  );
+}
+
+.personal-record-meta-divider-glyph {
+  position: relative;
+  background: var(--pr-panel-bg);
+  padding: 0 0.8rem;
+  color: var(--pr-brass-muted);
+  font-size: 0.62rem;
+  line-height: 1;
+  user-select: none;
+}
+
+.personal-record-meta-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.4rem;
+  box-sizing: border-box;
+}
+
+.personal-record-meta-left {
+  font-family: 'Space Mono', 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pr-text-muted);
+  user-select: none;
+}
+
+.personal-record-relock-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: transparent;
+  border: none;
+  color: var(--pr-text-muted);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  padding: 0.25rem 0.4rem;
+  border-radius: 3px;
+  transition: all 0.22s ease;
+  text-decoration: none;
+}
+
+.personal-record-relock-btn:hover {
+  color: var(--pr-brass-champagne);
+  text-shadow: 0 0 10px rgba(207, 188, 140, 0.35);
+  transform: translateY(-1px);
+}
+
+.personal-record-relock-btn:focus-visible {
+  outline: 1px solid var(--pr-brass-champagne);
+  outline-offset: 2px;
+}
+
+.personal-record-relock-icon {
+  width: 13px;
+  height: 13px;
+  opacity: 0.85;
+}
+
+/* =========================================================================
+   PAGE FOOTER
+   ========================================================================= */
+
+.personal-record-footer {
+  text-align: center;
+  padding: 1.4rem 1rem 1.75rem 1rem;
+  position: relative;
+  z-index: 5;
+}
+
+.personal-record-footer-text {
+  font-family: 'Space Mono', 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--pr-brass-muted);
+  user-select: none;
+  opacity: 0.85;
+}
+
+/* =========================================================================
+   RESPONSIVE ADAPTATIONS
+   ========================================================================= */
+
+@media (max-width: 768px) {
+  .personal-record-nav {
+    padding: 0.9rem 1.25rem;
+  }
+
+  .personal-record-case-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+  }
+
+  .personal-record-return-link {
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+  }
+
+  .personal-record-intro-quote {
+    font-size: 0.92rem;
+    margin: 1.2rem auto 1rem auto;
+    padding: 0 1rem;
+  }
+
+  .personal-record-outer-frame {
+    padding: 8px;
+    max-width: 95%;
+  }
+
+  .personal-record-inner-frame {
+    padding: 2rem 1.4rem 1.4rem 1.4rem;
+  }
+
+  .personal-record-disc {
+    width: 138px;
+    height: 138px;
+  }
+
+  .personal-record-play-btn {
+    max-width: 280px;
+    height: 42px;
+    font-size: 0.7rem;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .personal-record-nav {
+    padding: 0.75rem 0.9rem;
+  }
+
+  .personal-record-return-link span:not(.personal-record-return-arrow) {
+    display: inline-block;
+  }
+
+  .personal-record-case-tag {
+    display: none;
+  }
+
+  .personal-record-inner-frame {
+    padding: 1.6rem 1rem 1.2rem 1rem;
+  }
+
+  .personal-record-title {
+    font-size: 1.35rem;
+  }
+
+  .personal-record-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .personal-record-disc {
+    width: 120px;
+    height: 120px;
+  }
+
+  .personal-record-meta-row {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .personal-record-meta-left {
+    font-size: 0.6rem;
+  }
+}

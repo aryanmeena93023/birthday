@@ -9,6 +9,7 @@ import MemoryOne from './pages/Raven/MemoryOne';
 import MemoryTwo from './pages/Raven/MemoryTwo';
 import Drawer from './pages/Drawer/Drawer';
 import Forbidden from './pages/Forbidden/Forbidden';
+import PersonalRecord from './pages/PersonalRecord/PersonalRecord';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
 
 
         <Route path="/audio" element={<Audio />} />
+        <Route path="/personal-record" element={<PersonalRecord />} />
         <Route path="/raven" element={<Raven />} />
         <Route path="/raven/memory-1" element={<MemoryOne />} />
         <Route path="/raven/memory-2" element={<MemoryTwo />} />
