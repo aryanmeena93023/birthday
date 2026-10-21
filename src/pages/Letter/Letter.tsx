@@ -521,23 +521,23 @@ const Letter: React.FC = () => {
         {/* Dossier Navigation */}
         <nav
           aria-label="Archive dossier navigation"
-          className="w-full max-w-2xl mt-8 mb-2 flex flex-col sm:flex-row items-center justify-center gap-4 z-10 px-2"
+          className="w-full max-w-2xl mt-8 mb-2 flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-6 z-10 px-4"
         >
           <Link
             to="/case"
             onClick={handleReturnClick}
-            className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-5 py-2.5 rounded border border-[#a88d67]/35 bg-[#120d0b]/80 hover:bg-[#1f1510] text-[#d6c5af] hover:text-[#f3e9db] font-display text-[11px] sm:text-xs tracking-[0.22em] uppercase transition-all duration-200 shadow-sm focus:outline-none focus:ring-1 focus:ring-[#a88d67]"
+            className="group letter-btn-expand inline-flex items-center justify-center gap-3 w-full sm:w-auto py-3.5 px-8 rounded-lg border border-[#4a5568]/50 hover:border-[#dfc27d]/70 bg-[#0d111a]/85 hover:bg-[#131926] text-[#e2e8f0] hover:text-[#fce7a9] font-serif text-xs sm:text-[13px] tracking-[0.22em] font-medium transition-all duration-300 shadow-[0_4px_22px_rgba(0,0,0,0.65)] hover:shadow-[0_0_24px_rgba(223,194,125,0.3)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer uppercase backdrop-blur-md"
           >
-            <span>←</span>
-            <span>RETURN TO ARCHIVE</span>
+            <span className="letter-arrow-left inline-block font-sans text-sm text-[#dfc27d]">←</span>
+            <span className="whitespace-nowrap">RETURN TO ARCHIVE</span>
           </Link>
           <Link
             to="/memories"
             onClick={handleNextClick}
-            className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 py-2.5 rounded border border-[#b89562]/80 bg-gradient-to-r from-[#b89562] via-[#cfbe9f] to-[#a8824f] text-[#1c140d] hover:brightness-105 hover:border-[#d6a85e] hover:shadow-[0_0_18px_rgba(207,190,159,0.35)] font-display text-[11px] sm:text-xs font-semibold tracking-[0.22em] uppercase transition-all duration-200 shadow-[0_2px_12px_rgba(0,0,0,0.5)] focus:outline-none focus:ring-2 focus:ring-[#f5ebd7] cursor-pointer"
+            className="group letter-btn-expand letter-animate-gold-glow inline-flex items-center justify-center gap-3 w-full sm:w-auto py-3.5 px-8 rounded-lg bg-gradient-to-br from-[#e5c17d] via-[#dfba76] to-[#d8ae64] hover:brightness-105 text-[#15120d] font-serif text-xs sm:text-[13px] font-bold tracking-[0.22em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer uppercase border border-[#edd89f]/40"
           >
-            <span>MOVE TO FILE 02</span>
-            <span>→</span>
+            <span className="whitespace-nowrap">MOVE TO FILE NO. 02</span>
+            <span className="letter-arrow-right inline-block font-sans text-sm font-bold">→</span>
           </Link>
         </nav>
       </main>

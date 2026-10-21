@@ -243,5 +243,45 @@
   transform: translateY(0);
 }
 
+/* ==========================================================================
+   OWL-STYLE NAVIGATION BUTTON ANIMATIONS
+   Matches Raven/Owl page button design: hover letter-spacing expansion,
+   arrow glide effects, and breathing golden glow on the gold CTA button.
+   ========================================================================== */
+
+/* Breathing Golden Glow Animation for the primary gold action button */
+@keyframes letterGoldGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(223, 186, 118, 0.35), 0 0 40px rgba(223, 186, 118, 0.18);
+  }
+  50% {
+    box-shadow: 0 0 32px rgba(223, 186, 118, 0.58), 0 0 55px rgba(223, 186, 118, 0.3), 0 0 12px rgba(255, 235, 175, 0.45);
+  }
+}
+.letter-animate-gold-glow {
+  animation: letterGoldGlow 4s ease-in-out infinite;
+}
+
+/* Hover Typography Expansion */
+.letter-btn-expand {
+  transition: letter-spacing 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease, box-shadow 0.3s ease;
+}
+.letter-btn-expand:hover {
+  letter-spacing: 0.26em;
+}
+
+/* Arrow Glide Animations */
+.letter-arrow-left {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.group:hover .letter-arrow-left {
+  transform: translateX(-5px);
+}
+.letter-arrow-right {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.group:hover .letter-arrow-right {
+  transform: translateX(5px);
+}
 
 

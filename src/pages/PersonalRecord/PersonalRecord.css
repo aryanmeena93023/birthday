@@ -1,643 +1,980 @@
 /* =========================================================================
-   PERSONAL RECORD PAGE — VINTAGE RESTRICTED ARCHIVE THEME
-   Strictly scoped to the Personal Record I specification & reference image
+   FILE 04 AUDIO RECORD PAGE — STRICT VISUAL MATCH TO IMAGE 3
+   Target: moment-kept-reference.jpg (2176 x 1152 visual source of truth)
+   Prefix: mk-
    ========================================================================= */
 
 :root {
-  --pr-bg-dark: #070709;
-  --pr-panel-bg: #0c0b0a;
-  --pr-panel-inner-glow: radial-gradient(ellipse 90% 75% at 50% 28%, #181410 0%, #0d0c0b 60%, #080706 100%);
-  --pr-brass-border: rgba(186, 163, 109, 0.46);
-  --pr-brass-inner-border: rgba(186, 163, 109, 0.22);
-  --pr-brass-muted: #96835b;
-  --pr-brass-champagne: #cfbc8c;
-  --pr-brass-bright: #e8d5a8;
-  --pr-text-ivory: #f5efe6;
-  --pr-text-ivory-dim: rgba(245, 239, 230, 0.76);
-  --pr-text-muted: rgba(207, 188, 140, 0.62);
-  --pr-btn-brass: linear-gradient(180deg, #baa36d 0%, #9e8753 50%, #7d683a 100%);
+  --mk-bg-deep: #030203;
+  --mk-card-surface: #140f11;
+  --mk-brass-primary: #caa86f;
+  --mk-brass-light: #ebd8b0;
+  --mk-brass-dark: #6e5429;
+  --mk-brass-border: rgba(145, 118, 75, 0.42);
+  --mk-brass-border-subtle: rgba(145, 118, 75, 0.22);
+  --mk-ivory-title: #f2e7d0;
+  --mk-ivory-sub: #c4b59d;
+  --mk-ivory-mono: #a5957d;
 }
 
-.personal-record-container {
+/* Base Page Shell */
+.mk-container {
   min-height: 100vh;
   width: 100%;
-  background-color: var(--pr-bg-dark);
-  background-image: 
-    radial-gradient(ellipse 85% 65% at 50% 30%, rgba(28, 22, 16, 0.55) 0%, rgba(7, 7, 9, 0.95) 80%, #050507 100%),
-    radial-gradient(circle at 50% 50%, rgba(20, 16, 13, 0.6) 0%, transparent 100%);
-  color: var(--pr-text-ivory);
+  background-color: var(--mk-bg-deep);
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: relative;
+  align-items: center;
   overflow-x: hidden;
+  overflow-y: auto;
   box-sizing: border-box;
-  font-family: 'Playfair Display', Georgia, serif;
-}
-
-/* Atmospheric subtle vignette & motes overlay */
-.personal-record-vignette {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(circle at 50% 50%, transparent 45%, rgba(0, 0, 0, 0.68) 100%);
-  z-index: 1;
-}
-
-/* =========================================================================
-   TOP NAVIGATION BAR
-   ========================================================================= */
-
-.personal-record-header {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-}
-
-.personal-record-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.1rem 2.2rem;
-  max-width: 1440px;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-
-.personal-record-return-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  background: transparent;
-  border: none;
-  color: var(--pr-brass-champagne);
-  font-family: 'Space Mono', 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  padding: 0.35rem 0.2rem;
-}
-
-.personal-record-return-link:hover {
-  color: var(--pr-text-ivory);
-  transform: translateX(-2px);
-  text-shadow: 0 0 10px rgba(207, 188, 140, 0.4);
-}
-
-.personal-record-return-arrow {
-  font-size: 0.95rem;
-  line-height: 1;
-  transition: transform 0.25s ease;
-}
-
-.personal-record-return-link:hover .personal-record-return-arrow {
-  transform: translateX(-3px);
-}
-
-.personal-record-case-tag {
-  font-family: 'Space Mono', 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: var(--pr-brass-muted);
+  font-family: 'Cormorant Garamond', Georgia, serif;
   user-select: none;
 }
 
-.personal-record-mute-btn {
+/* Reset outline on buttons */
+.mk-container button:focus {
+  outline: none;
+}
+
+/* =========================================================================
+   PHASE 2 & 3: ANIMATED DUSTY-RED ATMOSPHERIC BACKGROUND
+   Matches moment-kept-reference.jpg:
+   - Deep black and charcoal base
+   - Dark burgundy, dusty crimson, and reddish-brown billowing smoke
+   - Subtle gray-black wisps blending naturally with the red haze
+   - Slow, organic, seamless, multi-speed cinematic drift
+   - Respects prefers-reduced-motion
+   ========================================================================= */
+
+.mk-bg-ambience {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  background-color: #030203;
+}
+
+/* 1. Base Atmospheric Texture Plate (from reference image) */
+.mk-bg-plate {
+  position: absolute;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  background-image: url('/media/archive/textures/personal-record-atmosphere.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  animation: mkPlateSubtleDrift 54s ease-in-out infinite alternate;
+}
+
+/* 2. Left Billowing Burgundy and Dusty Crimson Smoke Plume */
+.mk-smoke-billow-left {
+  position: absolute;
+  left: -10%;
+  top: -10%;
+  width: 65%;
+  height: 120%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  background:
+    radial-gradient(ellipse 650px 850px at 20% 52%, rgba(125, 26, 44, 0.62) 0%, rgba(85, 18, 30, 0.38) 42%, rgba(45, 10, 18, 0.16) 68%, transparent 82%),
+    radial-gradient(circle 440px at 14% 40%, rgba(110, 24, 38, 0.52) 0%, transparent 74%),
+    radial-gradient(circle 500px at 28% 70%, rgba(95, 20, 32, 0.45) 0%, transparent 72%);
+  animation: mkLeftSmokeCurl 36s ease-in-out infinite alternate;
+}
+
+/* 3. Right Counter-Drifting Dusty Crimson and Ash Smoke Plume */
+.mk-smoke-billow-right {
+  position: absolute;
+  right: -10%;
+  top: -10%;
+  width: 65%;
+  height: 120%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  background:
+    radial-gradient(ellipse 620px 820px at 80% 54%, rgba(105, 24, 38, 0.55) 0%, rgba(72, 18, 28, 0.35) 42%, transparent 75%),
+    radial-gradient(circle 420px at 88% 64%, rgba(68, 52, 56, 0.58) 0%, rgba(42, 28, 32, 0.3) 50%, transparent 75%),
+    radial-gradient(circle 480px at 74% 38%, rgba(88, 22, 34, 0.38) 0%, transparent 70%);
+  animation: mkRightSmokeCurl 44s ease-in-out infinite alternate;
+}
+
+/* 4. Ambient Reddish-Brown & Burgundy Haze */
+.mk-smoke-haze-ambient {
+  position: absolute;
+  inset: -10%;
+  width: 120%;
+  height: 120%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  background:
+    radial-gradient(ellipse 950px 520px at 50% 22%, rgba(85, 20, 32, 0.32) 0%, transparent 70%),
+    radial-gradient(circle 650px at 50% 80%, rgba(65, 16, 25, 0.28) 0%, transparent 70%);
+  animation: mkAmbientHazeDrift 58s ease-in-out infinite alternate;
+}
+
+/* 5. Microscopic photographic dust and grain overlay */
+.mk-dust-texture {
+  position: absolute;
+  inset: 0;
+  opacity: 0.042;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  animation: mkDustShimmer 24s ease-in-out infinite alternate;
+}
+
+/* 6. Deep vignette falloff to pure black edges & clear center */
+.mk-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    /* Soft shadow behind the central content so header and frame pop with high contrast */
+    radial-gradient(ellipse 880px 580px at 50% 50%, rgba(3, 2, 3, 0.35) 30%, transparent 75%),
+    /* Outer corners falloff to solid black */
+    radial-gradient(ellipse 85% 80% at 50% 50%, transparent 60%, rgba(0, 0, 0, 0.45) 85%, #000000 100%);
+}
+
+/* Continuous, organic, slow cinematic animations */
+@keyframes mkPlateSubtleDrift {
+  0% {
+    transform: translate3d(-10px, -6px, 0) scale(1.0);
+  }
+  50% {
+    transform: translate3d(8px, 10px, 0) scale(1.025);
+  }
+  100% {
+    transform: translate3d(12px, -8px, 0) scale(1.012);
+  }
+}
+
+@keyframes mkLeftSmokeCurl {
+  0% {
+    transform: translate3d(-15px, -10px, 0) scale(1.0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate3d(16px, 12px, 0) scale(1.04);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate3d(24px, -14px, 0) scale(1.02);
+    opacity: 0.58;
+  }
+}
+
+@keyframes mkRightSmokeCurl {
+  0% {
+    transform: translate3d(14px, 12px, 0) scale(1.02) rotate(-0.3deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate3d(-18px, -12px, 0) scale(0.97) rotate(0.4deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate3d(-24px, 10px, 0) scale(1.01) rotate(-0.1deg);
+    opacity: 0.54;
+  }
+}
+
+@keyframes mkAmbientHazeDrift {
+  0% {
+    transform: translate3d(0, -8px, 0) scale(1.0);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate3d(-10px, 10px, 0) scale(1.03);
+    opacity: 0.65;
+  }
+  100% {
+    transform: translate3d(12px, -6px, 0) scale(0.98);
+    opacity: 0.48;
+  }
+}
+
+@keyframes mkDustShimmer {
+  0% {
+    opacity: 0.038;
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    opacity: 0.048;
+    transform: translate3d(-6px, 4px, 0);
+  }
+  100% {
+    opacity: 0.040;
+    transform: translate3d(5px, -4px, 0);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .mk-bg-plate,
+  .mk-smoke-billow-left,
+  .mk-smoke-billow-right,
+  .mk-smoke-haze-ambient,
+  .mk-dust-texture {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* =========================================================================
+   PHASE 1C: TOP NAVIGATION BAR
+   Compact height ~56px, fine horizontal divider, muted ivory/brass
+   ========================================================================= */
+.mk-topbar {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(20px, 11vw, 240px);
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(135, 110, 75, 0.2);
+}
+
+.mk-return-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  background: rgba(18, 15, 12, 0.65);
-  border: 1px solid var(--pr-brass-border);
-  border-radius: 4px;
-  padding: 0.4rem 0.85rem;
-  color: var(--pr-brass-champagne);
-  font-family: 'Space Mono', 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
+  gap: 0.65rem;
+  background: transparent;
+  border: none;
+  color: var(--mk-ivory-mono);
+  font-family: 'Space Mono', monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.22s ease;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  padding: 6px 0;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
-.personal-record-mute-btn:hover {
-  background: rgba(28, 23, 18, 0.85);
-  border-color: var(--pr-brass-bright);
-  color: var(--pr-text-ivory);
-  box-shadow: 0 0 12px rgba(186, 163, 109, 0.25);
+.mk-return-btn:hover {
+  color: var(--mk-brass-light);
+  text-shadow: 0 0 10px rgba(235, 216, 176, 0.4);
 }
 
-.personal-record-mute-btn:focus-visible {
-  outline: 2px solid var(--pr-brass-champagne);
-  outline-offset: 2px;
+.mk-return-arrow {
+  font-size: 1rem;
+  line-height: 1;
 }
 
-.personal-record-mute-icon {
-  width: 14px;
-  height: 14px;
+.mk-mute-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: rgba(14, 10, 10, 0.82);
+  border: 1px solid rgba(145, 120, 80, 0.42);
+  border-radius: 3px;
+  color: #dfd2bc;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 5px 13px;
+  height: 30px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mk-mute-btn:hover {
+  background: rgba(26, 18, 16, 0.95);
+  border-color: rgba(205, 175, 120, 0.7);
+  box-shadow: 0 0 10px rgba(186, 163, 109, 0.25);
+  color: #ffffff;
+}
+
+.mk-mute-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.personal-record-nav-divider {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(186, 163, 109, 0.18) 18%,
-    rgba(186, 163, 109, 0.38) 50%,
-    rgba(186, 163, 109, 0.18) 82%,
-    transparent 100%
-  );
+  color: #dfd2bc;
 }
 
 /* =========================================================================
-   INTRODUCTORY QUOTATION
+   PHASE 1C: HEADING BLOCK
+   Matches exact typography, proportion & spacing of IMAGE 3
    ========================================================================= */
-
-.personal-record-intro-quote {
+.mk-header {
+  position: relative;
+  z-index: 5;
   text-align: center;
-  font-family: 'Playfair Display', Georgia, serif;
+  padding-top: clamp(14px, 2.2vh, 26px);
+  padding-bottom: clamp(12px, 1.8vh, 20px);
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.mk-case-label {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.3em;
+  color: var(--mk-ivory-mono);
+  text-transform: uppercase;
+  margin-bottom: 7px;
+}
+
+.mk-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(26px, 2.35vw, 42px);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--mk-ivory-title);
+  margin: 0;
+  line-height: 1.15;
+  text-transform: uppercase;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.95), 0 0 25px rgba(240, 230, 206, 0.15);
+  white-space: nowrap;
+}
+
+.mk-subtitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(14px, 1vw, 17.5px);
   font-style: italic;
-  font-size: 1.05rem;
-  line-height: 1.5;
-  color: var(--pr-text-ivory-dim);
-  margin: 1.75rem auto 1.5rem auto;
-  padding: 0 1.5rem;
+  font-weight: 400;
+  color: var(--mk-ivory-sub);
+  margin-top: 6px;
+  margin-bottom: 0;
   letter-spacing: 0.02em;
-  max-width: 680px;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
-  position: relative;
-  z-index: 5;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.9);
 }
 
 /* =========================================================================
-   MAIN ARCHIVAL DOUBLE-FRAME PANEL
+   MAIN WRAPPER & ARCHIVAL FRAME (PHASE 1D)
    ========================================================================= */
-
-.personal-record-main-area {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem 1.5rem 2rem 1.5rem;
+.mk-main-placeholder {
   position: relative;
   z-index: 5;
-}
-
-.personal-record-outer-frame {
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  max-width: 780px;
-  background: var(--pr-panel-bg);
-  background-image: var(--pr-panel-inner-glow);
-  border: 1px solid var(--pr-brass-border);
-  box-shadow: 
-    0 24px 60px rgba(0, 0, 0, 0.88),
-    0 0 45px rgba(186, 163, 109, 0.07),
-    inset 0 0 24px rgba(0, 0, 0, 0.8);
-  padding: 10px;
+  flex: 1;
+  padding: 0 1.5rem clamp(8px, 1.5vh, 18px) 1.5rem;
   box-sizing: border-box;
 }
 
-/* Outer geometric corner brackets */
-.pr-corner-bracket {
+/* Outer Card: Large centered rectangular antique archival casing */
+.mk-outer-card {
+  position: relative;
+  width: 100%;
+  max-width: 1205px;
+  background: linear-gradient(180deg, #171113 0%, #110c0e 35%, #0c090a 100%);
+  border: 1px solid rgba(135, 105, 65, 0.45);
+  border-radius: 6px;
+  padding: clamp(26px, 2.3vw, 36px) clamp(18px, 2vw, 34px) clamp(22px, 2vw, 32px) clamp(18px, 2vw, 34px);
+  box-sizing: border-box;
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.95),
+    0 0 45px rgba(45, 12, 20, 0.3),
+    inset 0 1px 1px rgba(225, 200, 155, 0.12),
+    inset 0 0 25px rgba(0, 0, 0, 0.85);
+}
+
+/* Inner Ornate Frame: Double antique brass lines & corner rosettes */
+.mk-inner-frame {
+  position: relative;
+  border: 1px solid rgba(145, 118, 75, 0.42);
+  border-radius: 3px;
+  padding: clamp(24px, 2.2vw, 36px) clamp(16px, 1.6vw, 26px) clamp(18px, 1.8vw, 26px) clamp(16px, 1.6vw, 26px);
+  background: rgba(8, 7, 7, 0.85);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.95);
+}
+
+/* Thinner inner concentric border line with gap */
+.mk-inner-frame::before {
+  content: '';
   position: absolute;
-  width: 14px;
-  height: 14px;
+  inset: 5px;
+  border: 1px solid rgba(145, 118, 75, 0.22);
+  border-radius: 2px;
   pointer-events: none;
 }
 
-.pr-corner-tl {
-  top: -1px;
-  left: -1px;
-  border-top: 2px solid var(--pr-brass-champagne);
-  border-left: 2px solid var(--pr-brass-champagne);
+/* Corner Flourishes: Antique engraved floral rosette and scrolls */
+.mk-flourish {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+  z-index: 2;
+  color: #c8ad7f;
+  opacity: 0.7;
 }
 
-.pr-corner-tr {
-  top: -1px;
-  right: -1px;
-  border-top: 2px solid var(--pr-brass-champagne);
-  border-right: 2px solid var(--pr-brass-champagne);
+.mk-flourish-tl {
+  top: 7px;
+  left: 7px;
 }
 
-.pr-corner-bl {
-  bottom: -1px;
-  left: -1px;
-  border-bottom: 2px solid var(--pr-brass-champagne);
-  border-left: 2px solid var(--pr-brass-champagne);
+.mk-flourish-tr {
+  top: 7px;
+  right: 7px;
+  transform: scaleX(-1);
 }
 
-.pr-corner-br {
-  bottom: -1px;
-  right: -1px;
-  border-bottom: 2px solid var(--pr-brass-champagne);
-  border-right: 2px solid var(--pr-brass-champagne);
+.mk-flourish-bl {
+  bottom: 7px;
+  left: 7px;
+  transform: scaleY(-1);
 }
 
-/* Inner frame */
-.personal-record-inner-frame {
+.mk-flourish-br {
+  bottom: 7px;
+  right: 7px;
+  transform: scale(-1, -1);
+}
+
+/* =========================================================================
+   BRASS NAMEPLATE PLAQUE: "PERSONAL RECORD I"
+   Centered across top border of the frame, matches plaque_zoom.png
+   ========================================================================= */
+.mk-nameplate-wrapper {
+  position: absolute;
+  top: -19px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.mk-nameplate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 216px;
+  height: 38px;
+  background: linear-gradient(180deg, #dfc89a 0%, #caa972 35%, #9b7e46 75%, #765d30 100%);
+  border: 1px solid #4a3818;
+  border-radius: 2px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.85),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.45);
   position: relative;
-  border: 1px solid var(--pr-brass-inner-border);
-  padding: 2.75rem 2.5rem 1.75rem 2.5rem;
+}
+
+/* Inner engraved border on plaque */
+.mk-nameplate::before {
+  content: '';
+  position: absolute;
+  inset: 2.5px;
+  border: 1px solid rgba(75, 52, 18, 0.35);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+.mk-plaque-rivets-left,
+.mk-plaque-rivets-right {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  box-sizing: border-box;
+  justify-content: space-between;
+  height: 26px;
+  z-index: 2;
 }
 
-/* Inner frame corner notches */
-.pr-inner-notch {
+.mk-rivet {
+  width: 3.5px;
+  height: 3.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #5a4220 55%, #150f07 100%);
+  box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.7);
+  flex-shrink: 0;
+}
+
+.mk-nameplate-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: #23180b;
+  text-transform: uppercase;
+  text-align: center;
+  flex: 1;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
+  z-index: 2;
+}
+
+/* =========================================================================
+   PHASE 1E: MEDIA DISPLAY AREA
+   Pure black display, thin brass border, corner brackets, centered button
+   ========================================================================= */
+.mk-video-area-slot {
+  position: relative;
+  width: 100%;
+}
+
+.mk-video-frame {
+  position: relative;
+  width: 100%;
+  height: clamp(340px, 28vw, 480px);
+  background: #000000;
+  border: 1px solid rgba(140, 115, 75, 0.42);
+  border-radius: 2px;
+  box-shadow:
+    inset 0 0 35px rgba(0, 0, 0, 0.98),
+    0 3px 12px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Video frame corner brackets matching corner_flourish_zoom.png */
+.mk-video-corner {
   position: absolute;
   width: 10px;
   height: 10px;
   pointer-events: none;
+  z-index: 4;
 }
 
-.pr-notch-tl {
-  top: 4px;
-  left: 4px;
-  border-top: 1px solid rgba(207, 188, 140, 0.4);
-  border-left: 1px solid rgba(207, 188, 140, 0.4);
-}
-
-.pr-notch-tr {
-  top: 4px;
-  right: 4px;
-  border-top: 1px solid rgba(207, 188, 140, 0.4);
-  border-right: 1px solid rgba(207, 188, 140, 0.4);
-}
-
-.pr-notch-bl {
-  bottom: 4px;
-  left: 4px;
-  border-bottom: 1px solid rgba(207, 188, 140, 0.4);
-  border-left: 1px solid rgba(207, 188, 140, 0.4);
-}
-
-.pr-notch-br {
-  bottom: 4px;
-  right: 4px;
-  border-bottom: 1px solid rgba(207, 188, 140, 0.4);
-  border-right: 1px solid rgba(207, 188, 140, 0.4);
-}
-
-/* =========================================================================
-   HEADINGS & RECORD METADATA
-   ========================================================================= */
-
-.personal-record-label {
-  font-family: 'Space Mono', 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  color: var(--pr-brass-muted);
-  margin-bottom: 0.85rem;
-  user-select: none;
-}
-
-.personal-record-title {
-  font-family: 'Playfair Display', 'Cinzel', Georgia, serif;
-  font-size: clamp(1.6rem, 3.4vw, 2.35rem);
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--pr-text-ivory);
-  margin: 0 0 0.85rem 0;
-  line-height: 1.15;
-  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.8);
-}
-
-.personal-record-subtitle {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-style: italic;
-  font-size: 0.96rem;
-  color: var(--pr-text-ivory-dim);
-  margin: 0 0 2.2rem 0;
-  letter-spacing: 0.02em;
-  max-width: 520px;
-  line-height: 1.45;
-}
-
-/* =========================================================================
-   ANTIQUE BRASS RECORD GRAPHIC
-   ========================================================================= */
-
-.personal-record-disc-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.25rem;
-}
-
-.personal-record-disc {
-  width: 168px;
-  height: 168px;
-  object-fit: contain;
-  border-radius: 50%;
-  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.88)) drop-shadow(0 0 12px rgba(186, 163, 109, 0.15));
-  transition: transform 0.4s ease;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-
-.personal-record-disc.spinning {
-  animation: discSpin 16s linear infinite;
-}
-
-@keyframes discSpin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.personal-record-identifier {
-  font-family: 'Space Mono', 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--pr-brass-muted);
-  margin: 0 0 1.6rem 0;
-  user-select: none;
-}
-
-/* =========================================================================
-   PLAYBACK BUTTON
-   ========================================================================= */
-
-.personal-record-play-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.65rem;
-  width: 100%;
-  max-width: 320px;
-  height: 44px;
-  border-radius: 9999px;
-  background: var(--pr-btn-brass);
-  border: 1px solid #3d3119;
-  box-shadow: 
-    0 4px 18px rgba(0, 0, 0, 0.7),
-    inset 0 1px 0 rgba(255, 255, 255, 0.35),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.45);
-  color: #17130c;
-  font-family: 'Space Mono', 'JetBrains Mono', monospace;
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
-  margin-bottom: 2.75rem;
-  position: relative;
-  outline: none;
-}
-
-.personal-record-play-btn:hover {
-  filter: brightness(1.08);
-  transform: translateY(-1px);
-  box-shadow: 
-    0 6px 22px rgba(0, 0, 0, 0.85),
-    0 0 16px rgba(186, 163, 109, 0.32),
-    inset 0 1px 0 rgba(255, 255, 255, 0.45);
-}
-
-.personal-record-play-btn:active {
-  transform: translateY(1px);
-  filter: brightness(0.96);
-  box-shadow: 
-    0 2px 8px rgba(0, 0, 0, 0.9),
-    inset 0 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.personal-record-play-btn:focus-visible {
-  outline: 2px solid var(--pr-brass-bright);
-  outline-offset: 3px;
-}
-
-.personal-record-play-icon-circle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 1.5px solid #17130c;
-  margin-right: 0.15rem;
-}
-
-.personal-record-play-icon-circle svg {
-  margin-left: 1px;
-}
-
-/* =========================================================================
-   BOTTOM METADATA DIVIDER & ROW
-   ========================================================================= */
-
-.personal-record-meta-divider-wrapper {
-  width: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.15rem;
-}
-
-.personal-record-meta-divider-line {
+.mk-video-corner::before {
+  content: '';
   position: absolute;
+  top: 0;
   left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(186, 163, 109, 0.18) 12%,
-    rgba(186, 163, 109, 0.32) 50%,
-    rgba(186, 163, 109, 0.18) 88%,
-    transparent 100%
-  );
-}
-
-.personal-record-meta-divider-glyph {
-  position: relative;
-  background: var(--pr-panel-bg);
-  padding: 0 0.8rem;
-  color: var(--pr-brass-muted);
-  font-size: 0.62rem;
-  line-height: 1;
-  user-select: none;
-}
-
-.personal-record-meta-row {
   width: 100%;
+  height: 100%;
+  border-top: 1.5px solid rgba(210, 180, 125, 0.75);
+  border-left: 1.5px solid rgba(210, 180, 125, 0.75);
+}
+
+.mk-video-corner::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 2.5px;
+  height: 2.5px;
+  border-radius: 50%;
+  background: #f2e3be;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+}
+
+.mk-vid-tl {
+  top: 4px;
+  left: 4px;
+}
+
+.mk-vid-tr {
+  top: 4px;
+  right: 4px;
+  transform: scaleX(-1);
+}
+
+.mk-vid-bl {
+  bottom: 4px;
+  left: 4px;
+  transform: scaleY(-1);
+}
+
+.mk-vid-br {
+  bottom: 4px;
+  right: 4px;
+  transform: scale(-1, -1);
+}
+
+.mk-video-element {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000000;
+  display: block;
+}
+
+/* Center circular muted-gold play/pause control */
+.mk-center-pause-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(74px, 4.8vw, 96px);
+  height: clamp(74px, 4.8vw, 96px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, #fbf3dc 0%, #ceb47d 45%, #9b7e46 80%, #685025 100%);
+  border: 1.5px solid #dfc99a;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 0.4rem;
-  box-sizing: border-box;
-}
-
-.personal-record-meta-left {
-  font-family: 'Space Mono', 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--pr-text-muted);
-  user-select: none;
-}
-
-.personal-record-relock-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  background: transparent;
-  border: none;
-  color: var(--pr-text-muted);
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 0.82rem;
-  letter-spacing: 0.04em;
+  justify-content: center;
+  color: #1c1409;
   cursor: pointer;
-  padding: 0.25rem 0.4rem;
-  border-radius: 3px;
-  transition: all 0.22s ease;
-  text-decoration: none;
-}
-
-.personal-record-relock-btn:hover {
-  color: var(--pr-brass-champagne);
-  text-shadow: 0 0 10px rgba(207, 188, 140, 0.35);
-  transform: translateY(-1px);
-}
-
-.personal-record-relock-btn:focus-visible {
-  outline: 1px solid var(--pr-brass-champagne);
-  outline-offset: 2px;
-}
-
-.personal-record-relock-icon {
-  width: 13px;
-  height: 13px;
-  opacity: 0.85;
-}
-
-/* =========================================================================
-   PAGE FOOTER
-   ========================================================================= */
-
-.personal-record-footer {
-  text-align: center;
-  padding: 1.4rem 1rem 1.75rem 1rem;
-  position: relative;
+  box-shadow:
+    0 0 30px rgba(205, 175, 115, 0.35),
+    0 6px 20px rgba(0, 0, 0, 0.85),
+    inset 0 1px 2px rgba(255, 255, 255, 0.75),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
   z-index: 5;
 }
 
-.personal-record-footer-text {
-  font-family: 'Space Mono', 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--pr-brass-muted);
+.mk-center-pause-btn:hover {
+  transform: translate(-50%, -50%) scale(1.04);
+  box-shadow:
+    0 0 38px rgba(205, 175, 115, 0.5),
+    0 8px 24px rgba(0, 0, 0, 0.95),
+    inset 0 1px 2px rgba(255, 255, 255, 0.85);
+  filter: brightness(1.05);
+}
+
+.mk-center-pause-btn:active {
+  transform: translate(-50%, -50%) scale(0.97);
+}
+
+/* Playback Control Strip underneath video */
+.mk-control-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  width: 100%;
+  height: 38px;
+  margin-top: 10px;
+  padding: 0 12px;
+  background: rgba(9, 8, 8, 0.92);
+  border: 1px solid rgba(135, 110, 75, 0.32);
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+/* Small round pause control on strip */
+.mk-ctrl-pause-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #d8bf8c 0%, #ad9059 50%, #826735 100%);
+  border: 1px solid #ebdcba;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1c1409;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.65);
+}
+
+.mk-ctrl-pause-btn:hover {
+  transform: scale(1.06);
+  filter: brightness(1.08);
+}
+
+/* Progress track and knob */
+.mk-progress-container {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 20px;
+  cursor: pointer;
   user-select: none;
-  opacity: 0.85;
+}
+
+.mk-progress-track {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background: rgba(135, 110, 75, 0.28);
+  border-radius: 1px;
+}
+
+.mk-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #cbb585;
+  border-radius: 1px;
+}
+
+.mk-progress-knob {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #ceb582 50%, #765d30 100%);
+  border: 1px solid #f2e5c8;
+  box-shadow: 0 0 5px rgba(206, 181, 130, 0.7);
+  pointer-events: none;
+}
+
+/* Timer display */
+.mk-timer {
+  font-family: 'Space Mono', monospace;
+  font-size: 11.5px;
+  color: #dfd2bc;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Volume & Fullscreen buttons */
+.mk-icon-btn {
+  background: transparent;
+  border: none;
+  color: #b8a584;
+  cursor: pointer;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.mk-icon-btn:hover {
+  color: var(--mk-brass-light);
+  transform: scale(1.1);
 }
 
 /* =========================================================================
-   RESPONSIVE ADAPTATIONS
+   PHASE 1F: BUTTONS
+   Refined cartouche "PLAY THE RECORD" & dashed "RE-LOCK RECORD" / "SKIP RECORD"
    ========================================================================= */
+.mk-actions-slot {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: clamp(16px, 1.8vw, 24px);
+}
 
-@media (max-width: 768px) {
-  .personal-record-nav {
-    padding: 0.9rem 1.25rem;
+/* Main Cartouche Plaque Button: reduced size ~370px max-width x 44px height */
+.mk-plaque-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 370px;
+  height: 44px;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 20%, rgba(255, 248, 225, 0.45) 0%, transparent 70%),
+    linear-gradient(180deg, #dfcca2 0%, #c4a36a 30%, #9e7f44 75%, #765d2a 100%);
+  border: 1.2px solid #ebdbb5;
+  border-radius: 22px;
+  box-sizing: border-box;
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.85),
+    0 0 18px rgba(189, 160, 105, 0.25),
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.8),
+    inset 0 -1.5px 3px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  user-select: none;
+}
+
+/* Inner concentric border */
+.mk-plaque-btn::before {
+  content: '';
+  position: absolute;
+  inset: 2.5px;
+  border: 1px solid rgba(75, 52, 18, 0.38);
+  border-radius: 20px;
+  pointer-events: none;
+}
+
+.mk-plaque-btn:hover {
+  transform: translateY(-1.5px);
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.95),
+    0 0 24px rgba(189, 160, 105, 0.35),
+    inset 0 1px 2px rgba(255, 255, 255, 0.9);
+  filter: brightness(1.04);
+}
+
+.mk-plaque-btn:active {
+  transform: translateY(1px);
+}
+
+.mk-key-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #241a0d;
+  flex-shrink: 0;
+}
+
+.mk-plaque-text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: #241a0d;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Secondary Action Buttons Row */
+.mk-secondary-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  width: 100%;
+  margin-top: 14px;
+}
+
+.mk-secondary-btn {
+  position: relative;
+  background: rgba(12, 10, 10, 0.8);
+  border: 1px dashed rgba(155, 130, 85, 0.48);
+  border-radius: 2px;
+  color: #dfd2bc;
+  font-family: 'Space Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  height: 27px;
+  width: 126px;
+  white-space: nowrap;
+  padding: 0 8px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+/* Tiny corner brackets on secondary buttons */
+.mk-secondary-btn::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 4px;
+  height: 4px;
+  border-top: 1.5px solid rgba(210, 185, 135, 0.7);
+  border-left: 1.5px solid rgba(210, 185, 135, 0.7);
+  pointer-events: none;
+}
+
+.mk-secondary-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 4px;
+  height: 4px;
+  border-bottom: 1.5px solid rgba(210, 185, 135, 0.7);
+  border-right: 1.5px solid rgba(210, 185, 135, 0.7);
+  pointer-events: none;
+}
+
+.mk-secondary-btn:hover {
+  background: rgba(24, 18, 16, 0.95);
+  border-color: rgba(225, 195, 140, 0.75);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(186, 163, 109, 0.28);
+  transform: translateY(-1px);
+}
+
+.mk-secondary-btn:active {
+  transform: translateY(1px);
+}
+
+/* =========================================================================
+   PHASE 1G: FOOTER
+   ========================================================================= */
+.mk-footer {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 14px 1rem 18px 1rem;
+}
+
+.mk-footer-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--mk-ivory-mono);
+  opacity: 0.55;
+  margin: 0;
+}
+
+/* =========================================================================
+   RESPONSIVE DESIGN PRESERVATION
+   ========================================================================= */
+@media (max-width: 1024px) {
+  .mk-outer-card {
+    padding: 24px 16px;
   }
 
-  .personal-record-case-tag {
-    font-size: 0.65rem;
-    letter-spacing: 0.18em;
+  .mk-inner-frame {
+    padding: 26px 12px 18px 12px;
   }
 
-  .personal-record-return-link {
-    font-size: 0.65rem;
-    letter-spacing: 0.16em;
-  }
-
-  .personal-record-intro-quote {
-    font-size: 0.92rem;
-    margin: 1.2rem auto 1rem auto;
-    padding: 0 1rem;
-  }
-
-  .personal-record-outer-frame {
-    padding: 8px;
-    max-width: 95%;
-  }
-
-  .personal-record-inner-frame {
-    padding: 2rem 1.4rem 1.4rem 1.4rem;
-  }
-
-  .personal-record-disc {
-    width: 138px;
-    height: 138px;
-  }
-
-  .personal-record-play-btn {
-    max-width: 280px;
-    height: 42px;
-    font-size: 0.7rem;
-    margin-bottom: 2rem;
+  .mk-plaque-btn {
+    max-width: 420px;
+    height: 52px;
   }
 }
 
-@media (max-width: 480px) {
-  .personal-record-nav {
-    padding: 0.75rem 0.9rem;
+@media (max-width: 768px) {
+  .mk-topbar {
+    padding: 0 16px;
   }
 
-  .personal-record-return-link span:not(.personal-record-return-arrow) {
-    display: inline-block;
+  .mk-title {
+    white-space: normal;
   }
 
-  .personal-record-case-tag {
-    display: none;
+  .mk-outer-card {
+    padding: 20px 10px;
   }
 
-  .personal-record-inner-frame {
-    padding: 1.6rem 1rem 1.2rem 1rem;
+  .mk-control-bar {
+    gap: 0.5rem;
+    padding: 0 8px;
   }
 
-  .personal-record-title {
-    font-size: 1.35rem;
+  .mk-timer {
+    font-size: 10.5px;
   }
 
-  .personal-record-subtitle {
-    font-size: 0.85rem;
+  .mk-plaque-btn {
+    max-width: 320px;
+    height: 48px;
+    gap: 0.5rem;
   }
 
-  .personal-record-disc {
-    width: 120px;
-    height: 120px;
+  .mk-plaque-text {
+    font-size: 15px;
   }
 
-  .personal-record-meta-row {
+  .mk-secondary-row {
     flex-direction: column;
-    gap: 0.75rem;
-    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
   }
 
-  .personal-record-meta-left {
-    font-size: 0.6rem;
+  .mk-secondary-btn {
+    width: 100%;
+    max-width: 200px;
   }
 }
