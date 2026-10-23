@@ -311,7 +311,7 @@ const Raven: React.FC = () => {
           </p>
           <div className="inline-flex flex-col items-center justify-center transition-all duration-300 hover:border-[#dfc27d]/50" style={{ borderRadius: '12px', background: 'rgba(18, 22, 30, 0.72)', border: '1px solid rgba(184, 148, 88, 0.28)', boxShadow: 'rgba(255, 255, 255, 0.05) 0px 1px 2px inset, rgba(0, 0, 0, 0.5) 0px 10px 30px', padding: '16px 36px', minWidth: '320px', backdropFilter: 'blur(8px)' }}>
             <span className="tracking-[0.32em] text-[#7f8694] font-medium uppercase mb-1.5 transition-colors duration-300 hover:text-[#b8c2d1]" style={{ fontFamily: 'monospace, ui-monospace, sans-serif', fontSize: '11px' }}>
-              VAULT RECORD STATUS
+              VAULT RECOVER ST<u style={{ textDecorationThickness: '1px', textUnderlineOffset: '2px' }}>"<span style={{ color: '#dfc27d', textShadow: '0 0 6px rgba(223, 194, 125, 0.4)' }}>8</span>"</u>US
             </span>
             <div className="flex items-center justify-center gap-3">
               <span className="vault-counter-glow" style={{ fontFamily: '"Cinzel", "Playfair Display", serif', fontSize: '1.25rem', fontWeight: 700, letterSpacing: '0.24em', color: '#ece6d8' }}>

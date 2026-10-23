@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { markDiscovered } from '../../utils/discoveryTracker';
 
 const Forbidden: React.FC = () => {
   const navigate = useNavigate();
@@ -7,6 +8,10 @@ const Forbidden: React.FC = () => {
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       if (event.data && (event.data.type === 'VAULT_UNLOCKED' || event.data.destination === '/personal-record')) {
+        try {
+          localStorage.setItem('birthdayWebsite_chestUnlocked', 'true');
+        } catch (err) {}
+        markDiscovered('forbidden');
         navigate('/personal-record');
       }
     };

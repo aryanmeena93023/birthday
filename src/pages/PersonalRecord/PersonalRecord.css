@@ -70,10 +70,12 @@
   background-repeat: no-repeat;
   will-change: transform;
   transform: translate3d(0, 0, 0);
+  opacity: 0.72;
+  filter: saturate(0.8) brightness(0.9);
   animation: mkPlateSubtleDrift 54s ease-in-out infinite alternate;
 }
 
-/* 2. Left Billowing Burgundy and Dusty Crimson Smoke Plume */
+/* 2. Left Billowing Smoke Plume - Soft atmospheric burgundy & wine */
 .mk-smoke-billow-left {
   position: absolute;
   left: -10%;
@@ -84,13 +86,13 @@
   mix-blend-mode: screen;
   will-change: transform, opacity;
   background:
-    radial-gradient(ellipse 650px 850px at 20% 52%, rgba(125, 26, 44, 0.62) 0%, rgba(85, 18, 30, 0.38) 42%, rgba(45, 10, 18, 0.16) 68%, transparent 82%),
-    radial-gradient(circle 440px at 14% 40%, rgba(110, 24, 38, 0.52) 0%, transparent 74%),
-    radial-gradient(circle 500px at 28% 70%, rgba(95, 20, 32, 0.45) 0%, transparent 72%);
+    radial-gradient(ellipse 650px 850px at 20% 52%, rgba(95, 22, 35, 0.45) 0%, rgba(65, 16, 26, 0.28) 42%, rgba(35, 12, 20, 0.12) 68%, transparent 82%),
+    radial-gradient(circle 440px at 14% 40%, rgba(85, 20, 32, 0.36) 0%, transparent 74%),
+    radial-gradient(circle 500px at 28% 70%, rgba(70, 18, 28, 0.3) 0%, transparent 72%);
   animation: mkLeftSmokeCurl 36s ease-in-out infinite alternate;
 }
 
-/* 3. Right Counter-Drifting Dusty Crimson and Ash Smoke Plume */
+/* 3. Right Counter-Drifting Smoky Charcoal and Warm Burgundy Plume */
 .mk-smoke-billow-right {
   position: absolute;
   right: -10%;
@@ -101,13 +103,13 @@
   mix-blend-mode: screen;
   will-change: transform, opacity;
   background:
-    radial-gradient(ellipse 620px 820px at 80% 54%, rgba(105, 24, 38, 0.55) 0%, rgba(72, 18, 28, 0.35) 42%, transparent 75%),
-    radial-gradient(circle 420px at 88% 64%, rgba(68, 52, 56, 0.58) 0%, rgba(42, 28, 32, 0.3) 50%, transparent 75%),
-    radial-gradient(circle 480px at 74% 38%, rgba(88, 22, 34, 0.38) 0%, transparent 70%);
+    radial-gradient(ellipse 620px 820px at 80% 54%, rgba(80, 20, 32, 0.38) 0%, rgba(55, 16, 25, 0.24) 42%, transparent 75%),
+    radial-gradient(circle 420px at 88% 64%, rgba(55, 42, 46, 0.5) 0%, rgba(38, 22, 28, 0.24) 50%, transparent 75%),
+    radial-gradient(circle 480px at 74% 38%, rgba(65, 18, 28, 0.25) 0%, transparent 70%);
   animation: mkRightSmokeCurl 44s ease-in-out infinite alternate;
 }
 
-/* 4. Ambient Reddish-Brown & Burgundy Haze */
+/* 4. Ambient Deep Charcoal & Warm Wine Haze */
 .mk-smoke-haze-ambient {
   position: absolute;
   inset: -10%;
@@ -117,8 +119,8 @@
   mix-blend-mode: screen;
   will-change: transform, opacity;
   background:
-    radial-gradient(ellipse 950px 520px at 50% 22%, rgba(85, 20, 32, 0.32) 0%, transparent 70%),
-    radial-gradient(circle 650px at 50% 80%, rgba(65, 16, 25, 0.28) 0%, transparent 70%);
+    radial-gradient(ellipse 950px 520px at 50% 22%, rgba(65, 18, 28, 0.22) 0%, transparent 70%),
+    radial-gradient(circle 650px at 50% 80%, rgba(50, 15, 22, 0.18) 0%, transparent 70%);
   animation: mkAmbientHazeDrift 58s ease-in-out infinite alternate;
 }
 
@@ -140,9 +142,9 @@
   pointer-events: none;
   background:
     /* Soft shadow behind the central content so header and frame pop with high contrast */
-    radial-gradient(ellipse 880px 580px at 50% 50%, rgba(3, 2, 3, 0.35) 30%, transparent 75%),
+    radial-gradient(ellipse 880px 580px at 50% 50%, rgba(3, 2, 3, 0.5) 30%, transparent 75%),
     /* Outer corners falloff to solid black */
-    radial-gradient(ellipse 85% 80% at 50% 50%, transparent 60%, rgba(0, 0, 0, 0.45) 85%, #000000 100%);
+    radial-gradient(ellipse 85% 80% at 50% 50%, transparent 50%, rgba(0, 0, 0, 0.65) 80%, #000000 100%);
 }
 
 /* Continuous, organic, slow cinematic animations */
@@ -150,9 +152,11 @@
   0% {
     transform: translate3d(-10px, -6px, 0) scale(1.0);
   }
+
   50% {
     transform: translate3d(8px, 10px, 0) scale(1.025);
   }
+
   100% {
     transform: translate3d(12px, -8px, 0) scale(1.012);
   }
@@ -163,10 +167,12 @@
     transform: translate3d(-15px, -10px, 0) scale(1.0);
     opacity: 0.55;
   }
+
   50% {
     transform: translate3d(16px, 12px, 0) scale(1.04);
     opacity: 0.75;
   }
+
   100% {
     transform: translate3d(24px, -14px, 0) scale(1.02);
     opacity: 0.58;
@@ -178,10 +184,12 @@
     transform: translate3d(14px, 12px, 0) scale(1.02) rotate(-0.3deg);
     opacity: 0.5;
   }
+
   50% {
     transform: translate3d(-18px, -12px, 0) scale(0.97) rotate(0.4deg);
     opacity: 0.7;
   }
+
   100% {
     transform: translate3d(-24px, 10px, 0) scale(1.01) rotate(-0.1deg);
     opacity: 0.54;
@@ -193,10 +201,12 @@
     transform: translate3d(0, -8px, 0) scale(1.0);
     opacity: 0.45;
   }
+
   50% {
     transform: translate3d(-10px, 10px, 0) scale(1.03);
     opacity: 0.65;
   }
+
   100% {
     transform: translate3d(12px, -6px, 0) scale(0.98);
     opacity: 0.48;
@@ -208,10 +218,12 @@
     opacity: 0.038;
     transform: translate3d(0, 0, 0);
   }
+
   50% {
     opacity: 0.048;
     transform: translate3d(-6px, 4px, 0);
   }
+
   100% {
     opacity: 0.040;
     transform: translate3d(5px, -4px, 0);
@@ -220,6 +232,7 @@
 
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
+
   .mk-bg-plate,
   .mk-smoke-billow-left,
   .mk-smoke-billow-right,
@@ -760,141 +773,211 @@
 }
 
 /* Main Cartouche Plaque Button: reduced size ~370px max-width x 44px height */
+/* Main Cartouche Plaque Button: antique champagne-gold pill matching "OPEN THE CHEST" reference */
 .mk-plaque-btn {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  width: 100%;
-  max-width: 370px;
-  height: 44px;
+  width: calc(100% - 32px);
+  max-width: 380px;
+  height: 40px;
+  padding: 0 24px;
+  /* Soft, subdued antique champagne-gold metallic gradient - darker, warmer, avoiding bright cream/white highlights */
   background:
-    radial-gradient(ellipse 80% 50% at 50% 20%, rgba(255, 248, 225, 0.45) 0%, transparent 70%),
-    linear-gradient(180deg, #dfcca2 0%, #c4a36a 30%, #9e7f44 75%, #765d2a 100%);
-  border: 1.2px solid #ebdbb5;
-  border-radius: 22px;
+    linear-gradient(180deg,
+      rgba(240, 222, 180, 0.22) 0%,
+      rgba(215, 195, 150, 0.12) 20%,
+      rgba(175, 150, 105, 0.05) 50%,
+      rgba(130, 105, 65, 0.18) 80%,
+      rgba(88, 68, 38, 0.38) 100%),
+    linear-gradient(90deg,
+      #8c7447 0%,
+      #a9905e 7%,
+      #beaa7a 20%,
+      #cebb8c 38%,
+      #d5c394 50%,
+      #cebb8c 62%,
+      #beaa7a 80%,
+      #a9905e 93%,
+      #8c7447 100%);
+  /* Delicate, warm aged-gold outline with natural depth */
+  border: 1px solid rgba(120, 95, 52, 0.7);
+  border-radius: 9999px;
   box-sizing: border-box;
+  /* Subdued, warm atmospheric edge glow without halos or excessive bloom */
   box-shadow:
-    0 4px 14px rgba(0, 0, 0, 0.85),
-    0 0 18px rgba(189, 160, 105, 0.25),
-    inset 0 1px 1.5px rgba(255, 255, 255, 0.8),
-    inset 0 -1.5px 3px rgba(0, 0, 0, 0.5);
+    0 4px 16px rgba(0, 0, 0, 0.75),
+    0 0 14px rgba(205, 175, 115, 0.16),
+    inset 0 1px 0.8px rgba(255, 245, 215, 0.45),
+    inset 0 -1.5px 2px rgba(65, 48, 22, 0.38);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.25, 1),
+    box-shadow 0.22s ease,
+    filter 0.22s ease;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
 }
 
-/* Inner concentric border */
+/* Delicate subtle inner edge line matching the reference button contour */
 .mk-plaque-btn::before {
   content: '';
   position: absolute;
-  inset: 2.5px;
-  border: 1px solid rgba(75, 52, 18, 0.38);
-  border-radius: 20px;
+  inset: 2.5px 4px;
+  border: 1px solid rgba(130, 102, 58, 0.26);
+  border-radius: 9999px;
   pointer-events: none;
+  box-shadow:
+    0 0.5px 0.5px rgba(255, 245, 215, 0.32),
+    inset 0 0.5px 0.5px rgba(255, 245, 215, 0.22);
 }
 
 .mk-plaque-btn:hover {
-  transform: translateY(-1.5px);
+  transform: translateY(-1px);
+  filter: brightness(1.03);
   box-shadow:
-    0 6px 18px rgba(0, 0, 0, 0.95),
-    0 0 24px rgba(189, 160, 105, 0.35),
-    inset 0 1px 2px rgba(255, 255, 255, 0.9);
-  filter: brightness(1.04);
+    0 5px 18px rgba(0, 0, 0, 0.82),
+    0 0 18px rgba(215, 185, 125, 0.26),
+    0 0 32px rgba(195, 160, 95, 0.12),
+    inset 0 1px 1px rgba(255, 245, 215, 0.55),
+    inset 0 -1.5px 2px rgba(65, 48, 22, 0.35);
 }
 
 .mk-plaque-btn:active {
-  transform: translateY(1px);
+  transform: translateY(1px) scale(0.99);
+  filter: brightness(0.98);
+  box-shadow:
+    0 2px 7px rgba(0, 0, 0, 0.72),
+    0 0 8px rgba(190, 155, 95, 0.14),
+    inset 0 1.5px 2.5px rgba(60, 44, 20, 0.45),
+    inset 0 -0.5px 1px rgba(255, 245, 215, 0.18);
 }
 
 .mk-key-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #241a0d;
+  color: #2b1f10;
+  filter: drop-shadow(0 0.5px 0 rgba(255, 250, 230, 0.45));
   flex-shrink: 0;
+  margin-top: -1px;
+  transition: transform 0.2s ease;
+}
+
+.mk-plaque-btn:hover .mk-key-icon {
+  transform: scale(1.04);
 }
 
 .mk-plaque-text {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 15.5px;
-  font-weight: 600;
+  font-family: 'Cinzel', 'EB Garamond', 'Cormorant Garamond', Georgia, serif;
+  font-size: 13.5px;
+  font-weight: 500;
   letter-spacing: 0.22em;
-  color: #241a0d;
+  color: #2e2417;
   text-transform: uppercase;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+  text-shadow: 0 0.5px 0.5px rgba(255, 248, 225, 0.45);
+  line-height: 1;
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Secondary Action Buttons Row */
+/* Secondary Action Buttons Row (Harry Potter Magical Archive Aesthetic) */
 .mk-secondary-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 22px;
+  gap: 28px;
   width: 100%;
-  margin-top: 14px;
+  margin-top: 16px;
+  flex-wrap: wrap;
 }
 
 .mk-secondary-btn {
   position: relative;
-  background: rgba(12, 10, 10, 0.8);
-  border: 1px dashed rgba(155, 130, 85, 0.48);
-  border-radius: 2px;
+  background:
+    linear-gradient(180deg, rgba(28, 22, 18, 0.92) 0%, rgba(14, 11, 10, 0.96) 100%);
+  border: 1px solid rgba(160, 130, 80, 0.5);
+  border-radius: 3px;
   color: #dfd2bc;
-  font-family: 'Space Mono', monospace;
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
+  font-family: 'Cinzel', 'EB Garamond', 'Cormorant Garamond', Georgia, serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  height: 27px;
-  width: 126px;
+  height: 32px;
+  min-width: 136px;
+  padding: 0 16px;
   white-space: nowrap;
-  padding: 0 8px;
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 245, 215, 0.18),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.6);
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.25, 1),
+              box-shadow 0.22s ease,
+              border-color 0.22s ease,
+              color 0.22s ease,
+              background 0.22s ease;
   user-select: none;
+  outline: none;
 }
 
-/* Tiny corner brackets on secondary buttons */
+/* Subtle antique inner frame line for magical archive cabinet feel */
 .mk-secondary-btn::before {
   content: '';
   position: absolute;
-  top: -1px;
-  left: -1px;
-  width: 4px;
-  height: 4px;
-  border-top: 1.5px solid rgba(210, 185, 135, 0.7);
-  border-left: 1.5px solid rgba(210, 185, 135, 0.7);
+  inset: 2px;
+  border: 1px solid rgba(190, 155, 100, 0.16);
+  border-radius: 1px;
   pointer-events: none;
+  transition: border-color 0.22s ease;
 }
 
+/* Delicate corner accents replacing dashed styling */
 .mk-secondary-btn::after {
   content: '';
   position: absolute;
-  bottom: -1px;
-  right: -1px;
-  width: 4px;
-  height: 4px;
-  border-bottom: 1.5px solid rgba(210, 185, 135, 0.7);
-  border-right: 1.5px solid rgba(210, 185, 135, 0.7);
+  inset: 0;
   pointer-events: none;
 }
 
+/* Next Page Button has a subtle forward antique gold warmth */
+.mk-btn-skip {
+  border-color: rgba(185, 150, 95, 0.6);
+  color: #ede2cf;
+}
+
+.mk-btn-skip::before {
+  border-color: rgba(210, 175, 115, 0.22);
+}
+
 .mk-secondary-btn:hover {
-  background: rgba(24, 18, 16, 0.95);
-  border-color: rgba(225, 195, 140, 0.75);
-  color: #ffffff;
-  box-shadow: 0 0 12px rgba(186, 163, 109, 0.28);
-  transform: translateY(-1px);
+  transform: translateY(-1.5px);
+  background:
+    linear-gradient(180deg, rgba(38, 28, 20, 0.95) 0%, rgba(18, 14, 12, 0.98) 100%);
+  border-color: rgba(215, 180, 115, 0.8);
+  color: #fff9ee;
+  box-shadow:
+    0 5px 16px rgba(0, 0, 0, 0.85),
+    0 0 14px rgba(215, 175, 100, 0.25),
+    inset 0 1px 0 rgba(255, 250, 225, 0.3);
+}
+
+.mk-secondary-btn:hover::before {
+  border-color: rgba(235, 200, 135, 0.38);
 }
 
 .mk-secondary-btn:active {
   transform: translateY(1px);
+  box-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.8),
+    inset 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 /* =========================================================================

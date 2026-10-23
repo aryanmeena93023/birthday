@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './PersonalRecord.css';
 import { playArtifactChime } from '../../utils/archiveAudio';
+import { unmarkDiscovered } from '../../utils/discoveryTracker';
 
 export const PersonalRecord: React.FC = () => {
   const navigate = useNavigate();
@@ -109,13 +110,18 @@ export const PersonalRecord: React.FC = () => {
   };
 
   const handleRelockRecord = () => {
+    try {
+      localStorage.removeItem('birthdayWebsite_chestUnlocked');
+      localStorage.removeItem('birthdayWebsite_keyAcquired');
+    } catch (err) {}
+    unmarkDiscovered('forbidden');
     playArtifactChime(329.63);
     navigate('/forbidden');
   };
 
   const handleSkipRecord = () => {
     playArtifactChime(523.25);
-    navigate('/drawer');
+    navigate('/key-acquisition');
   };
 
   return (
@@ -167,10 +173,10 @@ export const PersonalRecord: React.FC = () => {
 
       {/* HEADER */}
       <section className="mk-header">
-        <span className="mk-case-label">CASE FILE // NO. 04</span>
-        <h1 className="mk-title">A MOMENT KEPT FOR YOU</h1>
+        <span className="mk-case-label">CASE FILE // NO. 05</span>
+        <h1 className="mk-title">A CLASSIFIED BIRTHDAY SURPRISE</h1>
         <p className="mk-subtitle">
-          &ldquo;Some memories deserve to be kept a little longer.&rdquo;
+          Please enjoy responsibly. Side effects may include smiling.
         </p>
       </section>
 
@@ -435,17 +441,6 @@ export const PersonalRecord: React.FC = () => {
                   onClick={handleTogglePlay}
                   aria-label="Play the Record"
                 >
-                  <span className="mk-key-icon" aria-hidden="true">
-                    {/* Antique skeleton key icon matching reference */}
-                    <svg viewBox="0 0 28 28" width="22" height="22" fill="currentColor">
-                      <g transform="rotate(-30 14 14)">
-                        <path d="M 8 14 C 8 11.2 10.2 9 13 9 C 15.8 9 18 11.2 18 14 C 18 16.8 15.8 19 13 19 C 10.2 19 8 16.8 8 14 Z M 10.5 14 C 10.5 15.4 11.6 16.5 13 16.5 C 14.4 16.5 15.5 15.4 15.5 14 C 15.5 12.6 14.4 11.5 13 11.5 C 11.6 11.5 10.5 12.6 10.5 14 Z" fillRule="evenodd" />
-                        <rect x="17" y="13" width="9" height="2" rx="0.5" />
-                        <rect x="18" y="12" width="1.5" height="4" rx="0.5" />
-                        <path d="M 23 15 L 23 18.5 L 24.5 18.5 L 24.5 16.5 L 25.5 16.5 L 25.5 18.5 L 26.5 18.5 L 26.5 15 Z" />
-                      </g>
-                    </svg>
-                  </span>
                   <span className="mk-plaque-text">PLAY THE RECORD</span>
                 </button>
 
@@ -463,8 +458,9 @@ export const PersonalRecord: React.FC = () => {
                     type="button"
                     className="mk-secondary-btn mk-btn-skip"
                     onClick={handleSkipRecord}
+                    aria-label="Next Page"
                   >
-                    SKIP RECORD
+                    NEXT PAGE
                   </button>
                 </div>
               </div>

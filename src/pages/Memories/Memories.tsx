@@ -401,18 +401,22 @@ const Memories: React.FC = () => {
             <Link 
               to="/case"
               onClick={handleReturn}
-              className="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-[3px] border border-[#6b5536]/80 bg-[#14110d]/70 text-[#dfcfb4] hover:text-[#faedd6] hover:border-[#b89562] hover:bg-[#1f1912]/90 hover:shadow-[0_0_15px_rgba(184,149,98,0.2)] transition-all duration-300 text-sm md:text-[14.5px] font-serif tracking-wide focus:outline-none focus:ring-1 focus:ring-[#c8a670]"
+              className="memories-return-archive-btn"
             >
-              <span aria-hidden="true" className="text-base text-[#cfbe9f]">←</span>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+              </svg>
               <span>Return to Archive</span>
             </Link>
             <Link 
               to="/raven"
               onClick={handleNext}
-              className="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-[3px] border border-[#b89562]/70 bg-gradient-to-r from-[#b89562] via-[#cfbe9f] to-[#a8824f] text-[#1d1916] hover:brightness-105 hover:border-[#d6a85e] hover:shadow-[0_0_18px_rgba(207,190,159,0.3)] transition-all duration-300 text-sm md:text-[14.5px] font-serif font-medium tracking-wide focus:outline-none focus:ring-2 focus:ring-[#f5ebd7] shadow-[0_2px_12px_rgba(0,0,0,0.5)] cursor-pointer"
+              className="memories-next-file-btn"
             >
               <span>File No. 03</span>
-              <span aria-hidden="true" className="text-base font-semibold">→</span>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
+              </svg>
             </Link>
           </div>
         </nav>

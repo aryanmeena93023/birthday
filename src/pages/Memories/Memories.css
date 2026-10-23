@@ -481,3 +481,74 @@
   }
 }
 
+/* Scoped Navigation Buttons matching File No. 04 */
+.memories-return-archive-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: 6px;
+  border: 1px solid rgba(221, 196, 139, 0.25);
+  background: rgba(23, 24, 26, 0.95);
+  color: #cfc5b6;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.memories-return-archive-btn:hover,
+.memories-return-archive-btn:focus-visible {
+  color: #e3e2e5;
+  background: #252629;
+  border-color: rgba(221, 196, 139, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.65);
+  outline: none;
+}
+
+.memories-return-archive-btn:active {
+  transform: translateY(0);
+}
+
+.memories-next-file-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.65rem 1.35rem;
+  border-radius: 6px;
+  border: 1px solid #e5ce97;
+  background: linear-gradient(135deg, #ddc48b 0%, #c4aa6c 100%);
+  color: #121315;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(221, 196, 139, 0.3), 0 2px 8px rgba(0, 0, 0, 0.6);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.memories-next-file-btn:hover,
+.memories-next-file-btn:focus-visible {
+  background: linear-gradient(135deg, #e7cf96 0%, #ceb476 100%);
+  border-color: #f0db9f;
+  color: #0b0c0d;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(221, 196, 139, 0.45), 0 4px 12px rgba(0, 0, 0, 0.7);
+  outline: none;
+}
+
+.memories-next-file-btn:active {
+  transform: translateY(0);
+}
+

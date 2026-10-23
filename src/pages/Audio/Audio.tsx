@@ -112,7 +112,9 @@ const AudioPage: React.FC = () => {
           <div className="single-recording-badge-row">
             <div className="single-recording-badge">
               <span className="badge-live-pulse" />
-              <span className="recording-label-text">{audioMemoryData.recordingLabel}</span>
+              <span className="recording-label-text">
+                RECORDING // PERSONAL TESTAMENT <u style={{ textDecorationThickness: '1px', textUnderlineOffset: '2px' }}>"<span style={{ fontSize: '12.5px', color: '#f3e5ab', textShadow: '0 0 6px rgba(221, 196, 139, 0.5)' }}>2</span>"</u>
+              </span>
             </div>
           </div>
 

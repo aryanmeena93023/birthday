@@ -3,39 +3,87 @@
 
 export type DiscoveryKey = 'letter' | 'memories' | 'audio' | 'raven' | 'drawer' | 'forbidden';
 
-const LEGACY_STORAGE_KEY = 'archive_discoveries_v1';
+const ARCHIVE_DISCOVERIES_KEY = 'birthdayWebsite_archive_discoveries';
 
-// In-memory runtime state that survives route navigation but resets on page refresh
-const inMemoryDiscoveredSet = new Set<DiscoveryKey>();
+function loadPersistedDiscoveries(): Set<DiscoveryKey> {
+  const set = new Set<DiscoveryKey>();
+  if (typeof window !== 'undefined') {
+    try {
+      const raw = localStorage.getItem(ARCHIVE_DISCOVERIES_KEY);
+      if (raw) {
+        const arr = JSON.parse(raw);
+        if (Array.isArray(arr)) {
+          arr.forEach((k: string) => {
+            if (['letter', 'memories', 'audio', 'raven', 'drawer', 'forbidden'].includes(k)) {
+              set.add(k as DiscoveryKey);
+            }
+          });
+        }
+      }
+      // Also check persistent chest unlock status
+      if (localStorage.getItem('birthdayWebsite_chestUnlocked') === 'true') {
+        set.add('forbidden');
+      }
+    } catch {
+      // Ignore storage access errors
+    }
+  }
+  return set;
+}
 
-// Automatically clean up old persistent keys if present from previous builds
-if (typeof window !== 'undefined') {
-  try {
-    localStorage.removeItem(LEGACY_STORAGE_KEY);
-  } catch {
-    // Ignore storage access errors
+const inMemoryDiscoveredSet = loadPersistedDiscoveries();
+
+function persistDiscoveries(): void {
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem(ARCHIVE_DISCOVERIES_KEY, JSON.stringify(Array.from(inMemoryDiscoveredSet)));
+    } catch {
+      // Ignore storage access errors
+    }
   }
 }
 
 export function getDiscoveredSet(): Set<DiscoveryKey> {
+  if (typeof window !== 'undefined') {
+    if (localStorage.getItem('birthdayWebsite_chestUnlocked') === 'true') {
+      inMemoryDiscoveredSet.add('forbidden');
+    }
+  }
   return new Set(inMemoryDiscoveredSet);
 }
 
 export function isDiscovered(key: DiscoveryKey): boolean {
+  if (key === 'forbidden' && typeof window !== 'undefined') {
+    if (localStorage.getItem('birthdayWebsite_chestUnlocked') === 'true') {
+      inMemoryDiscoveredSet.add('forbidden');
+    }
+  }
   return inMemoryDiscoveredSet.has(key);
 }
 
 export function markDiscovered(key: DiscoveryKey): number {
   inMemoryDiscoveredSet.add(key);
+  persistDiscoveries();
   return inMemoryDiscoveredSet.size;
 }
 
 export function getDiscoveredCount(): number {
+  if (typeof window !== 'undefined') {
+    if (localStorage.getItem('birthdayWebsite_chestUnlocked') === 'true') {
+      inMemoryDiscoveredSet.add('forbidden');
+    }
+  }
   return inMemoryDiscoveredSet.size;
+}
+
+export function unmarkDiscovered(key: DiscoveryKey): void {
+  inMemoryDiscoveredSet.delete(key);
+  persistDiscoveries();
 }
 
 export function resetDiscoveries(): void {
   inMemoryDiscoveredSet.clear();
+  persistDiscoveries();
 }
 
 let owlMemory1Unlocked = false;

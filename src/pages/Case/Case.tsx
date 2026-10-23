@@ -12,7 +12,7 @@ import {
   setArchiveManuallyMuted,
   isArchiveManuallyMutedState
 } from '../../utils/archiveAudio';
-import { getDiscoveredCount, getDiscoveredSet, markDiscovered } from '../../utils/discoveryTracker';
+import { getDiscoveredCount, getDiscoveredSet } from '../../utils/discoveryTracker';
 
 const Case: React.FC = () => {
   const [isAmbiencePlaying, setIsAmbiencePlaying] = useState(false);
@@ -192,10 +192,7 @@ const Case: React.FC = () => {
           <span className="direct-nav-sep">|</span>
           <Link
             to="/forbidden"
-            onClick={() => {
-              handleNavClick(293.66);
-              markDiscovered('forbidden');
-            }}
+            onClick={() => handleNavClick(293.66)}
             className={`direct-nav-link ${discoveredSet.has('forbidden') ? 'discovered' : ''}`}
           >
             {discoveredSet.has('forbidden') && <span className="check-dot">✓</span>} Cipher Box
