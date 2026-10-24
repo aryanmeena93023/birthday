@@ -16,8 +16,13 @@ import { getDiscoveredCount, getDiscoveredSet } from '../../utils/discoveryTrack
 
 const Case: React.FC = () => {
   const [isAmbiencePlaying, setIsAmbiencePlaying] = useState(false);
-  const discoveredCount = getDiscoveredCount();
-  const discoveredSet = getDiscoveredSet();
+  const [discoveredCount, setDiscoveredCount] = useState(() => getDiscoveredCount());
+  const [discoveredSet, setDiscoveredSet] = useState(() => getDiscoveredSet());
+
+  useEffect(() => {
+    setDiscoveredCount(getDiscoveredCount());
+    setDiscoveredSet(getDiscoveredSet());
+  }, []);
 
   useEffect(() => {
     // Stop any legacy drone synthesizer sound so there are never conflicting tracks

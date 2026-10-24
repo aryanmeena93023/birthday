@@ -246,7 +246,7 @@ const Letter: React.FC = () => {
           try {
             osc.stop();
             osc.disconnect();
-          } catch(e) {}
+          } catch (e) { }
         }, 850);
       }
       setIsAmbientActive(false);
@@ -260,7 +260,7 @@ const Letter: React.FC = () => {
         try {
           ambientOscillatorRef.current.stop();
           ambientOscillatorRef.current.disconnect();
-        } catch(e) {}
+        } catch (e) { }
       }
     };
   }, []);
@@ -332,7 +332,7 @@ const Letter: React.FC = () => {
                   className="note-tag px-3 py-1.5 sm:px-4 sm:py-2 pr-6 sm:pr-8 text-center cursor-default z-10 select-none shadow-sm transition-transform duration-200 hover:-rotate-2"
                   title="Dedication tag"
                 >
-                  <span 
+                  <span
                     className="font-script text-2xl sm:text-3xl text-[#2a1d17] leading-[1.1] block tracking-wide"
                     style={{ fontFamily: '"Great Vibes", "Alex Brush", cursive', paddingRight: '0.2rem' }}
                   >
@@ -467,7 +467,7 @@ const Letter: React.FC = () => {
 
                 <div className="letter-line-item">
                   <p>
-                    Have a wonderful day, enjoy yourself, and may the year ahead bring you lots of happiness, success, and reasons to look back and say, <em>"That was a good year." 
+                    Have a wonderful day, enjoy yourself, and may the year ahead bring you lots of happiness, success, and reasons to look back and say, <em>"That was a good year."
                       so </em>
                   </p>
                 </div>
@@ -485,7 +485,7 @@ const Letter: React.FC = () => {
                       textTransform: 'uppercase',
                     }}
                   >
-                    HAPPY BIRTHDAY ,"3<span className="inline-block relative underline decoration-amber-700 decoration-2 underline-offset-4 font-bold" style={{textDecoration: 'underline 2px', textUnderlineOffset: '4px', fontStyle: 'italic', color: 'rgb(110, 38, 29)'}}>0</span>00"😜
+                    HAPPY BIRTHDAY ,"3<span className="inline-block relative underline decoration-amber-700 decoration-2 underline-offset-4 font-bold" style={{ textDecoration: 'underline 2px', textUnderlineOffset: '4px', fontStyle: 'italic', color: 'rgb(110, 38, 29)' }}>0</span>00"😜
                   </span>
                 </div>
 
@@ -574,9 +574,8 @@ const Letter: React.FC = () => {
             onClick={toggleAmbientAudio}
           >
             <span
-              className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                isAmbientActive ? 'bg-amber-400 shadow-[0_0_8px_#f59e0b]' : 'bg-[#7a1c22]'
-              }`}
+              className={`w-1.5 h-1.5 rounded-full transition-colors ${isAmbientActive ? 'bg-amber-400 shadow-[0_0_8px_#f59e0b]' : 'bg-[#7a1c22]'
+                }`}
             />
             <span>{isAmbientActive ? 'Whisper Active' : 'Ambient Whisper'}</span>
           </button>

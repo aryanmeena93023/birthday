@@ -83,7 +83,17 @@ export function unmarkDiscovered(key: DiscoveryKey): void {
 
 export function resetDiscoveries(): void {
   inMemoryDiscoveredSet.clear();
-  persistDiscoveries();
+  owlMemory1Unlocked = false;
+  owlMemory2Unlocked = false;
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.removeItem(ARCHIVE_DISCOVERIES_KEY);
+      localStorage.removeItem('birthdayWebsite_chestUnlocked');
+      localStorage.removeItem('birthdayWebsite_keyAcquired');
+    } catch {
+      // Ignore storage errors
+    }
+  }
 }
 
 let owlMemory1Unlocked = false;

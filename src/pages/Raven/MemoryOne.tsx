@@ -134,14 +134,14 @@ const MemoryOne: React.FC = () => {
           </div>
           
           <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] tracking-[0.16em] uppercase text-[#f7efe1] mt-3 md:mt-4 font-normal drop-shadow-[0_2px_18px_rgba(235,215,180,0.15)]" style={{ fontFamily: '"Cormorant Garamond", Georgia, serif', color: 'rgb(244, 237, 226)', letterSpacing: '0.22em', fontWeight: 500, textShadow: 'rgba(244, 237, 226, 0.12) 0px 2px 20px' }}>
-            A BEAUTIFUL SMILE
+            A BEAUTIFUL INCIDENT
           </h1>
           
           <div className="flex flex-col items-center justify-center mt-3 md:mt-4">
             <span className="text-[8px] text-[#c29d5a]/70 mb-1.5">✦</span>
             <div className="flex items-center gap-3 text-[10px] md:text-[11px] tracking-[0.28em] text-[#8e8576] font-sans uppercase">
               <span className="inline-block w-8 md:w-10 h-[1px] bg-[#4f483c]/50"></span>
-              <span>during the dance practice</span>
+              <span></span>
               <span className="inline-block w-8 md:w-10 h-[1px] bg-[#4f483c]/50"></span>
             </div>
           </div>
@@ -169,11 +169,14 @@ const MemoryOne: React.FC = () => {
 
             <div className="cinematic-entry-text relative z-10 px-2 sm:px-6 md:px-8 mb-8 sm:mb-12">
               <div className="font-serif italic text-[#27221d] text-left antialiased max-w-2xl mx-auto space-y-4 text-sm sm:text-base md:text-[15px] leading-[1.8] sm:leading-[1.85] selection:bg-[#dfd3bc]">
-                <p><span className="drop-cap font-normal not-italic text-[#1d1915]">I</span> don’t think you remember this moment, but it’s honestly one of the most special memories I have with you.</p>
-                <p>It was when we were practicing for Teachers’ Day. I was doing really badly at the dance, so you told me to keep practicing. You were sitting right in front of me, with your legs folded, leaning against the wall beneath the window.</p>
-                <p>And then, while I was practicing, we suddenly made eye contact for two or three seconds. I don’t know what was going through your mind at that moment, but I remember how, out of awkwardness, we both smiled. You turned your face toward the wall and started laughing, while all our friends were looking at us.</p>
-                <p>I don’t know why such a small moment stayed with me so clearly, but it did. Maybe it was the unexpected eye contact, the awkwardness we both felt, or simply the way you smiled. Your smile was genuinely so beautiful that even now, when I think about that moment, it brings back the same feeling.</p>
-                <p>Maybe you don’t remember it at all, and for you, it was just another ordinary day. But for me, it became one of those little memories that I never really wanted to forget. And I think that’s what makes it so special to me—not because something extraordinary happened, but because, for a few seconds, I got to share such a sweet little moment with you ^_^.</p>
+                <p><span className="drop-cap font-normal not-italic text-[#1d1915]">T</span>here’s a little memory from Class 11 that I’ve never told you about, but whenever I think about it, it still makes me smile.</p>
+                <p>Back when we were on our school holidays, we had only recently started talking on WhatsApp. I didn’t know  your birthday, so it was just another ordinary morning for me.</p>
+                <p>I think it was around 10 AM when your mom posted a status wishing you a happy birthday, with your photo alongside your little rabbit, and wrote, “Happy Birthday, Bettu!” 🐰❤️</p>
+                <p>And guess what? I genuinely thought it was your rabbit’s birthday! 😭😂 I thought you were wishing your little bunny, and I had absolutely no idea that the birthday wish was actually for you!</p>
+                <p>Later, when I realised that it was YOUR birthday and that Bettu was your nickname, I laughed so much at my own misunderstanding. 👻😂 I never told you about it, but somehow, this silly little incident became a memory I still remember.</p>
+                <p>It’s funny how the smallest things from the past stay with us, Back then, we had only just started talking, and I had no idea that one day, I’d look back at something as simple as a WhatsApp status and smile about it. 😄</p>
+                <p>And oh, one more thing! I had a rabbit as a pet once, too, just like yours. 😎🐰</p>
+                <p><strong>So, if I could go back to that morning and say one thing, it would be : Happy Birthday, Bettu! 😜❤️</strong></p>
               </div>
             </div>
 

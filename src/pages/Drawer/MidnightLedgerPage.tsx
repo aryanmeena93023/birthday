@@ -95,8 +95,8 @@ const MidnightLedgerPage: React.FC<MidnightLedgerPageProps> = ({
 
       streamTimerRef.current = setTimeout(() => {
         runTextStream(lineIndex + 1);
-      }, 800);
-    }, 3500);
+      }, 600);
+    }, 2600);
   };
 
   const handleBlowCandles = (e?: React.MouseEvent) => {

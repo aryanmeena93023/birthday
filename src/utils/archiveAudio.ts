@@ -15,7 +15,7 @@ function getAudioContext(): AudioContext | null {
     }
   }
   if (audioCtx && audioCtx.state === 'suspended') {
-    audioCtx.resume().catch(() => {});
+    audioCtx.resume().catch(() => { });
   }
   return audioCtx;
 }
@@ -142,10 +142,10 @@ export function toggleAmbienceDrone(onStateChange?: (playing: boolean) => void):
           try {
             droneOsc1?.stop();
             droneOsc2?.stop();
-          } catch {}
+          } catch { }
         }, 900);
       }
-    } catch {}
+    } catch { }
     isAmbiencePlaying = false;
     onStateChange?.(false);
     return false;
@@ -160,7 +160,7 @@ export function stopAmbienceDrone(): void {
       droneGain.gain.setValueAtTime(0.0001, ctx.currentTime);
       droneOsc1?.stop();
       droneOsc2?.stop();
-    } catch {}
+    } catch { }
   }
   isAmbiencePlaying = false;
 }
@@ -204,5 +204,30 @@ export function setArchiveManuallyMuted(muted: boolean): void {
 
 export function isArchiveManuallyMutedState(): boolean {
   return isArchiveManuallyMuted;
+}
+
+let letterOpeningAudio: HTMLAudioElement | null = null;
+
+export function playLetterOpeningSound(): void {
+  try {
+    if (typeof window === 'undefined') return;
+    if (!letterOpeningAudio) {
+      letterOpeningAudio = new Audio('/audio/letter-opening.mp3');
+      letterOpeningAudio.volume = 0.55;
+    }
+    letterOpeningAudio.currentTime = 0;
+    letterOpeningAudio.play().catch(() => {});
+  } catch {
+    // Fallback
+  }
+}
+
+export function stopLetterOpeningSound(): void {
+  if (letterOpeningAudio) {
+    try {
+      letterOpeningAudio.pause();
+      letterOpeningAudio.currentTime = 0;
+    } catch { }
+  }
 }
 

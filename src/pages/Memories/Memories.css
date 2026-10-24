@@ -336,6 +336,7 @@
   ) border-box;
   -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   opacity: var(--frame-sheen-opacity);
   transition: opacity 300ms cubic-bezier(0.25, 1, 0.5, 1);

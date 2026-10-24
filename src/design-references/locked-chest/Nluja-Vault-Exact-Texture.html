@@ -1600,22 +1600,19 @@ Error generating stack: `+ o.message + `
           pointer-events: none !important;
         }
 
-        /* Preset Combination Archival Monospace Indicator */
-        .chest-preset-indicator {
+        /* Archival Concealment Patch — seamlessly obscures visible preset combination text */
+        .chest-preset-conceal-patch {
           position: absolute;
           left: 50%;
           transform: translateX(-50%);
-          top: 69.4%;
-          font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
-          font-size: clamp(8px, 0.72cqi, 13px);
-          letter-spacing: 0.28em;
-          text-transform: uppercase;
-          color: #d6b872;
-          text-shadow: 0 0 10px rgba(214, 184, 114, 0.6), 0 1px 2px rgba(0,0,0,0.9);
+          top: 68.85%;
+          width: 14.5%;
+          height: 2.3%;
+          background: radial-gradient(ellipse 90% 85% at center, rgba(39, 29, 23, 0.99) 0%, rgba(33, 24, 19, 0.98) 60%, rgba(27, 20, 16, 0.94) 85%, rgba(24, 18, 14, 0.6) 100%);
+          box-shadow: 0 0 10px 4px rgba(32, 23, 18, 0.85);
+          filter: blur(1px);
           pointer-events: none;
           z-index: 11;
-          white-space: nowrap;
-          font-weight: 600;
         }
 
         /* Luxury Ornate Golden Cartouche Button matching user reference */
@@ -1850,6 +1847,12 @@ Error generating stack: `+ o.message + `
                   ),
 
 
+
+                  // Conceal visible preset combination text from reference artwork
+                  I("div", {
+                    "aria-hidden": "true",
+                    className: "chest-preset-conceal-patch"
+                  }),
 
                   // Open The Chest golden button matching reference screenshot 100%
                   I("button", {

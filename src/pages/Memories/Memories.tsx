@@ -28,7 +28,7 @@ const MEMORY_CARDS: MemoryCardData[] = [
       </>
     ),
     date: 'FEB 2024',
-    caption: 'Most Beautifull Soul Of That Day',
+    caption: 'Most Beautifull Soul Of That Day✨',
     supportingText: "I DIDN'T GET THE CHANCE TO COMPLIMENT YOU THAT DAY BUT YOU WERE GORGEOUS.",
     baseRot: -2.5,
     image: frameOfYouImg,
@@ -38,7 +38,7 @@ const MEMORY_CARDS: MemoryCardData[] = [
     id: 'card-2',
     title: 'TimeLess',
     date: 'FEB 2023',
-    caption: 'A Perfect Movement Frozen.',
+    caption: 'A Perfect Movement Frozen.😎',
     supportingText: 'YOU WERE SO SWEET AT THIS MOVEMENT  .',
     baseRot: 2,
     image: beautifulPauseImg,
@@ -56,6 +56,11 @@ const Memories: React.FC = () => {
   useEffect(() => {
     markDiscovered('memories');
   }, []);
+
+  const handleCloseDetail = () => {
+    playArtifactChime(392);
+    setSelectedCard(null);
+  };
 
   // Handle ESC key to close photo detail modal
   useEffect(() => {
@@ -321,11 +326,6 @@ const Memories: React.FC = () => {
   const handleOpenDetail = (card: MemoryCardData) => {
     playArtifactChime(523);
     setSelectedCard(card);
-  };
-
-  const handleCloseDetail = () => {
-    playArtifactChime(392);
-    setSelectedCard(null);
   };
 
   return (

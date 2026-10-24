@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EntryGate.css';
 import { toggleAmbienceDrone, isAmbienceActive, playUnlockChime } from '../../utils/archiveAudio';
+import { resetDiscoveries } from '../../utils/discoveryTracker';
 
 interface EntryGateProps {
   animateReveal?: boolean;
@@ -37,6 +38,9 @@ export const EntryGate: React.FC<EntryGateProps> = ({ animateReveal = false }) =
     e.preventDefault();
     if (isEntering) return;
     setIsEntering(true);
+
+    // Reset discoveries so starting the journey from the gate starts fresh
+    resetDiscoveries();
 
     // Resonant unlock chime gives immediate atmospheric confirmation
     playUnlockChime();
