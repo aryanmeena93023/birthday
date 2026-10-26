@@ -51,12 +51,10 @@ export const KeyAcquisition: React.FC = () => {
   };
 
   const handleReturnToArchive = () => {
-    playArtifactChime(440);
     navigate('/case');
   };
 
   const handleMoveToFile06 = () => {
-    playArtifactChime(523.25);
     // File No. 06 is the Locked Desk Drawer archive chapter
     navigate('/drawer');
   };

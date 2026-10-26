@@ -304,7 +304,7 @@ const Raven: React.FC = () => {
             </span>
           </div>
           <h1 className="mb-3 select-none title-celestial-sheen cursor-default" style={{ fontFamily: 'Cinzel, "Playfair Display", Baskerville, serif', fontSize: 'clamp(3.2rem, 6.2vw, 5.2rem)', fontWeight: 700, letterSpacing: '0.32em', textIndent: '0.32em' }}>
-            THE OWL
+            HEDWIG
           </h1>
           <p className="mb-8 select-none epigraph-living-ink cursor-default" style={{ fontFamily: '"Cormorant Garamond", "Playfair Display", serif', fontSize: 'clamp(1.2rem, 2.1vw, 1.55rem)', fontStyle: 'italic', fontWeight: 400, lineHeight: 1.5 }}>
             Keeper of the moments that should not be forgotten.

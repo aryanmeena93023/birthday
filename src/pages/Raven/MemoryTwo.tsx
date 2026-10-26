@@ -22,7 +22,7 @@ const MemoryTwo: React.FC = () => {
     }
   };
 
-  const handleReturnToArchive = () => {
+  const handleOpenAudioMessage = () => {
     setOwlMemoryUnlocked(1, true);
     setOwlMemoryUnlocked(2, true);
     const panel = document.getElementById('memory-parchment-panel');
@@ -30,10 +30,10 @@ const MemoryTwo: React.FC = () => {
       panel.style.transform = 'scale(0.97)';
       panel.style.opacity = '0.4';
       setTimeout(() => {
-        navigate('/case');
+        navigate('/audio');
       }, 400);
     } else {
-      navigate('/case');
+      navigate('/audio');
     }
   };
 
@@ -213,8 +213,8 @@ const MemoryTwo: React.FC = () => {
                 <button onClick={handleClose} className="btn-silky font-sans text-xs uppercase tracking-[0.18em] px-5 py-2.5 rounded-sm border border-[#c4b9a3] text-[#4d4437] hover:text-[#1e1914] hover:bg-[#ede5d6] hover:border-[#9f937d] transition duration-200" type="button" style={{ border: '1px solid rgb(203, 191, 172)', color: 'rgb(82, 71, 56)', letterSpacing: '0.18em', fontSize: '11px', background: 'transparent' }}>
                   ← Close
                 </button>
-                <button onClick={handleReturnToArchive} className="btn-silky font-sans text-xs uppercase tracking-[0.18em] px-6 py-2.5 rounded-sm bg-[#111317] hover:bg-[#1a1e24] text-[#ede5d6] border border-[#2b2a26] hover:border-[#b89f68] shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95 flex items-center group" type="button" style={{ backgroundColor: 'rgb(25, 24, 23)', border: '1px solid rgb(125, 105, 72)', color: 'rgb(237, 229, 214)', letterSpacing: '0.18em', fontSize: '11px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 4px 14px' }}>
-                  <span>Return to Archive</span>
+                <button onClick={handleOpenAudioMessage} className="btn-silky font-sans text-xs uppercase tracking-[0.18em] px-6 py-2.5 rounded-sm bg-[#111317] hover:bg-[#1a1e24] text-[#ede5d6] border border-[#2b2a26] hover:border-[#b89f68] shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95 flex items-center group" type="button" style={{ backgroundColor: 'rgb(25, 24, 23)', border: '1px solid rgb(125, 105, 72)', color: 'rgb(237, 229, 214)', letterSpacing: '0.18em', fontSize: '11px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 4px 14px' }}>
+                  <span>OPEN AUDIO MESSAGE</span>
                   <span className="ml-2 transform group-hover:translate-x-1 transition-transform">→</span>
                 </button>
               </div>

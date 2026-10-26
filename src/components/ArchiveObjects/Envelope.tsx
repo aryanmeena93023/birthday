@@ -1,13 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { playArtifactChime, pauseAndResetArchiveSoundtrack } from '../../utils/archiveAudio';
+import { pauseAndResetArchiveSoundtrack, playLetterOpeningSound } from '../../utils/archiveAudio';
 
 const Envelope: React.FC = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
+    playLetterOpeningSound();
     pauseAndResetArchiveSoundtrack();
-    playArtifactChime(523.25);
     navigate('/letter');
   };
 

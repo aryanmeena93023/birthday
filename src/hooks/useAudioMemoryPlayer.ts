@@ -29,7 +29,7 @@ export function useAudioMemoryPlayer(
   const [playerState, setPlayerState] = useState<PlayerState>('idle');
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
-  const [volume, setVolumeState] = useState<number>(0.8);
+  const [volume, setVolumeState] = useState<number>(0.35);
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [isAudioError, setIsAudioError] = useState<boolean>(false);
 
@@ -57,6 +57,9 @@ export function useAudioMemoryPlayer(
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
+
+    // Apply the initial softened volume (0.35) immediately on mount
+    audio.volume = 0.35;
 
     const handleLoadedMetadata = () => {
       setDuration(audio.duration || 0);

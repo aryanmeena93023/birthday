@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Letter.css';
 import { markDiscovered } from '../../utils/discoveryTracker';
-import { playArtifactChime } from '../../utils/archiveAudio';
+import { playLetterOpeningSound, stopLetterOpeningSound } from '../../utils/archiveAudio';
 
 const Letter: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -253,9 +253,11 @@ const Letter: React.FC = () => {
     }
   };
 
-  // Cleanup audio on unmount
+  // Play letter opening audio while letter is open, and stop immediately on unmount/leave
   useEffect(() => {
+    playLetterOpeningSound();
     return () => {
+      stopLetterOpeningSound();
       if (ambientOscillatorRef.current) {
         try {
           ambientOscillatorRef.current.stop();
@@ -266,11 +268,11 @@ const Letter: React.FC = () => {
   }, []);
 
   const handleReturnClick = () => {
-    playArtifactChime(392);
+    stopLetterOpeningSound();
   };
 
   const handleNextClick = () => {
-    playArtifactChime(440);
+    stopLetterOpeningSound();
   };
 
   return (
@@ -397,17 +399,17 @@ const Letter: React.FC = () => {
                   <p>First of all,</p>
                 </div>
                 <div className="letter-line-item pl-8 sm:pl-16">
-                  <p>Happy Birthday!</p>
+                  <p>Happy Birthday!  🎂🎉</p>
                 </div>
 
                 <div className="letter-line-item">
                   <p>
-                    I hope this year brings you lots of happiness, new opportunities, good experiences, and plenty of reasons to smile.
+                    I hope this year brings you lots of happiness, new opportunities, good experiences, and plenty of reasons to smile.😊
                   </p>
                 </div>
                 <div className="letter-line-item">
                   <p>
-                    May your hard work pay off, your plans work out the way you hope, and you get to achieve the things you've been looking forward to.
+                    May your hard work pay off, your plans work out the way you hope, and you get to achieve the things you've been looking forward to.✨
                   </p>
                 </div>
                 <div className="letter-line-item">
@@ -418,23 +420,23 @@ const Letter: React.FC = () => {
 
                 <div className="letter-line-item">
                   <p>
-                    I hope this year brings you more good days than bad ones, more laughter than stress, and lots of things to look forward to.
+                    I hope this year brings you more good days than bad ones, more laughter than stress, and lots of things to look forward to.💫
                   </p>
                 </div>
                 <div className="letter-line-item">
                   <p>
-                    Most importantly, I hope you stay happy, healthy, and keep finding your own reasons to smile.
+                    Most importantly, I hope you stay happy, healthy, and keep finding your own reasons to smile.🤍
                   </p>
                 </div>
                 <div className="letter-line-item">
                   <p>
-                    And of course, I hope you have a really lovely birthday!
+                    And of course, I hope you have a really lovely birthday!🥳🎁
                   </p>
                 </div>
 
                 <div className="pt-2 sm:pt-3 letter-line-item">
                   <p>
-                    I also made this little project as a birthday surprise for you.
+                    I also made this little project as a birthday surprise for you.🎀
                   </p>
                 </div>
                 <div className="letter-line-item">
@@ -450,7 +452,7 @@ const Letter: React.FC = () => {
 
                 <div className="letter-line-item">
                   <p>
-                    I hope you enjoy going through it and have fun exploring it.
+                    I hope you enjoy going through it and have fun exploring it.🪄
                   </p>
                 </div>
                 <div className="letter-line-item">
@@ -461,13 +463,13 @@ const Letter: React.FC = () => {
 
                 <div className="letter-line-item">
                   <p>
-                    Anyway, that's enough from me. I won't turn your birthday wish into a whole essay.
+                    Anyway, that's enough from me. I won't turn your birthday wish into a whole essay.😅
                   </p>
                 </div>
 
                 <div className="letter-line-item">
                   <p>
-                    Have a wonderful day, enjoy yourself, and may the year ahead bring you lots of happiness, success, and reasons to look back and say, <em>"That was a good year."
+                    Have a wonderful day, enjoy yourself, and may the year ahead bring you lots of happiness, success, and reasons to look back and say, <em>"That was a good year."🌷✨
                       so </em>
                   </p>
                 </div>

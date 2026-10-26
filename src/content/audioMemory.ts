@@ -17,8 +17,8 @@ export interface AudioMemory {
 
 export const audioMemoryData: AudioMemory = {
   id: "personal-audio-01",
-  pageLabel: "PERSONAL AUDIO AUDIO",
-  headerBadge: "NLUJA ASSAM // \"AUDIO MEMORY\"",
+  pageLabel: "PERSONAL AUDIO MESSAGE",
+  headerBadge: "NLUJA ASSAM // \"AUDIO MESSAGE\"",
   headerSubBadge: "PERSONAL ARCHIVE // SINGLE RECORD",
   heading: "AUDIO MESSAGE",
   tagline: "A voice kept here for you.",

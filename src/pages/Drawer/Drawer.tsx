@@ -285,7 +285,6 @@ const Drawer: React.FC = () => {
   const handleAdvanceToStage3 = () => {
     setKeyNotice(null);
     clearTimers();
-    playArtifactChime(523.25);
     setStage(3);
     setIsDrawerOpen(true);
     setIsKeyRotating(true);
@@ -316,7 +315,6 @@ const Drawer: React.FC = () => {
       setIsDrawerOpen(true);
       setIsKeyRotating(true);
     }
-    if (targetStage !== 1) playArtifactChime(523.25);
   };
 
   // If Stage III is active, render the dedicated standalone MidnightLedgerPage component

@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EntryGate.css';
-import { toggleAmbienceDrone, isAmbienceActive, playUnlockChime } from '../../utils/archiveAudio';
+import {
+  playUnlockChime,
+  playDialClick,
+  playAcademyGateAmbience,
+  stopAcademyGateAmbience,
+  resetGateEnteringState,
+  setGateAmbienceMuted,
+  isGateAmbienceActive,
+} from '../../utils/archiveAudio';
 import { resetDiscoveries } from '../../utils/discoveryTracker';
 
 interface EntryGateProps {
   animateReveal?: boolean;
+  isActive?: boolean;
 }
 
-export const EntryGate: React.FC<EntryGateProps> = ({ animateReveal = false }) => {
+export const EntryGate: React.FC<EntryGateProps> = ({ animateReveal = false, isActive = true }) => {
   const navigate = useNavigate();
-  const [isAudioActive, setIsAudioActive] = useState(isAmbienceActive());
+  const [isAudioActive, setIsAudioActive] = useState(isGateAmbienceActive());
   const [isEntering, setIsEntering] = useState(false);
   const [isRevealing, setIsRevealing] = useState(animateReveal);
 
   // When animateReveal becomes true, activate reveal animation and auto-clean after sequence finishes
-  React.useEffect(() => {
+  useEffect(() => {
     if (animateReveal) {
       setIsRevealing(true);
       // Reveal sequence takes ~1.95s total; cleanup class at 2.3s so all temporary styles are removed
@@ -26,17 +35,52 @@ export const EntryGate: React.FC<EntryGateProps> = ({ animateReveal = false }) =
     }
   }, [animateReveal]);
 
+  // Audio lifecycle: start looping ambience once gate entry page becomes active; cleanup on leave
+  useEffect(() => {
+    if (!isActive) return;
+    resetGateEnteringState();
+
+    // Start ambience with 0.5s pause and 1.5s cinematic fade-in
+    playAcademyGateAmbience(true);
+    setIsAudioActive(isGateAmbienceActive());
+
+    // Fallback: If autoplay was prevented before first gesture, start on first interaction
+    const handleFirstGesture = () => {
+      playAcademyGateAmbience(false);
+      setIsAudioActive(isGateAmbienceActive());
+    };
+
+    window.addEventListener('click', handleFirstGesture, { once: true });
+    window.addEventListener('touchstart', handleFirstGesture, { once: true });
+    window.addEventListener('keydown', handleFirstGesture, { once: true });
+
+    return () => {
+      window.removeEventListener('click', handleFirstGesture);
+      window.removeEventListener('touchstart', handleFirstGesture);
+      window.removeEventListener('keydown', handleFirstGesture);
+      stopAcademyGateAmbience();
+    };
+  }, [isActive]);
+
   const handleToggleAudio = () => {
     if (isEntering) return;
-    const nextState = toggleAmbienceDrone((playing) => {
-      setIsAudioActive(playing);
-    });
+    const nextState = !isAudioActive;
+    setGateAmbienceMuted(!nextState);
     setIsAudioActive(nextState);
   };
 
   const handleEnterAcademy = (e: React.MouseEvent) => {
     e.preventDefault();
     if (isEntering) return;
+
+    // 1. Immediately and permanently stop the gate-entry ambience
+    stopAcademyGateAmbience(true);
+    setIsAudioActive(false);
+
+    // 2. Play the existing button click sound effect
+    playDialClick(340);
+
+    // 3. Continue the existing academy-entry action
     setIsEntering(true);
 
     // Reset discoveries so starting the journey from the gate starts fresh
@@ -111,7 +155,7 @@ export const EntryGate: React.FC<EntryGateProps> = ({ animateReveal = false }) =
           {/* Top Right: Covenant Date & Atmosphere Audio Toggle */}
           <div className="flex flex-col items-end space-y-2.5" data-purpose="archive-controls">
             <div className="text-[#8c8477] tracking-[0.22em] text-[10.5px]">
-              OCTOBER 1984 COVENANT
+              OCTOBER 2006 COVENANT
             </div>
             <button
               type="button"
@@ -127,30 +171,32 @@ export const EntryGate: React.FC<EntryGateProps> = ({ animateReveal = false }) =
               {isAudioActive ? (
                 <svg
                   aria-hidden="true"
-                  className="w-3.5 h-3.5 text-[#c59b27] transition-colors"
+                  className="w-3.5 h-3.5 text-[#c59b27] transition-colors shrink-0"
                   fill="none"
                   stroke="currentColor"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth="1.8"
+                  strokeWidth="2"
                   viewBox="0 0 24 24"
+                  style={{ overflow: 'visible' }}
                 >
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 5" />
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
                   <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
                   <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
                 </svg>
               ) : (
                 <svg
                   aria-hidden="true"
-                  className="w-3.5 h-3.5 text-[#a69d8f] group-hover:text-[#c59b27] transition-colors"
+                  className="w-3.5 h-3.5 text-[#a69d8f] group-hover:text-[#c59b27] transition-colors shrink-0"
                   fill="none"
                   stroke="currentColor"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth="1.8"
+                  strokeWidth="2"
                   viewBox="0 0 24 24"
+                  style={{ overflow: 'visible' }}
                 >
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 5" />
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
                   <line x1="23" x2="17" y1="9" y2="15" />
                   <line x1="17" x2="23" y1="9" y2="15" />
                 </svg>

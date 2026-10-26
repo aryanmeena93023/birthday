@@ -4,7 +4,6 @@ import './Case.css';
 import ArchiveFieldGuide from '../../components/ArchiveFieldGuide/ArchiveFieldGuide';
 import ArchiveObjects from '../../components/ArchiveObjects/ArchiveObjects';
 import {
-  playArtifactChime,
   stopAmbienceDrone,
   getArchiveSoundtrack,
   pauseAndResetArchiveSoundtrack,
@@ -91,10 +90,9 @@ const Case: React.FC = () => {
     }
   };
 
-  const handleNavClick = (pitch = 440) => {
+  const handleNavClick = (_pitch?: number) => {
     // When opening an artifact, immediately stop soundtrack and rewind to 00:00
     pauseAndResetArchiveSoundtrack();
-    playArtifactChime(pitch);
   };
 
   return (
@@ -191,7 +189,7 @@ const Case: React.FC = () => {
             onClick={() => handleNavClick(329.63)}
             className={`direct-nav-link ${discoveredSet.has('raven') ? 'discovered' : ''}`}
           >
-            {discoveredSet.has('raven') && <span className="check-dot">✓</span>} Owl
+            {discoveredSet.has('raven') && <span className="check-dot">✓</span>} Hedwig
           </Link>
 
           <span className="direct-nav-sep">|</span>
@@ -208,7 +206,7 @@ const Case: React.FC = () => {
             onClick={() => handleNavClick(587.33)}
             className={`direct-nav-link ${discoveredSet.has('audio') ? 'discovered' : ''}`}
           >
-            {discoveredSet.has('audio') && <span className="check-dot">✓</span>} Radio
+            {discoveredSet.has('audio') && <span className="check-dot">✓</span>} Audio Message
           </Link>
           <span className="direct-nav-sep">|</span>
           <Link

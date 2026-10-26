@@ -211,14 +211,21 @@ let letterOpeningAudio: HTMLAudioElement | null = null;
 export function playLetterOpeningSound(): void {
   try {
     if (typeof window === 'undefined') return;
+    if (isArchiveManuallyMutedState()) return;
     if (!letterOpeningAudio) {
       letterOpeningAudio = new Audio('/audio/letter-opening.mp3');
       letterOpeningAudio.volume = 0.55;
+      letterOpeningAudio.preload = 'auto';
     }
     letterOpeningAudio.currentTime = 0;
-    letterOpeningAudio.play().catch(() => {});
+    const playPromise = letterOpeningAudio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Safe catch so playback errors do not disrupt the UI or navigation
+      });
+    }
   } catch {
-    // Fallback
+    // Fallback safe catch
   }
 }
 
@@ -230,4 +237,135 @@ export function stopLetterOpeningSound(): void {
     } catch { }
   }
 }
+
+// Dedicated looping audio manager for the Academy Gate Entry Page
+let academyGateAudio: HTMLAudioElement | null = null;
+let isGateAmbienceUserMuted = false;
+let isGateEntering = false;
+let gateFadeTimer: number | null = null;
+let gateFadeInterval: number | null = null;
+const GATE_TARGET_VOLUME = 1.0;
+
+export function getAcademyGateAmbience(): HTMLAudioElement | null {
+  if (typeof window === 'undefined') return null;
+  if (!academyGateAudio) {
+    academyGateAudio = new Audio('/audio/academy-gate-ambience.mp3');
+    academyGateAudio.loop = true;
+    academyGateAudio.volume = GATE_TARGET_VOLUME;
+    academyGateAudio.preload = 'auto';
+  }
+  return academyGateAudio;
+}
+
+export function cancelGateAmbienceFade(): void {
+  if (typeof window !== 'undefined') {
+    if (gateFadeTimer !== null) {
+      window.clearTimeout(gateFadeTimer);
+      gateFadeTimer = null;
+    }
+    if (gateFadeInterval !== null) {
+      window.clearInterval(gateFadeInterval);
+      gateFadeInterval = null;
+    }
+  }
+}
+
+export function playAcademyGateAmbience(fadeIn = false): Promise<void> | undefined {
+  try {
+    if (typeof window === 'undefined') return;
+    if (isGateAmbienceUserMuted || isGateEntering) return;
+    const audio = getAcademyGateAmbience();
+    if (!audio) return;
+    audio.loop = true;
+
+    if (!fadeIn) {
+      cancelGateAmbienceFade();
+      audio.volume = GATE_TARGET_VOLUME;
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
+      return playPromise;
+    }
+
+    // Cancel any previous fade operations before scheduling a new one
+    cancelGateAmbienceFade();
+
+    // 0.5s pause before starting the fade-in
+    gateFadeTimer = window.setTimeout(() => {
+      gateFadeTimer = null;
+      if (isGateAmbienceUserMuted || isGateEntering) return;
+
+      audio.volume = 0.01;
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
+
+      // Smooth fade-in over 1.5 seconds (1500ms) in 30 steps of 50ms
+      const fadeDuration = 1500;
+      const stepInterval = 50;
+      const totalSteps = fadeDuration / stepInterval;
+      const volumeStep = (GATE_TARGET_VOLUME - 0.01) / totalSteps;
+      let currentStep = 0;
+
+      gateFadeInterval = window.setInterval(() => {
+        if (isGateAmbienceUserMuted || isGateEntering || !audio) {
+          cancelGateAmbienceFade();
+          return;
+        }
+
+        currentStep++;
+        const nextVolume = Math.min(GATE_TARGET_VOLUME, 0.01 + volumeStep * currentStep);
+        audio.volume = nextVolume;
+
+        if (currentStep >= totalSteps || nextVolume >= GATE_TARGET_VOLUME) {
+          audio.volume = GATE_TARGET_VOLUME;
+          cancelGateAmbienceFade();
+        }
+      }, stepInterval);
+    }, 500);
+  } catch {
+    // Safe fallback
+  }
+}
+
+export function stopAcademyGateAmbience(permanent = false): void {
+  if (permanent) {
+    isGateEntering = true;
+  }
+  cancelGateAmbienceFade();
+  if (academyGateAudio) {
+    try {
+      academyGateAudio.pause();
+      academyGateAudio.currentTime = 0;
+      academyGateAudio.volume = GATE_TARGET_VOLUME;
+    } catch { }
+  }
+}
+
+export function resetGateEnteringState(): void {
+  isGateEntering = false;
+}
+
+export function setGateAmbienceMuted(muted: boolean): void {
+  isGateAmbienceUserMuted = muted;
+  if (muted) {
+    cancelGateAmbienceFade();
+    if (academyGateAudio) {
+      academyGateAudio.pause();
+    }
+  } else {
+    playAcademyGateAmbience(false);
+  }
+}
+
+export function isGateAmbienceActive(): boolean {
+  return !isGateAmbienceUserMuted && !isGateEntering && (
+    gateFadeTimer !== null ||
+    gateFadeInterval !== null ||
+    (!!academyGateAudio && !academyGateAudio.paused)
+  );
+}
+
 

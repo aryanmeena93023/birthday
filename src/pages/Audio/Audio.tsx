@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import './Audio.css';
 import { audioMemoryData } from '../../content/audioMemory';
 import { AudioMemory } from '../../components/AudioMemory/AudioMemory';
-import { playArtifactChime } from '../../utils/archiveAudio';
 import { markDiscovered } from '../../utils/discoveryTracker';
 
 const AudioPage: React.FC = () => {
@@ -13,7 +12,7 @@ const AudioPage: React.FC = () => {
   }, []);
 
   const handleReturnClick = () => {
-    playArtifactChime(392);
+    // Click sound removed
   };
 
   return (

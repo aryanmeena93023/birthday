@@ -1,13 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { playArtifactChime, pauseAndResetArchiveSoundtrack } from '../../utils/archiveAudio';
+import { pauseAndResetArchiveSoundtrack } from '../../utils/archiveAudio';
 
 const LockedDrawer: React.FC = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
     pauseAndResetArchiveSoundtrack();
-    playArtifactChime(369.99);
     navigate('/drawer');
   };
 

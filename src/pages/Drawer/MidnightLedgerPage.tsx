@@ -134,7 +134,6 @@ const MidnightLedgerPage: React.FC<MidnightLedgerPageProps> = ({
     e.stopPropagation();
     isNavigatingRef.current = false;
     clearTimers();
-    playArtifactChime(440);
     setCandleState(5);
     setCountdownValue(3);
     setCurrentLineIndex(0);
@@ -145,7 +144,6 @@ const MidnightLedgerPage: React.FC<MidnightLedgerPageProps> = ({
     if (candleState !== 9) return;
     if (isNavigatingRef.current) return;
     isNavigatingRef.current = true;
-    playArtifactChime(523.25);
     onNavigateStage(4);
   };
 
@@ -156,7 +154,6 @@ const MidnightLedgerPage: React.FC<MidnightLedgerPageProps> = ({
       e.preventDefault();
       if (isNavigatingRef.current) return;
       isNavigatingRef.current = true;
-      playArtifactChime(523.25);
       onNavigateStage(4);
     }
   };
@@ -165,7 +162,6 @@ const MidnightLedgerPage: React.FC<MidnightLedgerPageProps> = ({
     e.stopPropagation();
     if (isNavigatingRef.current) return;
     isNavigatingRef.current = true;
-    playArtifactChime(523.25);
     onNavigateStage(4);
   };
 

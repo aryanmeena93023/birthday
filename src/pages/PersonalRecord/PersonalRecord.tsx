@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './PersonalRecord.css';
-import { playArtifactChime } from '../../utils/archiveAudio';
 import { unmarkDiscovered } from '../../utils/discoveryTracker';
 
 export const PersonalRecord: React.FC = () => {
@@ -105,7 +104,6 @@ export const PersonalRecord: React.FC = () => {
   };
 
   const handleReturnToArchive = () => {
-    playArtifactChime(440);
     navigate('/case');
   };
 
@@ -115,12 +113,10 @@ export const PersonalRecord: React.FC = () => {
       localStorage.removeItem('birthdayWebsite_keyAcquired');
     } catch (err) {}
     unmarkDiscovered('forbidden');
-    playArtifactChime(329.63);
     navigate('/forbidden');
   };
 
   const handleSkipRecord = () => {
-    playArtifactChime(523.25);
     navigate('/key-acquisition');
   };
 

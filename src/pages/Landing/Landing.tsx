@@ -12,13 +12,7 @@ const INTRO_STORAGE_KEY = 'nluja_intro_completed';
  * 3. Navigates to Archive Desk (/case)
  */
 const Landing: React.FC = () => {
-  const [introCompleted, setIntroCompleted] = useState<boolean>(() => {
-    try {
-      return sessionStorage.getItem(INTRO_STORAGE_KEY) === 'true';
-    } catch {
-      return false;
-    }
-  });
+  const [introCompleted, setIntroCompleted] = useState<boolean>(false);
   const [shouldAnimateReveal, setShouldAnimateReveal] = useState<boolean>(false);
 
   const handleStartReveal = () => {
@@ -40,7 +34,10 @@ const Landing: React.FC = () => {
         Always render EntryGate so that during video fadeout, the EntryGate
         is immediately visible beneath it and smoothly executes its cinematic reveal.
       */}
-      <EntryGate animateReveal={shouldAnimateReveal} />
+      <EntryGate 
+        animateReveal={shouldAnimateReveal} 
+        isActive={introCompleted || shouldAnimateReveal}
+      />
 
       {!introCompleted && (
         <IntroVideo 

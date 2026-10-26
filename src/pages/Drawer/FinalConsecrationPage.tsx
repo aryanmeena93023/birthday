@@ -152,13 +152,11 @@ const FinalConsecrationPage: React.FC<FinalConsecrationPageProps> = ({
 
   const handleReplayExperience = (e: React.MouseEvent) => {
     e.stopPropagation();
-    playArtifactChime(440);
     onNavigateStage(3);
   };
 
   const handleReturnToArchive = (e: React.MouseEvent) => {
     e.stopPropagation();
-    playArtifactChime(349.23);
     navigate('/case');
   };
 

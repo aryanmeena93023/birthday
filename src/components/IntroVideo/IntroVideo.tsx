@@ -14,15 +14,26 @@ export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete, onStartRevea
   const [isMuted, setIsMuted] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [isAutoplayBlocked, setIsAutoplayBlocked] = useState(false);
+  const cleanupGestureListenersRef = useRef<(() => void) | null>(null);
 
   const triggerComplete = useCallback(() => {
     if (isFinishedRef.current) return;
     isFinishedRef.current = true;
 
-    // Immediately pause video playback so it never plays beneath the Entry Gate
+    // Remove any pending gesture listeners immediately so user clicks do not unmute or play video
+    if (cleanupGestureListenersRef.current) {
+      cleanupGestureListenersRef.current();
+      cleanupGestureListenersRef.current = null;
+    }
+
+    // Immediately stop video audio and pause playback
     if (videoRef.current) {
       try {
         videoRef.current.pause();
+        videoRef.current.muted = true;
+        videoRef.current.volume = 0;
+        videoRef.current.currentTime = videoRef.current.duration || 0;
       } catch {
         // Safe fallback
       }
@@ -49,31 +60,46 @@ export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete, onStartRevea
       window.removeEventListener('click', enableAudioOnUserGesture);
       window.removeEventListener('touchstart', enableAudioOnUserGesture);
       window.removeEventListener('keydown', enableAudioOnUserGesture);
+      window.removeEventListener('pointerdown', enableAudioOnUserGesture);
     };
+    cleanupGestureListenersRef.current = cleanupGestureListeners;
 
     const enableAudioOnUserGesture = () => {
+      if (isFinishedRef.current) return;
       if (!userMutedExplicitlyRef.current && videoRef.current) {
         videoRef.current.muted = false;
+        videoRef.current.volume = 1;
         setIsMuted(false);
+        setIsAutoplayBlocked(false);
       }
       cleanupGestureListeners();
     };
 
     if (video) {
       video.muted = false;
-      video.play().catch(() => {
-        // If the browser restricts unmuted autoplay before user interaction,
-        // start playback muted temporarily and unmute automatically upon the first user interaction
-        video.muted = true;
-        setIsMuted(true);
-        video.play().catch(() => {
-          // If playback is still prevented, allow user to continue
-        });
+      video.volume = 1;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            // Autoplay with sound succeeded
+            setIsMuted(false);
+            setIsAutoplayBlocked(false);
+          })
+          .catch(() => {
+            // Browser restricted unmuted autoplay before user interaction:
+            // Start video playing muted and set state so icon and fallback prompt are accurate
+            video.muted = true;
+            setIsMuted(true);
+            setIsAutoplayBlocked(true);
+            video.play().catch(() => {});
 
-        window.addEventListener('click', enableAudioOnUserGesture, { once: true });
-        window.addEventListener('touchstart', enableAudioOnUserGesture, { once: true });
-        window.addEventListener('keydown', enableAudioOnUserGesture, { once: true });
-      });
+            window.addEventListener('click', enableAudioOnUserGesture, { once: true });
+            window.addEventListener('touchstart', enableAudioOnUserGesture, { once: true });
+            window.addEventListener('keydown', enableAudioOnUserGesture, { once: true });
+            window.addEventListener('pointerdown', enableAudioOnUserGesture, { once: true });
+          });
+      }
     }
 
     // Keyboard support: Escape key skips intro
@@ -87,6 +113,12 @@ export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete, onStartRevea
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       cleanupGestureListeners();
+      if (video) {
+        try {
+          video.pause();
+          video.muted = true;
+        } catch { }
+      }
     };
   }, [triggerComplete]);
 
@@ -104,13 +136,25 @@ export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete, onStartRevea
 
     if (isMuted) {
       video.muted = false;
+      video.volume = 1;
       setIsMuted(false);
+      setIsAutoplayBlocked(false);
       userMutedExplicitlyRef.current = false;
     } else {
       video.muted = true;
       setIsMuted(true);
       userMutedExplicitlyRef.current = true;
     }
+  };
+
+  const handleEnableSoundBanner = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = false;
+    video.volume = 1;
+    setIsMuted(false);
+    setIsAutoplayBlocked(false);
+    userMutedExplicitlyRef.current = false;
   };
 
   return (
@@ -138,6 +182,33 @@ export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete, onStartRevea
             />
             {/* Cinematic subtle vignette overlay */}
             <div aria-hidden="true" className="intro-video-vignette" />
+
+            {/* Clear 1-click fallback prompt if browser policy blocked unprompted unmuted autoplay */}
+            {isAutoplayBlocked && isMuted && (
+              <button
+                type="button"
+                onClick={handleEnableSoundBanner}
+                className="intro-unmute-prompt"
+                aria-label="Enable sound"
+              >
+                <svg
+                  aria-hidden="true"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#c59b27"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                </svg>
+                <span>ENABLE SOUND</span>
+              </button>
+            )}
           </>
         ) : (
           /* Graceful Fallback Card if Video Fails */
@@ -181,18 +252,19 @@ export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete, onStartRevea
                 <>
                   <svg
                     aria-hidden="true"
-                    width="14"
-                    height="14"
+                    width="15"
+                    height="15"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
+                    stroke="#a9a296"
+                    strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    style={{ flexShrink: 0, overflow: 'visible' }}
                   >
                     <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                    <line x1="23" y1="9" x2="17" y2="15" />
-                    <line x1="17" y1="9" x2="23" y2="15" />
+                    <line x1="22" y1="9" x2="16" y2="15" />
+                    <line x1="16" y1="9" x2="22" y2="15" />
                   </svg>
                   <span>SOUND : OFF</span>
                 </>
@@ -200,16 +272,17 @@ export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete, onStartRevea
                 <>
                   <svg
                     aria-hidden="true"
-                    width="14"
-                    height="14"
+                    width="15"
+                    height="15"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="#c59b27"
-                    strokeWidth="1.8"
+                    strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    style={{ flexShrink: 0, overflow: 'visible' }}
                   >
-                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 5" />
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
                     <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
                     <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
                   </svg>

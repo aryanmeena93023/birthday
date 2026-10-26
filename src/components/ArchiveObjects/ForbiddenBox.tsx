@@ -1,13 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { playArtifactChime, pauseAndResetArchiveSoundtrack } from '../../utils/archiveAudio';
+import { pauseAndResetArchiveSoundtrack } from '../../utils/archiveAudio';
 
 const ForbiddenBox: React.FC = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
     pauseAndResetArchiveSoundtrack();
-    playArtifactChime(293.66);
     navigate('/forbidden');
   };
 

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import './ArchiveFieldGuide.css';
 import {
   pauseAndResetArchiveSoundtrack,
-  playArtifactChime,
   playLetterOpeningSound
 } from '../../utils/archiveAudio';
 
@@ -18,8 +17,8 @@ interface FieldGuideItem {
 const GUIDE_ITEMS: FieldGuideItem[] = [
   { number: '01', name: 'SEALED LETTER', path: '/letter', pitch: 523.25, isLetter: true },
   { number: '02', name: 'MEMORY BOX', path: '/memories', pitch: 440.00 },
-  { number: '03', name: 'THE OWL', path: '/raven', pitch: 329.63 },
-  { number: '04', name: 'RADIO AUDIO', path: '/audio', pitch: 587.33 },
+  { number: '03', name: 'HEDWIG', path: '/raven', pitch: 329.63 },
+  { number: '04', name: 'AUDIO MESSAGE', path: '/audio', pitch: 587.33 },
   { number: '05', name: 'CIPHER BOX', path: '/forbidden', pitch: 293.66 },
   { number: '06', name: 'DESK DRAWER', path: '/drawer', pitch: 349.23 },
 ];
@@ -34,8 +33,6 @@ export const ArchiveFieldGuide: React.FC = () => {
     pauseAndResetArchiveSoundtrack();
     if (item.isLetter) {
       playLetterOpeningSound();
-    } else {
-      playArtifactChime(item.pitch);
     }
   };
 

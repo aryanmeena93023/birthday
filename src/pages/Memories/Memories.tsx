@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Memories.css';
-import { playArtifactChime } from '../../utils/archiveAudio';
 import { markDiscovered } from '../../utils/discoveryTracker';
 import frameOfYouImg from '../../assets/images/memories/file-02/a-frame-of-you.webp';
 import beautifulPauseImg from '../../assets/images/memories/file-02/a-beautiful-pause.webp';
@@ -58,7 +57,6 @@ const Memories: React.FC = () => {
   }, []);
 
   const handleCloseDetail = () => {
-    playArtifactChime(392);
     setSelectedCard(null);
   };
 
@@ -316,15 +314,14 @@ const Memories: React.FC = () => {
   }, []);
 
   const handleReturn = () => {
-    playArtifactChime(392);
+    // Click sound removed
   };
 
   const handleNext = () => {
-    playArtifactChime(440);
+    // Click sound removed
   };
 
   const handleOpenDetail = (card: MemoryCardData) => {
-    playArtifactChime(523);
     setSelectedCard(card);
   };
 
