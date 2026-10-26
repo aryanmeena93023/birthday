@@ -283,7 +283,7 @@ export function playAcademyGateAmbience(fadeIn = false): Promise<void> | undefin
       audio.volume = GATE_TARGET_VOLUME;
       const playPromise = audio.play();
       if (playPromise !== undefined) {
-        playPromise.catch(() => {});
+        playPromise.catch(() => { });
       }
       return playPromise;
     }
@@ -299,7 +299,7 @@ export function playAcademyGateAmbience(fadeIn = false): Promise<void> | undefin
       audio.volume = 0.01;
       const playPromise = audio.play();
       if (playPromise !== undefined) {
-        playPromise.catch(() => {});
+        playPromise.catch(() => { });
       }
 
       // Smooth fade-in over 1.5 seconds (1500ms) in 30 steps of 50ms
@@ -368,4 +368,123 @@ export function isGateAmbienceActive(): boolean {
   );
 }
 
+// File No. 03 (Hedwig) Background Ambience Music
+let hedwigAudio: HTMLAudioElement | null = null;
+let hedwigFadeTimer: number | null = null;
+let hedwigFadeInterval: number | null = null;
+export const HEDWIG_TARGET_VOLUME = 0.45;
 
+function cancelHedwigFade(): void {
+  if (hedwigFadeTimer !== null) {
+    clearTimeout(hedwigFadeTimer);
+    hedwigFadeTimer = null;
+  }
+  if (hedwigFadeInterval !== null) {
+    clearInterval(hedwigFadeInterval);
+    hedwigFadeInterval = null;
+  }
+}
+
+function getHedwigAudio(): HTMLAudioElement | null {
+  if (typeof window === 'undefined') return null;
+  if (!hedwigAudio) {
+    try {
+      hedwigAudio = new Audio('/audio/hedwig/friendship-to-be.mp3');
+      hedwigAudio.loop = true;
+      hedwigAudio.preload = 'auto';
+      hedwigAudio.volume = 0.0;
+      hedwigAudio.style.display = 'none';
+      if (document.body) {
+        document.body.appendChild(hedwigAudio);
+      } else {
+        window.addEventListener('DOMContentLoaded', () => {
+          if (hedwigAudio && !document.body.contains(hedwigAudio)) {
+            document.body.appendChild(hedwigAudio);
+          }
+        });
+      }
+      (window as any).__hedwigAudio = hedwigAudio;
+    } catch {
+      hedwigAudio = null;
+    }
+  } else if (document.body && !document.body.contains(hedwigAudio)) {
+    document.body.appendChild(hedwigAudio);
+  }
+  return hedwigAudio;
+}
+
+export function isHedwigAmbiencePlaying(): boolean {
+  return !!hedwigAudio && !hedwigAudio.paused;
+}
+
+export function playHedwigAmbience(fadeIn = true, forceRestart = false): void {
+  try {
+    const audio = getHedwigAudio();
+    if (!audio) return;
+
+    if (forceRestart) {
+      try {
+        audio.currentTime = 0;
+      } catch { }
+    } else {
+      // If it's already playing, do NOT restart or modify playback position
+      if (!audio.paused) {
+        return;
+      }
+    }
+
+    cancelHedwigFade();
+
+    if (!fadeIn) {
+      audio.volume = HEDWIG_TARGET_VOLUME;
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => { });
+      }
+      return;
+    }
+
+    // Start with volume ramp from 0.0 or current volume
+    audio.volume = 0.0;
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => { });
+    }
+
+    // Smooth linear fade-in over 4 seconds (4000ms) in 80 steps of 50ms
+    const fadeDuration = 4000;
+    const stepInterval = 50;
+    const totalSteps = fadeDuration / stepInterval;
+    const volumeStep = HEDWIG_TARGET_VOLUME / totalSteps;
+    let currentStep = 0;
+
+    hedwigFadeInterval = window.setInterval(() => {
+      if (!audio || audio.paused) {
+        cancelHedwigFade();
+        return;
+      }
+
+      currentStep++;
+      const nextVolume = Math.min(HEDWIG_TARGET_VOLUME, volumeStep * currentStep);
+      audio.volume = nextVolume;
+
+      if (currentStep >= totalSteps || nextVolume >= HEDWIG_TARGET_VOLUME) {
+        audio.volume = HEDWIG_TARGET_VOLUME;
+        cancelHedwigFade();
+      }
+    }, stepInterval);
+  } catch {
+    // Safe fallback
+  }
+}
+
+export function stopHedwigAmbience(): void {
+  cancelHedwigFade();
+  if (hedwigAudio) {
+    try {
+      hedwigAudio.pause();
+      hedwigAudio.currentTime = 0;
+      hedwigAudio.volume = 0.0;
+    } catch { }
+  }
+}

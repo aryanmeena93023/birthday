@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { pauseAndResetArchiveSoundtrack } from '../../utils/archiveAudio';
+import { pauseAndResetArchiveSoundtrack, playHedwigAmbience } from '../../utils/archiveAudio';
 import { markDiscovered } from '../../utils/discoveryTracker';
 
 const Raven: React.FC = () => {
@@ -9,6 +9,7 @@ const Raven: React.FC = () => {
   const handleClick = () => {
     pauseAndResetArchiveSoundtrack();
     markDiscovered('raven');
+    playHedwigAmbience(true);
     navigate('/raven');
   };
 

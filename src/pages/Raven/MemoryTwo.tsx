@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MemoryOne.css';
 import { markDiscovered, setOwlMemoryUnlocked } from '../../utils/discoveryTracker';
+import { playHedwigAmbience } from '../../utils/archiveAudio';
 
 const MemoryTwo: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -41,6 +42,17 @@ const MemoryTwo: React.FC = () => {
     markDiscovered('raven');
     setOwlMemoryUnlocked(2, true);
     window.scrollTo(0, 0);
+
+    // Continue background music seamlessly
+    playHedwigAmbience(false, false);
+
+    const handleFirstInteraction = () => {
+      playHedwigAmbience(true, false);
+      window.removeEventListener('pointerdown', handleFirstInteraction);
+      window.removeEventListener('keydown', handleFirstInteraction);
+    };
+    window.addEventListener('pointerdown', handleFirstInteraction, { passive: true });
+    window.addEventListener('keydown', handleFirstInteraction, { passive: true });
 
     
     const canvas = canvasRef.current;
@@ -118,6 +130,8 @@ const MemoryTwo: React.FC = () => {
     render();
 
     return () => {
+      window.removeEventListener('pointerdown', handleFirstInteraction);
+      window.removeEventListener('keydown', handleFirstInteraction);
       window.removeEventListener('resize', handleResize);
       if (rafId) cancelAnimationFrame(rafId);
     };

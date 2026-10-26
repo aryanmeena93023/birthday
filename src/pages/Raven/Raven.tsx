@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import owlSentinelImg from '../../assets/images/owl-sentinel.png';
 import './Raven.css';
 import { markDiscovered, getOwlMemoryUnlockedState, setOwlMemoryUnlocked } from '../../utils/discoveryTracker';
+import { playHedwigAmbience } from '../../utils/archiveAudio';
 
 const Raven: React.FC = () => {
   const initialUnlockedState = getOwlMemoryUnlockedState();
@@ -17,7 +18,22 @@ const Raven: React.FC = () => {
     const state = getOwlMemoryUnlockedState();
     setUnlocked1(state.unlocked1);
     setUnlocked2(state.unlocked2);
+
+    // Gently start background music for File No. 3 (Hedwig)
+    playHedwigAmbience(true);
+
+    // Autoplay fallback in case browser policy requires user interaction
+    const handleFirstInteraction = () => {
+      playHedwigAmbience(true);
+      window.removeEventListener('pointerdown', handleFirstInteraction);
+      window.removeEventListener('keydown', handleFirstInteraction);
+    };
+    window.addEventListener('pointerdown', handleFirstInteraction, { passive: true });
+    window.addEventListener('keydown', handleFirstInteraction, { passive: true });
+
     return () => {
+      window.removeEventListener('pointerdown', handleFirstInteraction);
+      window.removeEventListener('keydown', handleFirstInteraction);
       if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current);
     };
   }, []);
@@ -86,6 +102,7 @@ const Raven: React.FC = () => {
       setOwlMemoryUnlocked(1, true);
       spawnPixieDust(clasp1Ref.current);
       showNotice('Archival seal unlocked for MEMORY I. Index revealed.');
+      playHedwigAmbience(false, false);
       
       const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const delay = isReduced ? 100 : 1400;
@@ -109,6 +126,7 @@ const Raven: React.FC = () => {
       setOwlMemoryUnlocked(2, true);
       spawnPixieDust(clasp2Ref.current);
       showNotice('Archival seal unlocked for MEMORY II. Index revealed.');
+      playHedwigAmbience(false, false);
       
       const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const delay = isReduced ? 100 : 1400;
@@ -439,7 +457,11 @@ const Raven: React.FC = () => {
             </div>
             <div className="text-center mt-4 mb-2">
               {unlocked1 ? (
-                <Link to="/raven/memory-1" className="flex flex-col items-center group cursor-pointer mt-1" style={{ textDecoration: 'none' }}>
+                <Link 
+                  to="/raven/memory-1" 
+                  className="flex flex-col items-center group cursor-pointer mt-1" 
+                  style={{ textDecoration: 'none' }}
+                >
                   <h2 className="memory-heading-lum font-serif text-sm sm:text-base tracking-[0.24em] font-medium uppercase drop-shadow-sm transition-colors group-hover:text-white">A BEAUTIFUL SMILE</h2>
                   <span className="mt-3 font-sans text-[10px] tracking-[0.24em] text-[#fce7a9] uppercase transition-all duration-300 px-4 py-1.5 rounded border border-[#dfc27d]/40 bg-[#dfc27d]/10 group-hover:bg-[#dfc27d]/25 group-hover:border-[#dfc27d]/80 group-hover:text-white group-hover:shadow-[0_0_12px_rgba(223,194,125,0.3)]">OPEN MEMORY →</span>
                 </Link>
@@ -540,7 +562,11 @@ const Raven: React.FC = () => {
             </div>
             <div className="text-center mt-4 mb-2">
               {unlocked2 ? (
-                <Link to="/raven/memory-2" className="flex flex-col items-center group cursor-pointer mt-1" style={{ textDecoration: 'none' }}>
+                <Link 
+                  to="/raven/memory-2" 
+                  className="flex flex-col items-center group cursor-pointer mt-1" 
+                  style={{ textDecoration: 'none' }}
+                >
                   <h2 className="memory-heading-lum font-serif text-sm sm:text-base tracking-[0.24em] font-medium uppercase drop-shadow-sm transition-colors group-hover:text-white">A CHERISHED MEMORY</h2>
                   <span className="mt-3 font-sans text-[10px] tracking-[0.24em] text-[#fce7a9] uppercase transition-all duration-300 px-4 py-1.5 rounded border border-[#dfc27d]/40 bg-[#dfc27d]/10 group-hover:bg-[#dfc27d]/25 group-hover:border-[#dfc27d]/80 group-hover:text-white group-hover:shadow-[0_0_12px_rgba(223,194,125,0.3)]">OPEN MEMORY →</span>
                 </Link>

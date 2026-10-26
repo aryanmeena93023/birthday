@@ -50,19 +50,15 @@ export const PersonalRecord: React.FC = () => {
     const video = videoRef.current;
     if (!video) return;
 
-    if (isPlaying) {
+    if (!video.paused) {
       video.pause();
-      setIsPlaying(false);
     } else {
       if (isMuted) {
         setIsMuted(false);
         video.muted = false;
       }
-      video.play().then(() => {
-        setIsPlaying(true);
-      }).catch(() => {
-        // Handled silently when no video file is present
-        setIsPlaying((prev) => !prev);
+      video.play().catch(() => {
+        setIsPlaying(false);
       });
     }
   };
@@ -328,46 +324,55 @@ export const PersonalRecord: React.FC = () => {
                 {/* Pure black interior video element */}
                 <video
                   ref={videoRef}
-                  src="/assets/videos/personal-record-1.mp4"
+                  src="/videos/locked-chest.mp4"
                   className="mk-video-element"
                   playsInline
                   preload="metadata"
                   muted={isMuted}
+                  onPlay={() => setIsPlaying(true)}
+                  onPause={() => setIsPlaying(false)}
                   onTimeUpdate={handleTimeUpdate}
                   onLoadedMetadata={handleLoadedMetadata}
                   onEnded={() => setIsPlaying(false)}
                 />
 
-                {/* CENTER BUTTON: Round brushed-gold with dark pause icon */}
-                <button
-                  type="button"
-                  className="mk-center-pause-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleTogglePlay();
-                  }}
-                  aria-label={isPlaying ? 'Pause Video' : 'Play Video'}
-                >
-                  <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
-                    <rect x="6.5" y="4" width="3.5" height="16" rx="1.5" />
-                    <rect x="14" y="4" width="3.5" height="16" rx="1.5" />
-                  </svg>
-                </button>
+                {/* CENTER BUTTON: Visible only when paused, displays right-pointing play triangle */}
+                {!isPlaying && (
+                  <button
+                    type="button"
+                    className="mk-center-pause-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleTogglePlay();
+                    }}
+                    aria-label="Play Video"
+                  >
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </button>
+                )}
               </div>
 
               {/* CONTROL BAR: Thin bordered strip below video frame */}
               <div className="mk-control-bar">
-                {/* 1. Small round gold pause button */}
+                {/* 1. Small round gold play/pause button */}
                 <button
                   type="button"
                   className="mk-ctrl-pause-btn"
                   onClick={handleTogglePlay}
                   aria-label={isPlaying ? 'Pause' : 'Play'}
                 >
-                  <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
-                    <rect x="6.5" y="5" width="3.2" height="14" rx="1.2" />
-                    <rect x="14.3" y="5" width="3.2" height="14" rx="1.2" />
-                  </svg>
+                  {isPlaying ? (
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+                      <rect x="6.5" y="5" width="3.2" height="14" rx="1.2" />
+                      <rect x="14.3" y="5" width="3.2" height="14" rx="1.2" />
+                    </svg>
+                  ) : (
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  )}
                 </button>
 
                 {/* 2. Thin gold progress line & draggable/clickable knob */}

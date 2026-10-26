@@ -9,7 +9,8 @@ import {
   pauseAndResetArchiveSoundtrack,
   playArchiveSoundtrack,
   setArchiveManuallyMuted,
-  isArchiveManuallyMutedState
+  isArchiveManuallyMutedState,
+  playHedwigAmbience
 } from '../../utils/archiveAudio';
 import { getDiscoveredCount, getDiscoveredSet } from '../../utils/discoveryTracker';
 
@@ -186,7 +187,10 @@ const Case: React.FC = () => {
           <span className="direct-nav-sep">|</span>
           <Link
             to="/raven"
-            onClick={() => handleNavClick(329.63)}
+            onClick={() => {
+              handleNavClick(329.63);
+              playHedwigAmbience(true);
+            }}
             className={`direct-nav-link ${discoveredSet.has('raven') ? 'discovered' : ''}`}
           >
             {discoveredSet.has('raven') && <span className="check-dot">✓</span>} Hedwig
