@@ -57,9 +57,13 @@ export const PersonalRecord: React.FC = () => {
         setIsMuted(false);
         video.muted = false;
       }
-      video.play().catch(() => {
-        setIsPlaying(false);
-      });
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          console.warn('[PersonalRecord] Playback postponed or interrupted:', err);
+          setIsPlaying(false);
+        });
+      }
     }
   };
 
