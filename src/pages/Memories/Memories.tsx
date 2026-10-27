@@ -51,9 +51,74 @@ const Memories: React.FC = () => {
   const card2Ref = useRef<HTMLElement>(null);
 
   const [selectedCard, setSelectedCard] = useState<MemoryCardData | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     markDiscovered('memories');
+  }, []);
+
+  // Background music for Image Memory (File Number 2)
+  useEffect(() => {
+    let isDisposed = false;
+    let audio: HTMLAudioElement | null = null;
+
+    try {
+      audio = new Audio('/audio/image-memory-2.mp3');
+      audio.preload = 'auto';
+      audioRef.current = audio;
+
+      const attemptPlay = () => {
+        if (!audio || isDisposed) return;
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // Browser autoplay policy might block play until user interacts
+          });
+        }
+      };
+
+      attemptPlay();
+
+      // Unlock autoplay on earliest permitted user interaction if initial play was deferred
+      const handleUserInteraction = () => {
+        if (audio && audio.paused && !isDisposed) {
+          audio.play().catch(() => {});
+        }
+        cleanupInteractionListeners();
+      };
+
+      const cleanupInteractionListeners = () => {
+        window.removeEventListener('click', handleUserInteraction);
+        window.removeEventListener('keydown', handleUserInteraction);
+        window.removeEventListener('touchstart', handleUserInteraction);
+        window.removeEventListener('pointerdown', handleUserInteraction);
+      };
+
+      window.addEventListener('click', handleUserInteraction, { passive: true });
+      window.addEventListener('keydown', handleUserInteraction, { passive: true });
+      window.addEventListener('touchstart', handleUserInteraction, { passive: true });
+      window.addEventListener('pointerdown', handleUserInteraction, { passive: true });
+
+      return () => {
+        isDisposed = true;
+        cleanupInteractionListeners();
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+          audioRef.current = null;
+        }
+      };
+    } catch (e) {
+      console.warn('Could not initialize image memory audio:', e);
+      return () => {
+        isDisposed = true;
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+          audioRef.current = null;
+        }
+      };
+    }
   }, []);
 
   const handleCloseDetail = () => {

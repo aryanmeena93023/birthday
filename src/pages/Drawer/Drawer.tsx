@@ -89,12 +89,38 @@ function playTactileSound(type: 'keyInsert' | 'unlockClunk' | 'glideOpen' | 'loc
   }
 }
 
-const Drawer: React.FC = () => {
-  // Access control state: Master key is accessible directly
-  const isKeyAcquired = true;
+const checkKeyAcquired = (): boolean => {
+  try {
+    return localStorage.getItem('birthdayWebsite_keyAcquired') === 'true';
+  } catch {
+    return false;
+  }
+};
 
-  // Single source of truth React state for stages and animation states
+const Drawer: React.FC = () => {
+  // Access control state: Check whether the user has collected the Locker Key
+  const [isKeyAcquired, setIsKeyAcquired] = useState<boolean>(() => checkKeyAcquired());
+
+  // Keep key-acquired state freshly verified on focus/visibility or storage change
+  useEffect(() => {
+    const handleStorage = () => {
+      setIsKeyAcquired(checkKeyAcquired());
+    };
+    window.addEventListener('storage', handleStorage);
+    window.addEventListener('focus', handleStorage);
+    return () => {
+      window.removeEventListener('storage', handleStorage);
+      window.removeEventListener('focus', handleStorage);
+    };
+  }, []);
+
+  // Single source of truth React state for stages and animation states.
+  // If the user has NOT acquired the Locker Key, prevent entering or opening beyond Stage 1.
   const [stage, setStage] = useState<1 | 2 | 3 | 4>(() => {
+    const hasKey = checkKeyAcquired();
+    if (!hasKey) {
+      return 1;
+    }
     const params = new URLSearchParams(window.location.search);
     const s = params.get('stage') || params.get('state');
     if (s === '4') return 4;
@@ -104,11 +130,25 @@ const Drawer: React.FC = () => {
     return isDiscovered('drawer') ? 2 : 1;
   });
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(() => isDiscovered('drawer'));
-  const [isKeyRotating, setIsKeyRotating] = useState<boolean>(() => isDiscovered('drawer'));
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(() => {
+    return checkKeyAcquired() ? isDiscovered('drawer') : false;
+  });
+  const [isKeyRotating, setIsKeyRotating] = useState<boolean>(() => {
+    return checkKeyAcquired() ? isDiscovered('drawer') : false;
+  });
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
   const [isAmbiencePlaying, setIsAmbiencePlaying] = useState<boolean>(() => isAmbienceActive());
-  const [keyNotice, setKeyNotice] = useState<string | null>(null);
+  const [keyNotice, setKeyNotice] = useState<string | null>(() => {
+    // If user attempted to navigate directly to an inner stage without the key, inform them immediately
+    if (!checkKeyAcquired()) {
+      const params = new URLSearchParams(window.location.search);
+      const s = params.get('stage') || params.get('state');
+      if (s && s !== '1') {
+        return 'LOCKER SEALED — You must acquire the Locker Key before entering.';
+      }
+    }
+    return null;
+  });
 
   const unlockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const countdownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -133,8 +173,16 @@ const Drawer: React.FC = () => {
     }
   };
 
-  // Shared continuous audio instance for Pages 3 and 4
+  // Shared continuous audio instance and loop timer for Pages 3 and 4
   const drawerAudioRef = useRef<HTMLAudioElement | null>(null);
+  const drawerAudioLoopTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearDrawerAudioLoopTimer = () => {
+    if (drawerAudioLoopTimerRef.current) {
+      clearTimeout(drawerAudioLoopTimerRef.current);
+      drawerAudioLoopTimerRef.current = null;
+    }
+  };
 
   useEffect(() => {
     const isPages3Or4 = stage === 3 || stage === 4;
@@ -149,6 +197,23 @@ const Drawer: React.FC = () => {
         }
       };
 
+      const handleTrackEnded = () => {
+        // Track finished playing naturally; clear any existing loop timer and wait 1.5s
+        clearDrawerAudioLoopTimer();
+        updateSyncState();
+
+        drawerAudioLoopTimerRef.current = setTimeout(() => {
+          drawerAudioLoopTimerRef.current = null;
+          const audio = drawerAudioRef.current;
+          if (audio) {
+            audio.currentTime = 0;
+            audio.play().catch(() => {
+              updateSyncState();
+            });
+          }
+        }, 1500);
+      };
+
       if (!drawerAudioRef.current) {
         const audio = new Audio('/audio/locked-drawer-pages-3-4.mp3');
         audio.preload = 'auto';
@@ -157,7 +222,7 @@ const Drawer: React.FC = () => {
 
         audio.addEventListener('play', updateSyncState);
         audio.addEventListener('pause', updateSyncState);
-        audio.addEventListener('ended', updateSyncState);
+        audio.addEventListener('ended', handleTrackEnded);
         audio.addEventListener('error', updateSyncState);
 
         const attemptPlay = () => {
@@ -191,15 +256,15 @@ const Drawer: React.FC = () => {
         const audio = drawerAudioRef.current;
         audio.removeEventListener('play', updateSyncState);
         audio.removeEventListener('pause', updateSyncState);
-        audio.removeEventListener('ended', updateSyncState);
+        audio.removeEventListener('ended', handleTrackEnded);
         audio.removeEventListener('error', updateSyncState);
 
         audio.addEventListener('play', updateSyncState);
         audio.addEventListener('pause', updateSyncState);
-        audio.addEventListener('ended', updateSyncState);
+        audio.addEventListener('ended', handleTrackEnded);
         audio.addEventListener('error', updateSyncState);
 
-        if (audio.paused && !audio.ended) {
+        if (audio.paused && !audio.ended && !drawerAudioLoopTimerRef.current) {
           audio.play().catch(() => {
             updateSyncState();
           });
@@ -209,6 +274,7 @@ const Drawer: React.FC = () => {
       }
     } else {
       // Stop and clean up audio as soon as the user leaves Pages 3 and 4 (e.g. Back to Page 1 or 2)
+      clearDrawerAudioLoopTimer();
       if (drawerAudioRef.current) {
         drawerAudioRef.current.pause();
         drawerAudioRef.current.currentTime = 0;
@@ -227,6 +293,7 @@ const Drawer: React.FC = () => {
   useEffect(() => {
     return () => {
       clearTimers();
+      clearDrawerAudioLoopTimer();
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       if (drawerAudioRef.current) {
         drawerAudioRef.current.pause();
@@ -296,6 +363,37 @@ const Drawer: React.FC = () => {
         newAudio.preload = 'auto';
         newAudio.loop = false;
         drawerAudioRef.current = newAudio;
+
+        const updateSyncState = () => {
+          if (drawerAudioRef.current) {
+            const isPlaying = !drawerAudioRef.current.paused && !drawerAudioRef.current.ended;
+            setIsAmbiencePlaying(isPlaying);
+          } else {
+            setIsAmbiencePlaying(false);
+          }
+        };
+
+        const handleTrackEnded = () => {
+          clearDrawerAudioLoopTimer();
+          updateSyncState();
+
+          drawerAudioLoopTimerRef.current = setTimeout(() => {
+            drawerAudioLoopTimerRef.current = null;
+            const a = drawerAudioRef.current;
+            if (a) {
+              a.currentTime = 0;
+              a.play().catch(() => {
+                updateSyncState();
+              });
+            }
+          }, 1500);
+        };
+
+        newAudio.addEventListener('play', updateSyncState);
+        newAudio.addEventListener('pause', updateSyncState);
+        newAudio.addEventListener('ended', handleTrackEnded);
+        newAudio.addEventListener('error', updateSyncState);
+
         newAudio.play().then(() => {
           setIsAmbiencePlaying(true);
         }).catch((err) => {
@@ -306,6 +404,7 @@ const Drawer: React.FC = () => {
       }
 
       if (audio.paused || audio.ended) {
+        clearDrawerAudioLoopTimer();
         if (audio.ended) {
           audio.currentTime = 0;
         }
@@ -316,6 +415,7 @@ const Drawer: React.FC = () => {
           setIsAmbiencePlaying(false);
         });
       } else {
+        clearDrawerAudioLoopTimer();
         audio.pause();
         setIsAmbiencePlaying(false);
       }
@@ -348,8 +448,11 @@ const Drawer: React.FC = () => {
   const handleToggleUnlock = (targetUnlocked?: boolean) => {
     const nextUnlocked = targetUnlocked !== undefined ? targetUnlocked : (stage === 1);
 
-    if (!isKeyAcquired) {
-      setKeyNotice('Master Drawer key not acquired yet.');
+    // Freshly check key acquisition
+    const currentKeyAcquired = checkKeyAcquired();
+    if (!currentKeyAcquired) {
+      setIsKeyAcquired(false);
+      setKeyNotice('LOCKER SEALED — You must acquire the Locker Key before entering.');
       playArtifactChime(220);
       setTimeout(() => {
         infoSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -411,6 +514,12 @@ const Drawer: React.FC = () => {
   };
 
   const handleAdvanceToStage3 = () => {
+    if (!checkKeyAcquired()) {
+      setIsKeyAcquired(false);
+      setKeyNotice('LOCKER SEALED — You must acquire the Locker Key before entering.');
+      playArtifactChime(220);
+      return;
+    }
     setKeyNotice(null);
     clearTimers();
     setStage(3);
@@ -418,10 +527,12 @@ const Drawer: React.FC = () => {
     setIsKeyRotating(true);
   };
 
-  // Direct HUD matrix jump — no animation guard or key check needed for stage-control navigation
+  // Direct HUD matrix jump — enforce key check for entering inner stages
   const jumpToStage = (targetStage: 1 | 2 | 3 | 4) => {
-    if (targetStage !== 1 && !isKeyAcquired) {
-      setKeyNotice('Master Drawer key not acquired yet.');
+    const currentKeyAcquired = checkKeyAcquired();
+    if (targetStage !== 1 && !currentKeyAcquired) {
+      setIsKeyAcquired(false);
+      setKeyNotice('LOCKER SEALED — You must acquire the Locker Key before entering.');
       playArtifactChime(220);
       setTimeout(() => {
         infoSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -801,7 +912,7 @@ const Drawer: React.FC = () => {
                   <span className="drawer-key-label-action">
                     <span>
                       {!isKeyAcquired
-                        ? 'KEY REQUIRED — SEALED CHEST'
+                        ? 'LOCKER SEALED — KEY REQUIRED'
                         : isAnimating
                           ? (isDrawerOpen ? 'RESTORING LOCK BOLT...' : 'DISENGAGING LOCK BOLT...')
                           : stage === 2
