@@ -6,7 +6,7 @@ let droneFilter: BiquadFilterNode | null = null;
 let droneGain: GainNode | null = null;
 let isAmbiencePlaying = false;
 
-function getAudioContext(): AudioContext | null {
+export function getAudioContext(): AudioContext | null {
   if (typeof window === 'undefined') return null;
   if (!audioCtx) {
     const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
@@ -214,8 +214,10 @@ export function playLetterOpeningSound(): void {
     if (isArchiveManuallyMutedState()) return;
     if (!letterOpeningAudio) {
       letterOpeningAudio = new Audio('/audio/letter-opening.mp3');
-      letterOpeningAudio.volume = 0.55;
+      letterOpeningAudio.volume = 1.0;
       letterOpeningAudio.preload = 'auto';
+    } else {
+      letterOpeningAudio.volume = 1.0;
     }
     letterOpeningAudio.currentTime = 0;
     const playPromise = letterOpeningAudio.play();
@@ -419,6 +421,10 @@ export function isHedwigAmbiencePlaying(): boolean {
 
 export function playHedwigAmbience(fadeIn = true, forceRestart = false): void {
   try {
+    if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/raven')) {
+      return;
+    }
+
     const audio = getHedwigAudio();
     if (!audio) return;
 
@@ -439,7 +445,13 @@ export function playHedwigAmbience(fadeIn = true, forceRestart = false): void {
       audio.volume = HEDWIG_TARGET_VOLUME;
       const playPromise = audio.play();
       if (playPromise !== undefined) {
-        playPromise.catch(() => { });
+        playPromise.then(() => {
+          if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/raven')) {
+            audio.pause();
+            audio.currentTime = 0;
+            audio.volume = 0.0;
+          }
+        }).catch(() => { });
       }
       return;
     }
@@ -448,7 +460,13 @@ export function playHedwigAmbience(fadeIn = true, forceRestart = false): void {
     audio.volume = 0.0;
     const playPromise = audio.play();
     if (playPromise !== undefined) {
-      playPromise.catch(() => { });
+      playPromise.then(() => {
+        if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/raven')) {
+          audio.pause();
+          audio.currentTime = 0;
+          audio.volume = 0.0;
+        }
+      }).catch(() => { });
     }
 
     // Smooth linear fade-in over 4 seconds (4000ms) in 80 steps of 50ms
@@ -459,6 +477,16 @@ export function playHedwigAmbience(fadeIn = true, forceRestart = false): void {
     let currentStep = 0;
 
     hedwigFadeInterval = window.setInterval(() => {
+      if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/raven')) {
+        cancelHedwigFade();
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+          audio.volume = 0.0;
+        }
+        return;
+      }
+
       if (!audio || audio.paused) {
         cancelHedwigFade();
         return;

@@ -89,12 +89,12 @@ export const PersonalRecord: React.FC = () => {
     const frame = document.getElementById('mk-video-frame-container');
     const video = videoRef.current;
     if (document.fullscreenElement) {
-      document.exitFullscreen().catch(() => {});
+      document.exitFullscreen().catch(() => { });
     } else {
       if (frame && frame.requestFullscreen) {
-        frame.requestFullscreen().catch(() => {});
+        frame.requestFullscreen().catch(() => { });
       } else if (video && video.requestFullscreen) {
-        video.requestFullscreen().catch(() => {});
+        video.requestFullscreen().catch(() => { });
       }
     }
   };
@@ -107,7 +107,7 @@ export const PersonalRecord: React.FC = () => {
     try {
       localStorage.removeItem('birthdayWebsite_chestUnlocked');
       localStorage.removeItem('birthdayWebsite_keyAcquired');
-    } catch (err) {}
+    } catch (err) { }
     unmarkDiscovered('forbidden');
     navigate('/forbidden');
   };

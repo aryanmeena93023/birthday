@@ -1308,22 +1308,22 @@ Error generating stack: `+ o.message + `
       let isInitiallyUnlocked = false;
       try {
         isInitiallyUnlocked = localStorage.getItem('birthdayWebsite_chestUnlocked') === 'true';
-      } catch (err) {}
+      } catch (err) { }
 
       let [tumblersState, setTumblersState] = H.useState(
         isInitiallyUnlocked
           ? [
-              { val: 2, prevVal: null, flipId: 0 },
-              { val: 8, prevVal: null, flipId: 0 },
-              { val: 1, prevVal: null, flipId: 0 },
-              { val: 0, prevVal: null, flipId: 0 }
-            ]
+            { val: 2, prevVal: null, flipId: 0 },
+            { val: 8, prevVal: null, flipId: 0 },
+            { val: 1, prevVal: null, flipId: 0 },
+            { val: 0, prevVal: null, flipId: 0 }
+          ]
           : [
-              { val: 0, prevVal: null, flipId: 0 },
-              { val: 0, prevVal: null, flipId: 0 },
-              { val: 0, prevVal: null, flipId: 0 },
-              { val: 0, prevVal: null, flipId: 0 }
-            ]
+            { val: 0, prevVal: null, flipId: 0 },
+            { val: 0, prevVal: null, flipId: 0 },
+            { val: 0, prevVal: null, flipId: 0 },
+            { val: 0, prevVal: null, flipId: 0 }
+          ]
       ),
         e = tumblersState.map((t) => t.val),
         [l, o] = H.useState(null),
@@ -1359,12 +1359,10 @@ Error generating stack: `+ o.message + `
           f.current = window.setTimeout(() => y(!1), 500);
         }, []),
         T = H.useCallback(() => {
-          playChestSound("click");
           if (e.join("") === "2810") {
             try {
               localStorage.setItem('birthdayWebsite_chestUnlocked', 'true');
-            } catch (err) {}
-            playChestSound("unlock");
+            } catch (err) { }
             c(!0);
             setTimeout(() => {
               try {

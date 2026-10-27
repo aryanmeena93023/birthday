@@ -4,9 +4,11 @@ import './Audio.css';
 import { audioMemoryData } from '../../content/audioMemory';
 import { AudioMemory } from '../../components/AudioMemory/AudioMemory';
 import { markDiscovered } from '../../utils/discoveryTracker';
+import { stopHedwigAmbience } from '../../utils/archiveAudio';
 
 const AudioPage: React.FC = () => {
   useEffect(() => {
+    stopHedwigAmbience();
     window.scrollTo(0, 0);
     markDiscovered('audio');
   }, []);

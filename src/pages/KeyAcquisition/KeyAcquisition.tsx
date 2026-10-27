@@ -1,11 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './KeyAcquisition.css';
 import { playArtifactChime } from '../../utils/archiveAudio';
 
 export const KeyAcquisition: React.FC = () => {
   const navigate = useNavigate();
-  const [isMuted, setIsMuted] = useState<boolean>(true);
+  // Global / page audio setting: defaults to enabled (false = unmuted / SOUND enabled)
+  const [isMuted, setIsMuted] = useState<boolean>(() => {
+    try {
+      const stored = localStorage.getItem('birthdayWebsite_isMuted');
+      return stored === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  const isMutedRef = useRef<boolean>(isMuted);
+  const keyAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Keep isMutedRef synchronized with current state to prevent stale closures
+  useEffect(() => {
+    isMutedRef.current = isMuted;
+  }, [isMuted]);
 
   // Key acquisition lifecycle: 'notAcquired' | 'animating' | 'acquired'
   const [acquisitionState, setAcquisitionState] = useState<'notAcquired' | 'animating' | 'acquired'>(() => {
@@ -25,6 +41,29 @@ export const KeyAcquisition: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // Preload audio instance on mount for immediate availability
+    if (typeof window !== 'undefined') {
+      try {
+        const audio = new Audio('/audio/key-acquisition.mp3');
+        audio.preload = 'auto';
+        audio.volume = 1.0;
+        keyAudioRef.current = audio;
+      } catch (e) {
+        console.warn('Could not initialize key audio:', e);
+      }
+    }
+
+    return () => {
+      if (keyAudioRef.current) {
+        try {
+          keyAudioRef.current.pause();
+          keyAudioRef.current.currentTime = 0;
+          keyAudioRef.current.src = '';
+        } catch { }
+        keyAudioRef.current = null;
+      }
+    };
   }, []);
 
   const handleAcquireKey = () => {
@@ -32,9 +71,6 @@ export const KeyAcquisition: React.FC = () => {
 
     // STATE 2: User clicks Acquire -> transition to animating
     setAcquisitionState('animating');
-    if (!isMuted) {
-      playArtifactChime(659.25);
-    }
 
     // STATE 3: When animation completes genuinely (1800ms matching CSS sequence)
     window.setTimeout(() => {
@@ -44,8 +80,25 @@ export const KeyAcquisition: React.FC = () => {
       } catch (e) {
         console.warn('Could not persist key acquisition state:', e);
       }
-      if (!isMuted) {
-        playArtifactChime(880);
+
+      if (!isMutedRef.current) {
+        try {
+          let audio = keyAudioRef.current;
+          if (!audio) {
+            audio = new Audio('/audio/key-acquisition.mp3');
+            keyAudioRef.current = audio;
+          }
+          audio.volume = 1.0;
+          audio.currentTime = 0;
+          const playPromise = audio.play();
+          if (playPromise !== undefined) {
+            playPromise.catch((err) => {
+              console.warn('Key acquisition audio playback prevented or failed:', err);
+            });
+          }
+        } catch (err) {
+          console.warn('Key acquisition audio error:', err);
+        }
       }
     }, 1800);
   };
@@ -60,8 +113,19 @@ export const KeyAcquisition: React.FC = () => {
   };
 
   const handleToggleMute = () => {
-    setIsMuted(!isMuted);
-    playArtifactChime(isMuted ? 659.25 : 329.63);
+    const nextMuted = !isMuted;
+    setIsMuted(nextMuted);
+    isMutedRef.current = nextMuted;
+    try {
+      localStorage.setItem('birthdayWebsite_isMuted', String(nextMuted));
+    } catch { }
+
+    if (nextMuted && keyAudioRef.current) {
+      try {
+        keyAudioRef.current.pause();
+      } catch { }
+    }
+    playArtifactChime(nextMuted ? 329.63 : 659.25);
   };
 
   return (
@@ -203,13 +267,12 @@ export const KeyAcquisition: React.FC = () => {
             <span className="ka-particle ka-particle-5" aria-hidden="true" />
 
             <div
-              className={`ka-key-wrap ${
-                acquisitionState === 'notAcquired'
+              className={`ka-key-wrap ${acquisitionState === 'notAcquired'
                   ? 'ka-key-resting'
                   : acquisitionState === 'animating'
-                  ? 'ka-key-animating'
-                  : 'ka-key-acquired'
-              }`}
+                    ? 'ka-key-animating'
+                    : 'ka-key-acquired'
+                }`}
               aria-label={
                 acquisitionState === 'acquired'
                   ? 'Acquired Antique Golden Key'
@@ -269,13 +332,12 @@ export const KeyAcquisition: React.FC = () => {
           <div className="ka-status-group">
             <button
               type="button"
-              className={`ka-status-pill ${
-                acquisitionState === 'notAcquired'
+              className={`ka-status-pill ${acquisitionState === 'notAcquired'
                   ? 'ka-status-clickable'
                   : acquisitionState === 'animating'
-                  ? 'ka-status-animating'
-                  : 'ka-status-confirmed'
-              }`}
+                    ? 'ka-status-animating'
+                    : 'ka-status-confirmed'
+                }`}
               onClick={handleAcquireKey}
               disabled={acquisitionState !== 'notAcquired'}
               aria-label={
@@ -297,11 +359,10 @@ export const KeyAcquisition: React.FC = () => {
 
           {/* Bottom Navigation Buttons: Revealed only after acquisition */}
           <div
-            className={`ka-buttons-row ${
-              acquisitionState === 'acquired'
+            className={`ka-buttons-row ${acquisitionState === 'acquired'
                 ? 'ka-buttons-revealed'
                 : 'ka-buttons-hidden'
-            }`}
+              }`}
             aria-hidden={acquisitionState !== 'acquired'}
           >
             <button

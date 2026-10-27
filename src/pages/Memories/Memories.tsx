@@ -105,7 +105,7 @@ const Memories: React.FC = () => {
       if (!card) return;
       const onMove = (e: MouseEvent) => handleMouseMove(e, card, baseRot);
       const onLeave = () => handleMouseLeave(card, baseRot);
-      
+
       card.addEventListener('mousemove', onMove);
       card.addEventListener('mouseleave', onLeave);
       return () => {
@@ -329,11 +329,11 @@ const Memories: React.FC = () => {
     <div className="memories-page-root text-stone-200 selection:bg-amber-900/40 selection:text-amber-100">
       <div aria-hidden="true" className="cinematic-glow"></div>
       <div aria-hidden="true" className="cinematic-bloom"></div>
-      
-      <canvas 
-        ref={canvasRef} 
-        aria-hidden="true" 
-        className="fixed inset-0 pointer-events-none z-[1] w-full h-full" 
+
+      <canvas
+        ref={canvasRef}
+        aria-hidden="true"
+        className="fixed inset-0 pointer-events-none z-[1] w-full h-full"
       />
 
       <main className="w-full flex-grow flex flex-col items-center justify-center px-4 py-8 md:py-12 relative z-10">
@@ -353,9 +353,9 @@ const Memories: React.FC = () => {
           {MEMORY_CARDS.map((card, idx) => {
             const cardRef = idx === 0 ? card1Ref : card2Ref;
             const rotClass = idx === 0 ? 'polaroid-card-left' : 'polaroid-card-right';
-            
+
             return (
-              <article 
+              <article
                 key={card.id}
                 ref={cardRef}
                 onClick={() => handleOpenDetail(card)}
@@ -364,7 +364,7 @@ const Memories: React.FC = () => {
               >
                 <div className="overflow-hidden rounded-[1px] border border-black/40">
                   <div className="film-surface film-bezel aspect-[1.18/1] w-full overflow-hidden relative">
-                    <img 
+                    <img
                       src={card.image}
                       alt={card.title}
                       style={{ objectPosition: card.objectPosition || 'center' }}
@@ -395,7 +395,7 @@ const Memories: React.FC = () => {
 
         <nav aria-label="Archive Navigation" className="mt-10 md:mt-12 mb-2" data-purpose="navigation-control">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-xl mx-auto px-4">
-            <Link 
+            <Link
               to="/case"
               onClick={handleReturn}
               className="memories-return-archive-btn"
@@ -405,7 +405,7 @@ const Memories: React.FC = () => {
               </svg>
               <span>Return to Archive</span>
             </Link>
-            <Link 
+            <Link
               to="/raven"
               onClick={handleNext}
               className="memories-next-file-btn"
@@ -421,7 +421,7 @@ const Memories: React.FC = () => {
 
       {/* Photo Detail View Modal Overlay */}
       {selectedCard && (
-        <div 
+        <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#040303]/95 backdrop-blur-sm select-none animate-fadeIn overflow-y-auto"
           data-purpose="dossier-card-modal"
           onClick={(e) => {
@@ -447,20 +447,20 @@ const Memories: React.FC = () => {
 
           {/* Main Content Container & Centered Ivory Photo Card */}
           <main className="relative z-20 w-full max-w-[564px] my-auto py-6 sm:py-8 flex items-center justify-center" data-purpose="dossier-card-container">
-            <article 
-              className="paper-texture card-magnetic-glide w-full max-w-[564px] h-auto rounded-[3px] pt-4 px-6 pb-8 sm:pt-4 sm:px-[29px] sm:pb-[34px] flex flex-col justify-between relative shadow-2xl overflow-hidden" 
+            <article
+              className="paper-texture card-magnetic-glide w-full max-w-[564px] h-auto rounded-[3px] pt-4 px-6 pb-8 sm:pt-4 sm:px-[29px] sm:pb-[34px] flex flex-col justify-between relative shadow-2xl overflow-hidden"
               data-purpose="archival-photograph-card"
             >
               {/* Living breathing warmth across parchment */}
               <div className="absolute inset-0 paper-living-light bg-[radial-gradient(ellipse_75%_65%_at_50%_42%,rgba(247,235,212,0.45)_0%,rgba(215,190,145,0.18)_50%,transparent_80%)] pointer-events-none z-[1]"></div>
-              
+
               {/* Close Button Top Right */}
               <header className="w-full flex justify-end items-center mb-3 relative z-10">
-                <button 
-                  aria-label="Close dossier view" 
+                <button
+                  aria-label="Close dossier view"
                   onClick={handleCloseDetail}
-                  className="w-[27px] h-[27px] rounded-full border border-[#3d3831]/60 flex items-center justify-center text-[#2c2720] hover:bg-[#3d3831]/10 transition-colors cursor-pointer" 
-                  data-purpose="modal-close-trigger" 
+                  className="w-[27px] h-[27px] rounded-full border border-[#3d3831]/60 flex items-center justify-center text-[#2c2720] hover:bg-[#3d3831]/10 transition-colors cursor-pointer"
+                  data-purpose="modal-close-trigger"
                   type="button"
                 >
                   <svg className="w-3.5 h-3.5 stroke-[1.4]" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
@@ -472,16 +472,16 @@ const Memories: React.FC = () => {
 
               {/* Framed Photograph */}
               <section className="w-full flex flex-col items-center relative z-10" data-purpose="framed-photograph-wrapper">
-                <div 
+                <div
                   aria-label={`Archival photograph: ${selectedCard.title}`}
-                  className="photo-frame-target w-full p-[6px] border border-[#a89063]/85 rounded-[1px] bg-transparent relative overflow-hidden cursor-default focus:outline-none" 
+                  className="photo-frame-target w-full p-[6px] border border-[#a89063]/85 rounded-[1px] bg-transparent relative overflow-hidden cursor-default focus:outline-none"
                   data-purpose="interactive-photo-frame"
                 >
                   <div className="steady-settled-aura absolute inset-0 pointer-events-none border border-[#e8d2a0]/30 rounded-[1px]"></div>
-                  
+
                   {/* Framed Archival Matte & Image Container */}
                   <div className="photo-matte w-full min-h-[260px] max-h-[60vh] sm:max-h-[460px] rounded-[1px] relative overflow-hidden flex items-center justify-center border border-black/40">
-                    <img 
+                    <img
                       src={selectedCard.image}
                       alt={selectedCard.title}
                       className="max-w-full max-h-[60vh] sm:max-h-[460px] w-auto h-auto object-contain object-center relative z-[2] shadow-sm"

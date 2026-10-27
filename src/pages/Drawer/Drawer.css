@@ -208,6 +208,41 @@
   gap: 0.5rem;
 }
 
+.drawer-back-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: #fae0a5;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 0.25rem;
+  flex-shrink: 0;
+}
+
+.drawer-back-arrow svg {
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.drawer-back-arrow:hover {
+  color: #ffffff;
+}
+
+.drawer-back-arrow:hover svg {
+  transform: translateX(-2px);
+  filter: drop-shadow(0 0 5px rgba(250, 224, 165, 0.7));
+}
+
+.drawer-back-arrow:focus-visible {
+  outline: 1px solid #fae0a5;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 .drawer-pulse-dot {
   width: 8px;
   height: 8px;
@@ -797,14 +832,16 @@
   text-align: center;
   box-sizing: border-box;
   opacity: 0;
-  transform: scale(0.96);
-  transition: opacity 500ms ease 300ms, transform 400ms cubic-bezier(0.16, 1, 0.3, 1), border-color 350ms ease, box-shadow 350ms ease;
+  transform: translateZ(0) scale(0.96);
+  transition: opacity 400ms ease, transform 0.12s ease-out;
+  will-change: transform;
   overflow: hidden;
+  backface-visibility: hidden;
 }
 
 .drawer-stage2-card.visible {
   opacity: 1;
-  transform: scale(1);
+  transform: translateZ(0) scale(1);
 }
 
 /* Light sweep translucent sheen overlay */
@@ -2341,16 +2378,16 @@
   left: 50%;
   width: 60%;
   height: 60%;
-  transform: translate(-50%, -50%);
+  transform: translate3d(-50%, -50%, 0);
   background: radial-gradient(circle, rgba(168, 126, 75, 0.16) 0%, rgba(124, 42, 56, 0.08) 40%, transparent 70%);
-  filter: blur(40px);
   z-index: 2;
+  will-change: opacity, transform;
   animation: envGlowPulse 8s infinite alternate ease-in-out;
 }
 
 @keyframes envGlowPulse {
-  0% { opacity: 0.8; transform: translate(-50%, -50%) scale(0.95); }
-  100% { opacity: 1.15; transform: translate(-50%, -50%) scale(1.08); }
+  0% { opacity: 0.8; transform: translate3d(-50%, -50%, 0) scale(0.96); }
+  100% { opacity: 1.1; transform: translate3d(-50%, -50%, 0) scale(1.05); }
 }
 
 .drawer-env-grid-horiz {
@@ -2387,7 +2424,7 @@
   width: 80%;
   max-width: 800px;
   aspect-ratio: 1/1;
-  transform: translate(-50%, -50%);
+  transform: translate3d(-50%, -50%, 0);
   border: 1px solid rgba(250, 224, 165, 0.12);
   border-radius: 50%;
   z-index: 2;
@@ -2400,16 +2437,17 @@
   width: 65%;
   max-width: 650px;
   aspect-ratio: 1/1;
-  transform: translate(-50%, -50%);
+  transform: translate3d(-50%, -50%, 0);
   border: 1px dashed rgba(250, 224, 165, 0.15);
   border-radius: 50%;
   z-index: 2;
+  will-change: transform;
   animation: envCircleSpin 120s linear infinite;
 }
 
 @keyframes envCircleSpin {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
+  0% { transform: translate3d(-50%, -50%, 0) rotate(0deg); }
+  100% { transform: translate3d(-50%, -50%, 0) rotate(360deg); }
 }
 
 .drawer-env-diamond {
@@ -2418,15 +2456,15 @@
   height: 6px;
   background-color: transparent;
   border: 1px solid rgba(250, 224, 165, 0.55);
-  transform: translate(-50%, -50%) rotate(45deg);
+  transform: translate3d(-50%, -50%, 0) rotate(45deg);
   z-index: 4;
   box-shadow: 0 0 6px rgba(250, 224, 165, 0.25);
   animation: envDiamondPulse 6s infinite alternate ease-in-out;
 }
 
 @keyframes envDiamondPulse {
-  0% { box-shadow: 0 0 4px rgba(250, 224, 165, 0.1); opacity: 0.8; }
-  100% { box-shadow: 0 0 8px rgba(250, 224, 165, 0.5); opacity: 1; }
+  0% { opacity: 0.8; }
+  100% { opacity: 1; }
 }
 
 .drawer-env-diamond.top { top: 15%; left: 50%; }
@@ -2443,21 +2481,21 @@
 .drawer-env-dust {
   position: absolute;
   border-radius: 50%;
-  background-color: rgba(250, 224, 165, 0.4);
-  filter: blur(1px);
+  background-color: rgba(250, 224, 165, 0.5);
   z-index: 4;
+  will-change: transform, opacity;
   animation: envDustDrift linear infinite alternate;
 }
 
 .dust-0 { width: 2px; height: 2px; opacity: 0.55; }
-.dust-1 { width: 3px; height: 3px; opacity: 0.85; background-color: rgba(220, 180, 120, 0.65); }
+.dust-1 { width: 3px; height: 3px; opacity: 0.8; background-color: rgba(220, 180, 120, 0.7); }
 .dust-2 { width: 4px; height: 4px; opacity: 0.45; }
 
 @keyframes envDustDrift {
-  0% { transform: translate(0, 0) scale(0.8); opacity: 0.3; filter: blur(1px); }
-  50% { opacity: 1; filter: blur(0px); box-shadow: 0 0 3px rgba(250, 224, 165, 0.6); }
-  85% { opacity: 0.4; filter: blur(1px); box-shadow: none; }
-  100% { transform: translate(30px, -40px) scale(1.2); opacity: 0.3; filter: blur(1px); }
+  0% { transform: translate3d(0, 0, 0) scale(0.85); opacity: 0.3; }
+  50% { opacity: 0.9; }
+  85% { opacity: 0.4; }
+  100% { transform: translate3d(24px, -32px, 0) scale(1.15); opacity: 0.3; }
 }
 
 @media (max-width: 768px) {

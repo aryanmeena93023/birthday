@@ -501,7 +501,7 @@ const Letter: React.FC = () => {
                       color: 'rgb(60, 42, 30)',
                     }}
                   >
-                    With love,
+                    
                   </span>
                   <span
                     className="font-script text-3xl sm:text-4xl md:text-[48px] text-[#221612] leading-none pt-1 sm:pt-2 -mr-1 block"

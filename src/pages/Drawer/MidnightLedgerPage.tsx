@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './MidnightLedgerPage.css';
 import drawerBirthday from '../../content/drawerBirthday';
-import { playArtifactChime } from '../../utils/archiveAudio';
+import { getAudioContext } from '../../utils/archiveAudio';
 
 interface MidnightLedgerPageProps {
   onNavigateStage: (targetStage: 1 | 2 | 3 | 4) => void;
@@ -78,17 +78,94 @@ const MidnightLedgerPage: React.FC<MidnightLedgerPageProps> = ({
     };
   }, []);
 
+  // Clean, audible magical sound synthesis tailored for Locked Drawer Page 3
+  const playCountdownTick = (countNum: number) => {
+    try {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      if (ctx.state === 'suspended') {
+        ctx.resume().catch(() => {});
+      }
+
+      const now = ctx.currentTime;
+      // Warm, crystalline resonant tone for countdown 3, 2, 1
+      const pitches: Record<number, number> = { 3: 523.25, 2: 587.33, 1: 659.25 }; // C5, D5, E5
+      const freq = pitches[countNum] || 523.25;
+
+      const osc = ctx.createOscillator();
+      const harmonic = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.exponentialRampToValueAtTime(freq * 1.02, now + 0.2);
+
+      harmonic.type = 'triangle';
+      harmonic.frequency.setValueAtTime(freq * 2, now);
+
+      // Balanced audible level (~0.30) decaying naturally
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(0.30, now + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.32);
+
+      osc.connect(gain);
+      harmonic.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now);
+      harmonic.start(now);
+      osc.stop(now + 0.35);
+      harmonic.stop(now + 0.35);
+    } catch {
+      // Graceful fallback
+    }
+  };
+
+  const playPopupShimmer = () => {
+    try {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      if (ctx.state === 'suspended') {
+        ctx.resume().catch(() => {});
+      }
+
+      const now = ctx.currentTime;
+      // Elegant magical chime chord: E5, G#5, B5, E6 (E-major celestial chime)
+      const chord = [659.25, 830.61, 987.77, 1318.51];
+      chord.forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = 'sine';
+        const noteStart = now + i * 0.08;
+        osc.frequency.setValueAtTime(freq, noteStart);
+
+        // Balanced audible volume (~0.32 peak) with smooth shimmer sustain
+        gain.gain.setValueAtTime(0.001, noteStart);
+        gain.gain.linearRampToValueAtTime(0.32, noteStart + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.0001, noteStart + 0.85);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(noteStart);
+        osc.stop(noteStart + 0.9);
+      });
+    } catch {
+      // Graceful fallback
+    }
+  };
+
   const runTextStream = (lineIndex: number) => {
     if (lineIndex >= drawerBirthday.lines.length) {
-      playArtifactChime(659.25);
       setCandleState(9);
       setLineVisible(false);
+      playPopupShimmer();
       return;
     }
 
     setCurrentLineIndex(lineIndex);
     setLineVisible(true);
-    playArtifactChime(440 + lineIndex * 40);
 
     streamTimerRef.current = setTimeout(() => {
       setLineVisible(false);
@@ -102,22 +179,21 @@ const MidnightLedgerPage: React.FC<MidnightLedgerPageProps> = ({
   const handleBlowCandles = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     if (candleState !== 5) return;
-    playArtifactChime(440);
     setCandleState(6);
     setCountdownValue(3);
+    playCountdownTick(3);
 
     // Countdown 3 -> 2 -> 1
     countdownTimerRef.current = setTimeout(() => {
       setCountdownValue(2);
-      playArtifactChime(493.88);
+      playCountdownTick(2);
 
       countdownTimerRef.current = setTimeout(() => {
         setCountdownValue(1);
-        playArtifactChime(523.25);
+        playCountdownTick(1);
 
         countdownTimerRef.current = setTimeout(() => {
           // Extinguish candles (State 7)
-          playArtifactChime(349.23);
           setCandleState(7);
 
           // After 1200ms smoke animation -> State 8 (Floating text stream)
@@ -204,6 +280,28 @@ const MidnightLedgerPage: React.FC<MidnightLedgerPageProps> = ({
         <div className="ledger-header-inner">
           <div className="ledger-header-left">
             <div className="ledger-header-badge">
+              <Link
+                to="/case"
+                className="ledger-back-arrow"
+                aria-label="Return to Archive"
+                title="Return to Archive"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <line x1="19" y1="12" x2="5" y2="12" />
+                  <polyline points="12 19 5 12 12 5" />
+                </svg>
+              </Link>
               <span className="ledger-pulse-dot" />
               <span>__NLUJA ASSAM // FILE NO. 06</span>
             </div>

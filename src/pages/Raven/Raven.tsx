@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import owlSentinelImg from '../../assets/images/owl-sentinel.png';
 import './Raven.css';
 import { markDiscovered, getOwlMemoryUnlockedState, setOwlMemoryUnlocked } from '../../utils/discoveryTracker';
-import { playHedwigAmbience } from '../../utils/archiveAudio';
+import { playHedwigAmbience, stopHedwigAmbience } from '../../utils/archiveAudio';
 
 const Raven: React.FC = () => {
   const initialUnlockedState = getOwlMemoryUnlockedState();
@@ -19,21 +19,7 @@ const Raven: React.FC = () => {
     setUnlocked1(state.unlocked1);
     setUnlocked2(state.unlocked2);
 
-    // Gently start background music for File No. 3 (Hedwig)
-    playHedwigAmbience(true);
-
-    // Autoplay fallback in case browser policy requires user interaction
-    const handleFirstInteraction = () => {
-      playHedwigAmbience(true);
-      window.removeEventListener('pointerdown', handleFirstInteraction);
-      window.removeEventListener('keydown', handleFirstInteraction);
-    };
-    window.addEventListener('pointerdown', handleFirstInteraction, { passive: true });
-    window.addEventListener('keydown', handleFirstInteraction, { passive: true });
-
     return () => {
-      window.removeEventListener('pointerdown', handleFirstInteraction);
-      window.removeEventListener('keydown', handleFirstInteraction);
       if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current);
     };
   }, []);
@@ -580,11 +566,22 @@ const Raven: React.FC = () => {
         {/* Footer Nav */}
         <footer className="mt-4 mb-8 flex justify-center w-full">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-6 w-full max-w-2xl px-4">
-            <Link to="/case" className="group button-archive-expand inline-flex items-center justify-center gap-3 w-full sm:w-auto py-3.5 px-8 rounded-lg border border-[#4a5568]/50 hover:border-[#dfc27d]/70 bg-[#0d111a]/85 hover:bg-[#131926] text-[#e2e8f0] hover:text-[#fce7a9] font-serif text-xs sm:text-[13px] tracking-[0.22em] font-medium transition-all duration-300 shadow-[0_4px_22px_rgba(0,0,0,0.65)] hover:shadow-[0_0_24px_rgba(223,194,125,0.3)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer uppercase backdrop-blur-md">
+            <Link
+              to="/case"
+              onClick={() => stopHedwigAmbience()}
+              className="group button-archive-expand inline-flex items-center justify-center gap-3 w-full sm:w-auto py-3.5 px-8 rounded-lg border border-[#4a5568]/50 hover:border-[#dfc27d]/70 bg-[#0d111a]/85 hover:bg-[#131926] text-[#e2e8f0] hover:text-[#fce7a9] font-serif text-xs sm:text-[13px] tracking-[0.22em] font-medium transition-all duration-300 shadow-[0_4px_22px_rgba(0,0,0,0.65)] hover:shadow-[0_0_24px_rgba(223,194,125,0.3)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer uppercase backdrop-blur-md"
+            >
               <span className="arrow-glide-left inline-block font-sans text-sm text-[#dfc27d]">←</span>
               <span className="whitespace-nowrap">RETURN TO ARCHIVE</span>
             </Link>
-            <button className="group button-archive-expand inline-flex items-center justify-center gap-3 w-full sm:w-auto py-3.5 px-8 rounded-lg bg-gradient-to-br from-[#e5c17d] via-[#dfba76] to-[#d8ae64] hover:brightness-105 text-[#15120d] font-serif text-xs sm:text-[13px] font-bold tracking-[0.22em] transition-all duration-300 animate-gold-glow hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer uppercase border border-[#edd89f]/40" type="button" onClick={() => navigate('/audio')}>
+            <button
+              className="group button-archive-expand inline-flex items-center justify-center gap-3 w-full sm:w-auto py-3.5 px-8 rounded-lg bg-gradient-to-br from-[#e5c17d] via-[#dfba76] to-[#d8ae64] hover:brightness-105 text-[#15120d] font-serif text-xs sm:text-[13px] font-bold tracking-[0.22em] transition-all duration-300 animate-gold-glow hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer uppercase border border-[#edd89f]/40"
+              type="button"
+              onClick={() => {
+                stopHedwigAmbience();
+                navigate('/audio');
+              }}
+            >
               <span className="whitespace-nowrap">MOVE TO FILE NO. 04</span>
               <span className="arrow-glide-right inline-block font-sans text-sm font-bold">→</span>
             </button>

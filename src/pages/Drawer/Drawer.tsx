@@ -133,6 +133,91 @@ const Drawer: React.FC = () => {
     }
   };
 
+  // Shared continuous audio instance for Pages 3 and 4
+  const drawerAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    const isPages3Or4 = stage === 3 || stage === 4;
+
+    if (isPages3Or4) {
+      const updateSyncState = () => {
+        if (drawerAudioRef.current) {
+          const isPlaying = !drawerAudioRef.current.paused && !drawerAudioRef.current.ended;
+          setIsAmbiencePlaying(isPlaying);
+        } else {
+          setIsAmbiencePlaying(false);
+        }
+      };
+
+      if (!drawerAudioRef.current) {
+        const audio = new Audio('/audio/locked-drawer-pages-3-4.mp3');
+        audio.preload = 'auto';
+        audio.loop = false;
+        drawerAudioRef.current = audio;
+
+        audio.addEventListener('play', updateSyncState);
+        audio.addEventListener('pause', updateSyncState);
+        audio.addEventListener('ended', updateSyncState);
+        audio.addEventListener('error', updateSyncState);
+
+        const attemptPlay = () => {
+          if (drawerAudioRef.current && drawerAudioRef.current.paused) {
+            drawerAudioRef.current.play().catch(() => {
+              // Browser blocked autoplay; will play on first user interaction
+              updateSyncState();
+            });
+          }
+        };
+
+        attemptPlay();
+
+        // Autoplay unlock fallback on earliest permitted interaction
+        const handleUserInteraction = () => {
+          if (drawerAudioRef.current && drawerAudioRef.current.paused && !drawerAudioRef.current.ended) {
+            drawerAudioRef.current.play().catch(() => {
+              updateSyncState();
+            });
+          }
+          window.removeEventListener('click', handleUserInteraction);
+          window.removeEventListener('keydown', handleUserInteraction);
+          window.removeEventListener('touchstart', handleUserInteraction);
+        };
+
+        window.addEventListener('click', handleUserInteraction);
+        window.addEventListener('keydown', handleUserInteraction);
+        window.addEventListener('touchstart', handleUserInteraction);
+      } else {
+        // If audio exists, ensure listeners are present and sync state
+        const audio = drawerAudioRef.current;
+        audio.removeEventListener('play', updateSyncState);
+        audio.removeEventListener('pause', updateSyncState);
+        audio.removeEventListener('ended', updateSyncState);
+        audio.removeEventListener('error', updateSyncState);
+
+        audio.addEventListener('play', updateSyncState);
+        audio.addEventListener('pause', updateSyncState);
+        audio.addEventListener('ended', updateSyncState);
+        audio.addEventListener('error', updateSyncState);
+
+        if (audio.paused && !audio.ended) {
+          audio.play().catch(() => {
+            updateSyncState();
+          });
+        } else {
+          updateSyncState();
+        }
+      }
+    } else {
+      // Stop and clean up audio as soon as the user leaves Pages 3 and 4 (e.g. Back to Page 1 or 2)
+      if (drawerAudioRef.current) {
+        drawerAudioRef.current.pause();
+        drawerAudioRef.current.currentTime = 0;
+        drawerAudioRef.current = null;
+      }
+      setIsAmbiencePlaying(isAmbienceActive());
+    }
+  }, [stage]);
+
   useEffect(() => {
     if (stage === 2 || stage === 3 || stage === 4) {
       markDiscovered('drawer');
@@ -143,8 +228,21 @@ const Drawer: React.FC = () => {
     return () => {
       clearTimers();
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (drawerAudioRef.current) {
+        drawerAudioRef.current.pause();
+        drawerAudioRef.current.currentTime = 0;
+        drawerAudioRef.current = null;
+      }
     };
   }, []);
+
+  const cardRectRef = useRef<DOMRect | null>(null);
+
+  const handlePointerEnter = () => {
+    if (cardRef.current) {
+      cardRectRef.current = cardRef.current.getBoundingClientRect();
+    }
+  };
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.pointerType === 'touch') return;
@@ -153,13 +251,17 @@ const Drawer: React.FC = () => {
     const card = cardRef.current;
     if (!card) return;
 
+    if (!cardRectRef.current) {
+      cardRectRef.current = card.getBoundingClientRect();
+    }
+    const rect = cardRectRef.current;
+
     const clientX = e.clientX;
     const clientY = e.clientY;
 
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
 
     rafRef.current = requestAnimationFrame(() => {
-      const rect = card.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
 
@@ -169,31 +271,57 @@ const Drawer: React.FC = () => {
       const xNorm = Math.max(-1, Math.min(1, deltaX / (rect.width / 2)));
       const yNorm = Math.max(-1, Math.min(1, deltaY / (rect.height / 2)));
 
-      const rotateX = yNorm * 4;
-      const rotateY = -xNorm * 4;
-      const translateZ = 6;
+      const rotateX = yNorm * 3.5;
+      const rotateY = -xNorm * 3.5;
 
-      const shadowX = -xNorm * 12;
-      const shadowY = -yNorm * 12 + 28;
-      const glowOpacity = 0.22 + Math.abs(xNorm) * 0.08;
-
-      card.style.transition = 'transform 0.06s ease-out, box-shadow 0.06s ease-out';
-      card.style.transform = `perspective(1200px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(${translateZ}px) scale(1.025)`;
-      card.style.boxShadow = `${shadowX.toFixed(1)}px ${shadowY.toFixed(1)}px 85px rgba(0, 0, 0, 0.95), 0 0 35px rgba(250, 224, 165, ${glowOpacity.toFixed(2)})`;
+      card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(4px) scale3d(1.02, 1.02, 1)`;
     });
   };
 
   const handlePointerLeave = () => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    cardRectRef.current = null;
     const card = cardRef.current;
     if (!card) return;
 
-    card.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
     card.style.transform = '';
-    card.style.boxShadow = '';
   };
 
   const handleToggleAmbience = () => {
+    if (stage === 3 || stage === 4) {
+      const audio = drawerAudioRef.current;
+      if (!audio) {
+        // If not created yet, instantiate and play
+        const newAudio = new Audio('/audio/locked-drawer-pages-3-4.mp3');
+        newAudio.preload = 'auto';
+        newAudio.loop = false;
+        drawerAudioRef.current = newAudio;
+        newAudio.play().then(() => {
+          setIsAmbiencePlaying(true);
+        }).catch((err) => {
+          console.warn('Playback blocked or failed:', err);
+          setIsAmbiencePlaying(false);
+        });
+        return;
+      }
+
+      if (audio.paused || audio.ended) {
+        if (audio.ended) {
+          audio.currentTime = 0;
+        }
+        audio.play().then(() => {
+          setIsAmbiencePlaying(true);
+        }).catch((err) => {
+          console.warn('Playback blocked or failed:', err);
+          setIsAmbiencePlaying(false);
+        });
+      } else {
+        audio.pause();
+        setIsAmbiencePlaying(false);
+      }
+      return;
+    }
+
     const active = toggleAmbienceDrone((playing) => {
       setIsAmbiencePlaying(playing);
     });
@@ -385,6 +513,27 @@ const Drawer: React.FC = () => {
         <div className="drawer-header-inner">
           <div className="drawer-header-left">
             <div className="drawer-header-badge">
+              <Link
+                to="/case"
+                className="drawer-back-arrow"
+                aria-label="Return to Archive"
+                title="Return to Archive"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <line x1="19" y1="12" x2="5" y2="12" />
+                  <polyline points="12 19 5 12 12 5" />
+                </svg>
+              </Link>
               <span className="drawer-pulse-dot" />
               <span className="drawer-header-title">NLUJA ASSAM // FILE NO. 06</span>
             </div>
@@ -510,9 +659,9 @@ const Drawer: React.FC = () => {
 
                       <div className="drawer-env-vignette" />
                     </div>
-                    <div
-                      className="drawer-stage2-card visible"
+                      <div className="drawer-stage2-card visible"
                       ref={cardRef}
+                      onPointerEnter={handlePointerEnter}
                       onPointerMove={handlePointerMove}
                       onPointerLeave={handlePointerLeave}
                     >

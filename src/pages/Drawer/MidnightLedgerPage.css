@@ -281,6 +281,41 @@
   color: #fae0a5;
 }
 
+.ledger-back-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: #fae0a5;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 0.25rem;
+  flex-shrink: 0;
+}
+
+.ledger-back-arrow svg {
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.ledger-back-arrow:hover {
+  color: #ffffff;
+}
+
+.ledger-back-arrow:hover svg {
+  transform: translateX(-2px);
+  filter: drop-shadow(0 0 5px rgba(250, 224, 165, 0.7));
+}
+
+.ledger-back-arrow:focus-visible {
+  outline: 1px solid #fae0a5;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 .ledger-pulse-dot {
   width: 6px;
   height: 6px;

@@ -31,11 +31,9 @@ function HedwigContinuousAudio() {
         playHedwigAmbience(false, false);
       }
     } else {
-      if (wasInHedwigRef.current) {
-        // Leaving the File No. 3 section completely
-        wasInHedwigRef.current = false;
-        stopHedwigAmbience();
-      }
+      // Unconditionally stop Hedwig audio when on any route outside /raven
+      wasInHedwigRef.current = false;
+      stopHedwigAmbience();
     }
   }, [location.pathname]);
 
