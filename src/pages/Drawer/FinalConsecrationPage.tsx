@@ -101,6 +101,14 @@ const FinalConsecrationPage: React.FC<FinalConsecrationPageProps> = ({
     };
   }, []);
 
+  const cardRectRef = useRef<DOMRect | null>(null);
+
+  const handlePointerEnter = () => {
+    if (cardRef.current) {
+      cardRectRef.current = cardRef.current.getBoundingClientRect();
+    }
+  };
+
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.pointerType === 'touch') return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -108,13 +116,17 @@ const FinalConsecrationPage: React.FC<FinalConsecrationPageProps> = ({
     const card = cardRef.current;
     if (!card) return;
 
+    if (!cardRectRef.current) {
+      cardRectRef.current = card.getBoundingClientRect();
+    }
+    const rect = cardRectRef.current;
+
     const clientX = e.clientX;
     const clientY = e.clientY;
 
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
 
     rafRef.current = requestAnimationFrame(() => {
-      const rect = card.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
 
@@ -140,6 +152,7 @@ const FinalConsecrationPage: React.FC<FinalConsecrationPageProps> = ({
 
   const handlePointerLeave = () => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    cardRectRef.current = null;
     const card = cardRef.current;
     if (!card) return;
 
@@ -303,6 +316,7 @@ const FinalConsecrationPage: React.FC<FinalConsecrationPageProps> = ({
           <div
             ref={cardRef}
             className="consecration-parchment-card"
+            onPointerEnter={handlePointerEnter}
             onPointerMove={handlePointerMove}
             onPointerLeave={handlePointerLeave}
           >

@@ -130,6 +130,14 @@ const Raven: React.FC = () => {
   };
 
 
+  const tiltRafRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (tiltRafRef.current) cancelAnimationFrame(tiltRafRef.current);
+    };
+  }, []);
+
   // 3D Tilt Logic
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>, cardRef: React.RefObject<HTMLDivElement | null>) => {
     const card = cardRef.current;
@@ -152,12 +160,16 @@ const Raven: React.FC = () => {
     const sheenX = (mouseX / bounds.width) * 100;
     const sheenY = (mouseY / bounds.height) * 100;
 
-    card.style.transform = `perspective(1400px) rotateX(${rotX.toFixed(3)}deg) rotateY(${rotY.toFixed(3)}deg) translateZ(0)`;
-    card.style.setProperty('--mouse-x', `${sheenX.toFixed(2)}%`);
-    card.style.setProperty('--mouse-y', `${sheenY.toFixed(2)}%`);
+    if (tiltRafRef.current) cancelAnimationFrame(tiltRafRef.current);
+    tiltRafRef.current = requestAnimationFrame(() => {
+      card.style.transform = `perspective(1400px) rotateX(${rotX.toFixed(3)}deg) rotateY(${rotY.toFixed(3)}deg) translateZ(0)`;
+      card.style.setProperty('--mouse-x', `${sheenX.toFixed(2)}%`);
+      card.style.setProperty('--mouse-y', `${sheenY.toFixed(2)}%`);
+    });
   };
 
   const handleMouseLeave = (cardRef: React.RefObject<HTMLDivElement | null>) => {
+    if (tiltRafRef.current) cancelAnimationFrame(tiltRafRef.current);
     const card = cardRef.current;
     if (!card) return;
     card.style.transform = 'perspective(1400px) rotateX(0deg) rotateY(0deg) translateZ(0)';

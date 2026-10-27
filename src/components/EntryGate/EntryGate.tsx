@@ -107,6 +107,8 @@ export const EntryGate: React.FC<EntryGateProps> = ({ animateReveal = false, isA
           alt="NLUJA Assam Gothic Iron Gate at Twilight"
           className="entry-gate-bg-image"
           draggable={false}
+          fetchPriority="high"
+          decoding="async"
         />
         {/* Deep atmospheric shadow & vignette overlay */}
         <div aria-hidden="true" className="entry-gate-vignette" />

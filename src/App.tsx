@@ -1,18 +1,19 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Landing from './pages/Landing/Landing';
-import Case from './pages/Case/Case';
-import Letter from './pages/Letter/Letter';
-import Memories from './pages/Memories/Memories';
-import Audio from './pages/Audio/Audio';
-import Raven from './pages/Raven/Raven';
-import MemoryOne from './pages/Raven/MemoryOne';
-import MemoryTwo from './pages/Raven/MemoryTwo';
-import Drawer from './pages/Drawer/Drawer';
-import Forbidden from './pages/Forbidden/Forbidden';
-import PersonalRecord from './pages/PersonalRecord/PersonalRecord';
-import KeyAcquisition from './pages/KeyAcquisition/KeyAcquisition';
 import { playHedwigAmbience, stopHedwigAmbience } from './utils/archiveAudio';
+
+const Case = lazy(() => import('./pages/Case/Case'));
+const Letter = lazy(() => import('./pages/Letter/Letter'));
+const Memories = lazy(() => import('./pages/Memories/Memories'));
+const Audio = lazy(() => import('./pages/Audio/Audio'));
+const Raven = lazy(() => import('./pages/Raven/Raven'));
+const MemoryOne = lazy(() => import('./pages/Raven/MemoryOne'));
+const MemoryTwo = lazy(() => import('./pages/Raven/MemoryTwo'));
+const Drawer = lazy(() => import('./pages/Drawer/Drawer'));
+const Forbidden = lazy(() => import('./pages/Forbidden/Forbidden'));
+const PersonalRecord = lazy(() => import('./pages/PersonalRecord/PersonalRecord'));
+const KeyAcquisition = lazy(() => import('./pages/KeyAcquisition/KeyAcquisition'));
 
 function HedwigContinuousAudio() {
   const location = useLocation();
@@ -59,22 +60,22 @@ function App() {
   return (
     <BrowserRouter>
       <HedwigContinuousAudio />
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/case" element={<Case />} />
-        <Route path="/letter" element={<Letter />} />
-        <Route path="/memories" element={<Memories />} />
-
-
-        <Route path="/audio" element={<Audio />} />
-        <Route path="/personal-record" element={<PersonalRecord />} />
-        <Route path="/key-acquisition" element={<KeyAcquisition />} />
-        <Route path="/raven" element={<Raven />} />
-        <Route path="/raven/memory-1" element={<MemoryOne />} />
-        <Route path="/raven/memory-2" element={<MemoryTwo />} />
-        <Route path="/drawer" element={<Drawer />} />
-        <Route path="/forbidden" element={<Forbidden />} />
-      </Routes>
+      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#050506' }} />}>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/case" element={<Case />} />
+          <Route path="/letter" element={<Letter />} />
+          <Route path="/memories" element={<Memories />} />
+          <Route path="/audio" element={<Audio />} />
+          <Route path="/personal-record" element={<PersonalRecord />} />
+          <Route path="/key-acquisition" element={<KeyAcquisition />} />
+          <Route path="/raven" element={<Raven />} />
+          <Route path="/raven/memory-1" element={<MemoryOne />} />
+          <Route path="/raven/memory-2" element={<MemoryTwo />} />
+          <Route path="/drawer" element={<Drawer />} />
+          <Route path="/forbidden" element={<Forbidden />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

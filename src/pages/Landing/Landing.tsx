@@ -12,7 +12,13 @@ const INTRO_STORAGE_KEY = 'nluja_intro_completed';
  * 3. Navigates to Archive Desk (/case)
  */
 const Landing: React.FC = () => {
-  const [introCompleted, setIntroCompleted] = useState<boolean>(false);
+  const [introCompleted, setIntroCompleted] = useState<boolean>(() => {
+    try {
+      return sessionStorage.getItem(INTRO_STORAGE_KEY) === 'true';
+    } catch {
+      return false;
+    }
+  });
   const [shouldAnimateReveal, setShouldAnimateReveal] = useState<boolean>(false);
 
   const handleStartReveal = () => {
