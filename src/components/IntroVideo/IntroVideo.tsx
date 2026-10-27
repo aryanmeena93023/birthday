@@ -126,7 +126,22 @@ export const IntroVideo: React.FC<IntroVideoProps> = ({ onComplete, onStartRevea
     triggerComplete();
   };
 
-  const handleVideoError = () => {
+  const handleVideoError = (e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
+    const video = videoRef.current || (e.currentTarget as HTMLVideoElement);
+    const mediaErr = video?.error;
+    console.error('[IntroVideo] Video element error encountered:', {
+      error: mediaErr ? {
+        code: mediaErr.code,
+        message: mediaErr.message,
+        MEDIA_ERR_ABORTED: mediaErr.code === 1,
+        MEDIA_ERR_NETWORK: mediaErr.code === 2,
+        MEDIA_ERR_DECODE: mediaErr.code === 3,
+        MEDIA_ERR_SRC_NOT_SUPPORTED: mediaErr.code === 4,
+      } : null,
+      currentSrc: video?.currentSrc,
+      networkState: video?.networkState,
+      readyState: video?.readyState,
+    });
     setHasError(true);
   };
 
