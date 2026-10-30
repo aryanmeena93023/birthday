@@ -1,5 +1,6 @@
 import { useEffect, useRef, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import Landing from './pages/Landing/Landing';
 import { playHedwigAmbience, stopHedwigAmbience } from './utils/archiveAudio';
 
@@ -76,6 +77,7 @@ function App() {
           <Route path="/forbidden" element={<Forbidden />} />
         </Routes>
       </Suspense>
+      <Analytics />
     </BrowserRouter>
   );
 }
